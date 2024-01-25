@@ -8,26 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Bagian extends Model
+class Rencana extends Model
 {
     use HasFactory;
 
-    
-    protected $table = 'bagian';
-    protected $fillable = ['type','bagian'];
-
-    public function subbagians(): HasMany
-    {
-        return $this->hasMany(SubBagian::class);
-    }
-
+    protected $table = 'rencana';
+    protected $fillable = ['anggaran','unit','tahun','status'];
     protected $appends = [
         'lvl'
     ];
 
+    public function rencanadetails(): HasMany
+    {
+        return $this->hasMany(Rencana::class);
+    }
+
     protected function lvl(): Attribute
     {
-        switch ($this->type) {
+        switch ($this->unit) {
         case 'RA':
             $z = 0;
             break;
@@ -48,12 +46,20 @@ class Bagian extends Model
         );
 
     }
-    
-    protected function type(): Attribute
-    {        
+
+    protected function unit(): Attribute
+    {
         return new Attribute(
             get: fn ($value) =>  ["RA", "SD", "SMP", "YYS"][$value],
         );
     }
+
+    protected function anggaran(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) =>  number_format($value,0,",","."),
+        );
+    }
+
     
 }

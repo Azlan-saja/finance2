@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+// use Auth;
+
 class UserAccess
 {
     /**
@@ -19,6 +21,10 @@ class UserAccess
     // }
     public function handle(Request $request, Closure $next, $userType): Response
     {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
         if(auth()->user()->type == $userType){
             return $next($request);
         }

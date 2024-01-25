@@ -7,18 +7,21 @@ use Illuminate\Http\Request;
 
 class BagianController extends Controller
 {
-     public function __construct()
+    public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'user-access:YYS']);
     }
-    public function index()
-    {
-        // $bagian = Bagian::sortable()->latest()->paginate(5);         
-        $bagian = Bagian::latest()->paginate(5);         
+    public function index(Request $request)
+    {                  
+        if ($request->sort && $request->order){
+            $bagian = Bagian::orderBy($request->sort, $request->order)->paginate(5);  
+        }else{
+            $bagian = Bagian::latest()->paginate(5);         
+        }
         return view('yys.bagian.index',compact('bagian'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);       
     }
-
+ 
     public function cari(Request $request)
     {              
         $request->validate([

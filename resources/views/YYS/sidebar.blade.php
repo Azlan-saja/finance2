@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('css')
+@yield('cssSidebar')
 <style>
    .terbang{
     position: fixed;
@@ -23,8 +24,7 @@
     <!-- Sidebar Start -->
     <aside class="left-sidebar">
       <!-- Sidebar scroll-->
-      <div>
-                    
+      <div>               
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar " data-simplebar="">
              <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer mt-2 text-center" id="sidebarCollapse">
@@ -52,40 +52,60 @@
                 <span class="hide-menu">Dashboard</span>
               </a>
             </li>
-            <li class="sidebar-item {{ request()->is('yys/bagian') ? 'selected' : ''}}">
-              <a class="sidebar-link" href="{{ url('yys/bagian')}}" aria-expanded="false">
+            <li class="sidebar-item {{ request()->is('yys/bagian*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ route('bagian.index')}}" aria-expanded="false">
                 <span>
-                  <i class="ti ti-notes"></i>
+                  <i class="ti ti-box-multiple-2"></i>
                 </span>
                 <span class="hide-menu">Bagian</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ url('yys/bagian')}}" aria-expanded="false">
+            <li class="sidebar-item {{ request()->is('yys/kegiatan*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/kegiatan')}}" aria-expanded="false">
                 <span>
                   <i class="ti ti-notes"></i>
                 </span>
-                <span class="hide-menu">Sub Bagian</span>
+                <span class="hide-menu">Kegiatan</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ url('yys/bagian')}}" aria-expanded="false">
+            
+            <li class="sidebar-item {{ request()->is('yys/sasaran*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/sasaran')}}" aria-expanded="false">
                 <span>
-                  <i class="ti ti-notes"></i>
+                  <i class="ti ti-target-arrow"></i>
                 </span>
-                <span class="hide-menu">Uraian Bagian</span>
+                <span class="hide-menu">Sasaran</span>
               </a>
             </li>
+            
+            <li class="sidebar-item {{ request()->is('yys/anggaran*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/anggaran')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-report-money"></i>
+                </span>
+                <span class="hide-menu">Sumber Anggaran</span>
+              </a>
+            </li>
+
+             <li class="sidebar-item {{ request()->is('yys/satuan*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/satuan')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-clock-search"></i>
+                </span>
+                <span class="hide-menu">Satuan</span>
+              </a>
+            </li>
+            
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">FITUR</span>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+            <li class="sidebar-item {{ request()->is('yys/rencana*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/rencana')}}" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                <span class="hide-menu">Pemasukan</span>
+                <span class="hide-menu">R A B</span>
               </a>
             </li>
             <li class="sidebar-item">

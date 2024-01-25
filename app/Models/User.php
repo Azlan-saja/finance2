@@ -46,6 +46,34 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $appends = [
+        'lvl'
+    ];
+
+    protected function lvl(): Attribute
+    {
+        switch ($this->type) {
+        case 'RA':
+            $z = 0;
+            break;
+        case 'SD':
+            $z = 1;
+            break;
+        case 'SMP':
+            $z = 2;
+            break;
+        case 'YYS':
+            $z = 3;
+            break;
+        default:
+           $z = 5;
+        }        
+        return new Attribute(
+            get: fn ($value) =>  $z,
+        );
+
+    }
+
     protected function type(): Attribute
     {
         return new Attribute(

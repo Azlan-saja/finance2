@@ -61,7 +61,9 @@ class LoginController extends Controller
             }else if (auth()->user()->type == 'YYS') {
                 return redirect()->route('YYS.home');
             }else{
-                return redirect()->route('login');
+                // return redirect()->route('login');
+                 return redirect()->route('login')
+                ->with('error','Email dan Password anda salah.');
             }
         }else{
             return redirect()->route('login')

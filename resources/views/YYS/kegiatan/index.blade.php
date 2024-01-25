@@ -1,5 +1,5 @@
 @extends('yys.sidebar')
-@section('title')Bagian - YYS @endsection
+@section('title')Kegiatan - YYS @endsection
 
 
 @section('pages')
@@ -9,12 +9,12 @@
   <div class="container mt-4">
               <h4 class="fw-semibold mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 18l6 -6l-6 -6v12" /></svg>
-                Bagian</h4>
+                Kegiatan</h4>
               <div class="card mb-0">
                 <div class="card-body p-4">
                 <!-- ISI START -->
-                <a href="{{ route('bagian.create') }}" class="btn btn-primary m-1">Tambah</a>
-                <a href="{{ route('bagian.index') }}" class="btn btn-outline-primary m-1">Segarkan</a>
+                <a href="{{ route('kegiatan.create') }}" class="btn btn-primary m-1">Tambah</a>
+                <a href="{{ route('kegiatan.index') }}" class="btn btn-outline-primary m-1">Segarkan</a>
                 <hr>
                    @if ($message = Session::get('success'))
                          <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
@@ -22,7 +22,7 @@
                             <strong> {{ $message }} </strong>
                         </div>                           
                     @endif
-                  <form action="{{ route('bagian.search') }}" method="POST">
+                  <form action="{{ route('kegiatan.search') }}" method="POST">
                      @csrf               
                     <div class="input-group mb-3">
                       <input type="text" class="form-control @error('cari') is-invalid @enderror" placeholder="Pencarian" name="cari" required>                      
@@ -43,17 +43,11 @@
                       <tr class="bg-dark">
                         <th class="border-bottom-0">
                           <span class="fw-semibold mb-0 text-white">#</span>
-                        </th>
-                        <th class="border-bottom-0">
-                           <a class="fw-semibold mb-0 text-white" href="{{ route('bagian.index', ['sort' => 'type', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
-                              Unit
-                            </a>
-                        </th>
+                        </th>                       
                         <th class="border-bottom-0">                          
-                            <a class="fw-semibold mb-0 text-white" href="{{ route('bagian.index', ['sort' => 'bagian', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
+                            <a class="fw-semibold mb-0 text-white" href="{{ route('kegiatan.index', ['sort' => 'kegiatan', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
-                              Bagian
+                              Kegiatan
                             </a>
                         </th>
                         <th class="border-bottom-0">                         
@@ -61,20 +55,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @forelse ($bagian as $data)
+                      @forelse ($kegiatan as $data)
                       <tr>
                         <td class="border-bottom-0">
                             <h6 class="fw-normal mb-0">{{ ++$i }}</h6>
-                        </td>                     
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">                          
-                             
-                                {{ $data->type }}
-                             
-                          </p>
-                        </td>
+                        </td>                                            
                          <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">{{ $data->bagian }}</p>
+                          <p class="mb-0 fw-normal">{{ $data->kegiatan }}</p>
                         </td>
                         <td class="border-bottom-0">
                           <div class="d-flex align-items-center gap-2">
@@ -82,18 +69,15 @@
                               <a href="#" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="ti ti-dots-vertical fs-6"></i>
                               </a>
-                              <ul class="dropdown-menu mt-0 pt-0" aria-labelledby="dropdownMenuButton">
+                              <ul class="dropdown-menu mt-0 pt-0" aria-labelledby="dropdownMenuButton">                               
                                 <li>
-                                  <a class="dropdown-item d-flex align-items-center gap-3 text-primary" href="{{ route('subbagian.index',$data->id) }}"><i class="fs-4 ti ti-eye-plus"></i>Sub Bagian</a>
+                                  <span class="bg-dark  dropdown-item d-flex align-items-center gap-3 text-white text-center" >{{$data->kegiatan }}</span>
                                 </li>
                                 <li>
-                                  <span class="bg-dark  dropdown-item d-flex align-items-center gap-3 text-white text-center" >{{ $data->type }}<br>{{$data->bagian }}</span>
+                                  <a class="dropdown-item d-flex align-items-center gap-3 text-warning" href="{{ route('kegiatan.edit',$data->id) }}"><i class="fs-4 ti ti-edit"></i>Edit</a>
                                 </li>
                                 <li>
-                                  <a class="dropdown-item d-flex align-items-center gap-3 text-warning" href="{{ route('bagian.edit',$data->id) }}"><i class="fs-4 ti ti-edit"></i>Edit</a>
-                                </li>
-                                <li>
-                                  <form action="{{ route('bagian.destroy',$data->id) }}" method="POST">
+                                  <form action="{{ route('kegiatan.destroy',$data->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')                
                                     <button type="submit" class="dropdown-item d-flex align-items-center gap-3 text-danger show_confirm"><i class="fs-4 ti ti-trash"></i>Delete</button>
@@ -109,7 +93,7 @@
                       <tr>
                         <td colspan="4">
                           <div class="alert alert-danger text-center" role="alert">
-                              Data Bagian Kosong.
+                              Data Kegiatan Kosong.
                           </div>
                         </td>
                       </tr>                
@@ -117,9 +101,7 @@
                     </tbody>
                   </table>
                   <div class="mt-3">
-                     {{ $bagian->withQueryString()->links('pagination::bootstrap-5') }} 
-                     <br>
-                                       
+                     {{ $kegiatan->withQueryString()->links('pagination::bootstrap-5') }}                     
                   </div>                  
                 </div>
                 <!-- ISI END -->
