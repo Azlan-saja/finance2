@@ -13,7 +13,9 @@
   .swal-modal .swal-text {
     text-align: center;
   }
-
+  .swal-overlay {
+     background-color: rgba(2, 0, 3, 0.45);
+  }
 </style>
 @endsection
 
@@ -40,11 +42,11 @@
                 <span class="hide-menu">{{ Auth::user()->name }} [{{ Auth::user()->type }}]     </span>
               </a>
             </li>
-             <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">MASTER</span>
+
+            
+             <li class="nav-small-cap p-0 mt-2 ">
             </li>
-            <li class="sidebar-item {{ request()->is('yys/home') ? 'selected' : ''}}">
+            <li class="sidebar-item {{ request()->is('yys/home') ? 'selected' : ''}} mb-2">
               <a class="sidebar-link" href="{{ url('yys/home')}}" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
@@ -52,6 +54,11 @@
                 <span class="hide-menu">Dashboard</span>
               </a>
             </li>
+            
+             <li class="nav-small-cap mt-0">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">TEMPLATE</span>
+            </li>        
             <li class="sidebar-item {{ request()->is('yys/bagian*') ? 'selected' : ''}}">
               <a class="sidebar-link" href="{{ route('bagian.index')}}" aria-expanded="false">
                 <span>
@@ -90,7 +97,7 @@
              <li class="sidebar-item {{ request()->is('yys/satuan*') ? 'selected' : ''}}">
               <a class="sidebar-link" href="{{ url('yys/satuan')}}" aria-expanded="false">
                 <span>
-                  <i class="ti ti-clock-search"></i>
+                  <i class="ti ti-math-function-y"></i>
                 </span>
                 <span class="hide-menu">Satuan</span>
               </a>
@@ -108,12 +115,21 @@
                 <span class="hide-menu">R A B</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+            <li class="sidebar-item {{ request()->is('yys/pemasukan*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/pemasukan')}}" aria-expanded="false">
                 <span>
-                  <i class="ti ti-alert-circle"></i>
+                  <i class="ti ti-trending-up"></i>
                 </span>
-                <span class="hide-menu">Pengeluaran</span>
+                <span class="hide-menu">Pemasukan</span>
+              </a>
+            </li>
+           
+            <li class="sidebar-item {{ request()->is('yys/laba-rugi*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/laba-rugi')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-report-analytics"></i>
+                </span>
+                <span class="hide-menu">Laba Rugi</span>
               </a>
             </li>
            
@@ -157,6 +173,8 @@
       @csrf
     </form>
   </div>
+
+  
 </div>
 @endsection
 

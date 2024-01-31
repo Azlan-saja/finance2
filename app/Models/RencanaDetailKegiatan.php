@@ -28,18 +28,18 @@ class RencanaDetailKegiatan extends Model
  
     protected $appends = [
         'total',
-        'Rawtotal',
+        // 'grandtotal',
     ];    
-    protected function Rawtotal(): Attribute
-    {
-        return new Attribute(
-            get: fn ($value) =>  $this->volume * str_replace('.','',$this->harga),            
-        );
-    }
+    // protected function grandtotal(): Attribute
+    // {
+    //     return new Attribute(
+    //         get: fn ($value) =>  number_format($value,0,",","."),            
+    //     );
+    // }
     protected function total(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  'Rp.'. number_format($this->volume * str_replace('.','',$this->harga),0,",","."),
+            get: fn ($value) =>  number_format($this->volume * str_replace('.','',$this->harga),0,",","."),
         );
     }
 

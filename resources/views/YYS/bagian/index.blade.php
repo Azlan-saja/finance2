@@ -100,7 +100,7 @@
                                   </form>
                                 </li>
                               </ul>
-                            </div>
+                            </div> 
                              
                           </div>
                         </td>                    
@@ -143,6 +143,7 @@ $( document ).ready(function() {
               icon: "warning",
               buttons: true,
               dangerMode: true,
+              
     })
     .then((willDelete) => {
       if (willDelete) {

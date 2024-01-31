@@ -16,27 +16,81 @@ use App\Models\RencanaDetailSubBagian;
 use App\Models\RencanaDetailKegiatan;
 
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class RencanaDetailController extends Controller
 {
-     public function __construct()
+    public function __construct()
     {
         $this->middleware(['auth', 'user-access:YYS']);
     }
 
     public function index(Request $request, $id)
     {              
+                                         
         $rencana = Rencana::where('id',$id)->where('status','Open')->first();       
         if ($rencana){
-            $bagian = Bagian::where('type', $rencana->lvl)->get();   
+            $bagian = Bagian::where('type', $rencana->lvl)->oldest()->with('subbagians')->oldest()->get();   
+            $totalsubbagian = 0;
+            $jumlah_kegiatan = 0;
+            $totalbagian = 0;
+            $grandtotal = 0;
+            
             foreach ($bagian as $key => $value) {
-                
+                foreach ($value['subbagians'] as $key2 => $value2) {                
+                    $kegiatan = RencanaDetailKegiatan::where('rencana_id', $id)
+                                        ->where('subbagian_id', $value2->id)->oldest();                                                                                     
+                    $totalsubbagian = $kegiatan->sum(DB::raw('volume*harga'));  
+                    $value2['totalsubbagian'] = $totalsubbagian;                  
+                    $value2['jumlah_kegiatan'] = $kegiatan->count();                        
+                    $value2['kegiatan'] = $kegiatan->get(); 
+                    $grandtotal += $totalsubbagian;
+                }
+                                 
             }
+            $rencana['grandtotal'] = $grandtotal;
 
             return view('yys.rencana-detail.index',compact('rencana','bagian','id'));                             
         }else{
              return redirect()->route('rencana.index')
                         ->with('error','Rencana Anggaran Belanja - RAB Sudah Closed.');
+ 
+        }
+    }
+    public function history($rencana_id)
+    {                                                   
+        $rencana = Rencana::where('id',$rencana_id)->first(['anggaran','unit','tahun']);       
+        if ($rencana){
+            $grandtotal = 0;
+            $rencana['bagian'] = [];
+            $rencana_detail = RencanaDetail::where('rencana_id',$rencana_id)->orderBy('bagian_id','asc')->get(['id','nama_bagian']);
+            foreach ($rencana_detail as $key => $value) {
+                $subtotal = 0;
+                $rencana['bagian'] = $rencana_detail;
+                $rencana_detail_subbagian = RencanaDetailSubBagian::where('rencana_detail_id', $value->id)->orderBy('subbagian_id','asc')->get(['id','nama_subbagian']);                
+                foreach ($rencana_detail_subbagian as $key2 => $value2) {
+                    $value2['kegiatan'] = [];
+                    
+                    $rencana_detail_kegiatan = RencanaDetailKegiatan::where('rencana_detail_subbagian_id', $value2->id)->oldest();
+                    $rencana_detail_kegiatan2 = $rencana_detail_kegiatan->get(['nama_kegiatan','sasaran','anggaran','satuan','jumlah_sasaran','volume','harga']);
+                    foreach ($rencana_detail_kegiatan2 as $key3 => $value3) {
+                        
+                        $value2['subtotal2'] = $rencana_detail_kegiatan->sum(DB::raw('volume*harga'));
+                        $value2['kegiatan'] = $rencana_detail_kegiatan2;
+                        
+                    }
+                    $subtotal += $value2['subtotal2'];
+                    $value['subtotal'] = $subtotal;
+                    $value['subbgaian'] = $rencana_detail_subbagian;
+                }
+                $grandtotal += $subtotal;
+            }
+            $rencana['grandtotal'] = $grandtotal;
+            // return $rencana;
+            return view('yys.rencana-detail.history',compact('rencana'));                             
+        }else{
+             return redirect()->route('rencana.index')
+                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan.');
  
         }
     }
@@ -51,36 +105,39 @@ class RencanaDetailController extends Controller
        $rencana = Rencana::where('id',$rencana_id)                    
                     ->where('status','Open')                   
                     ->first();
-       
-       $subbagian = SubBagian::where('id',$subbagian_id)
-                ->with('bagians')
-                ->whereRelation('bagians','type',$rencana->lvl)->first();                
-       if ($subbagian){
-            $kegiatan = Kegiatan::OrderBy('kegiatan','asc')->get();
-            $sasaran = Sasaran::OrderBy('sasaran','asc')->get();       
-            $anggaran = Anggaran::OrderBy('anggaran','asc')->get();
-            $satuan = Satuan::OrderBy('satuan','asc')->get();
-            $grantotal = 0;
-            if ($request->sort && $request->order){
-                $rencanadetailkegiatan = RencanaDetailKegiatan::where('rencana_id', $rencana_id)
-                ->where('subbagian_id', $subbagian_id)
-                ->orderBy($request->sort, $request->order)->paginate(5);  
+        
+        if ($rencana){
+            $subbagian = SubBagian::where('id',$subbagian_id)
+                    ->with('bagians')
+                    ->whereRelation('bagians','type',$rencana->lvl)->first();                
+            if ($subbagian){
+                $kegiatan = Kegiatan::OrderBy('kegiatan','asc')->get();
+                $sasaran = Sasaran::OrderBy('sasaran','asc')->get();       
+                $anggaran = Anggaran::OrderBy('anggaran','asc')->get();
+                $satuan = Satuan::OrderBy('satuan','asc')->get();
+                $grantotal = 0;
+
+                $rencanadetailKeg = RencanaDetailKegiatan::where('rencana_id', $rencana_id)
+                                    ->where('subbagian_id', $subbagian_id);
+                $grantotal = $rencanadetailKeg->sum(DB::raw('volume*harga'));
+
+                if ($request->sort && $request->order){
+                    $rencanadetailkegiatan = $rencanadetailKeg->orderBy($request->sort, $request->order)->paginate(5);  
+                }else{
+                    $rencanadetailkegiatan = $rencanadetailKeg->latest()->paginate(5);         
+                }
+                
+                return view('yys.rencana-detail.create',
+                            compact('rencana','subbagian','kegiatan',
+                                    'sasaran','anggaran','satuan', 'rencana_id',
+                                    'rencanadetailkegiatan','grantotal'))
+                            ->with('i', (request()->input('page', 1) - 1) * 5);  
             }else{
-                $rencanadetailkegiatan = RencanaDetailKegiatan::where('rencana_id', $rencana_id)
-                ->where('subbagian_id', $subbagian_id)
-                ->latest()->paginate(5);         
+                return response()->view('errors.check-permission'); 
             }
-                if($rencanadetailkegiatan){
-                    $grantotal = $rencanadetailkegiatan->sum('Rawtotal');
-                } 
- 
-            return view('yys.rencana-detail.create',
-                        compact('rencana','subbagian','kegiatan',
-                                'sasaran','anggaran','satuan', 'rencana_id',
-                                'rencanadetailkegiatan','grantotal'))
-                        ->with('i', (request()->input('page', 1) - 1) * 5);  
         }else{
-            return response()->view('errors.check-permission'); 
+              return redirect()->route('rencana.index')
+                        ->with('error','Rencana Anggaran Belanja - RAB Sudah Closed.');
         }
 
     }
@@ -100,10 +157,11 @@ class RencanaDetailController extends Controller
             'anggaran' => 'required',
             'satuan' => 'required',
             'jumlah_sasaran' => 'required',
-            'volume' => 'required',
+            'volume' => 'required|integer|between:1,12',
             'harga' => 'required',
         ]);      
 
+        // return $request->all();
         $rencanadetail = RencanaDetail::firstOrNew(
             [
                 'rencana_id' =>  $rencana_id, 

@@ -11,6 +11,9 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\RencanaController;
 use App\Http\Controllers\RencanaDetailController;
+use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\RealisasiController;
+use App\Http\Controllers\LabaRugiController;
 
 
 /*
@@ -55,7 +58,11 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
 
     Route::resource('yys/satuan', SatuanController::class);
     Route::post('yys/satuan/search', [SatuanController::class, 'cari'])->name('satuan.search');
+    
+    Route::resource('yys/pemasukan', PemasukanController::class);
+    Route::post('yys/pemasukan/search', [PemasukanController::class, 'cari'])->name('pemasukan.search');
 
+    
     Route::resource('yys/rencana', RencanaController::class);
     Route::post('yys/rencana/search', [RencanaController::class, 'cari'])->name('rencana.search');
     Route::put('yys/rencana/closed/{rencana}', [RencanaController::class, 'closed'])->name('rencana.closed');
@@ -65,7 +72,14 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
     Route::get('yys/rencana/{rencana_id}/rencana-detail/{subbagian}/create', [RencanaDetailController::class, 'create'])->name('rencana-detail.create');
     Route::post('yys/rencana/{rencana_id}/rencana-detail/{subbagian}/create', [RencanaDetailController::class, 'store'])->name('rencana-detail.store');
     Route::delete('yys/rencana/{rencana_id}/rencana-detail/{subbagian}/create/{rencana_detail}', [RencanaDetailController::class, 'destroy'])->name('rencana-detail.destroy');
-    // Route::get('yys/rencana/{rencana_id}/rencana-detail/{subbagian}/create/{rencana_detail}', [RencanaDetailController::class, 'show'])->name('rencana-detail.show');
+    Route::get('yys/rencana/{rencana_id}/rencana-detail/history', [RencanaDetailController::class, 'history'])->name('rencana-detail.history');
+
+    Route::get('yys/rencana/{rencana_id}/realisasi', [RealisasiController::class, 'index'])->name('realisasi.index');
+    Route::get('yys/rencana/{rencana_id}/realisasi/create/{kegiatan_id}/{bulan}', [RealisasiController::class, 'create'])->name('realisasi.create');
+    Route::post('yys/rencana/{rencana_id}/realisasi/create/{kegiatan_id}/{bulan}', [RealisasiController::class, 'store'])->name('realisasi.store');
+
+    Route::get('yys/laba-rugi', [LabaRugiController::class,'index'])->name('laba-rugi.index');
+    Route::post('yys/laba-rugi', [LabaRugiController::class,'search'])->name('laba-rugi.search');
 
 });
 

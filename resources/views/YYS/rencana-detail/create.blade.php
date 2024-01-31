@@ -61,7 +61,7 @@
                     <hr>
                     <span class="fw-bold">Total Rencana</span>
                     <h5 class="fw-semibold">
-                       {{ 'Rp.'. number_format($grantotal) }}
+                       {{ 'Rp. '.number_format($grantotal,0,",",".") }}
                     </h5>                         
                     <hr>
                   </div>
@@ -129,7 +129,7 @@
                                     </div>                          
                                   </div>
                           </div>                                                                                                        
-                            <div class="mb-3">
+                            <div class="mb-0">
                                   <div class="row">
                                     <label class="col-lg-2 form-label ">Sumber Anggaran</label>                         
                                     <div class="col-lg-10">
