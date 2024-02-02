@@ -37,23 +37,23 @@
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">STATUS</span>
             </li>
-            <li class="sidebar-item text-center">
-              <a class="btn btn-success" href="#" aria-expanded="false">               
+            <li class="sidebar-item text-center {{ request()->is('yys/home') ? 'selected' : ''}}">
+              <a class="btn btn-success" style="letter-spacing: 0.15em;" href="{{ url('yys/home')}}" aria-expanded="false">               
                 <span class="hide-menu">{{ Auth::user()->name }} [{{ Auth::user()->type }}]     </span>
               </a>
             </li>
 
             
-             <li class="nav-small-cap p-0 mt-2 ">
-            </li>
-            <li class="sidebar-item {{ request()->is('yys/home') ? 'selected' : ''}} mb-2">
+             <!-- <li class="nav-small-cap p-0 mt-0 ">
+            </li> -->
+            <!-- <li class="sidebar-item {{ request()->is('yys/home') ? 'selected' : ''}} mb-2">
               <a class="sidebar-link" href="{{ url('yys/home')}}" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
                 <span class="hide-menu">Dashboard</span>
               </a>
-            </li>            
+            </li>             -->
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">FITUR</span>
@@ -140,18 +140,18 @@
             </li>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Akun</span>
+              <span class="hide-menu">Lainnya</span>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+            <li class="sidebar-item {{ request()->is('yys/pengguna*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/pengguna')}}" aria-expanded="false">
                 <span>
                    <i class="ti ti-user-plus"></i>
                 </span>
-                <span class="hide-menu">Profil</span>
+                <span class="hide-menu">Pengguna</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+            <li class="sidebar-item {{ request()->is('yys/ubah-password*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/ubah-password')}}" aria-expanded="false">
                 <span>
                  <i class="ti ti-login"></i>
                 </span>

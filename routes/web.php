@@ -15,6 +15,7 @@ use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\RealisasiController;
 use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\BebanController;
+use App\Http\Controllers\PenggunaController;
 
 
 /*
@@ -84,6 +85,14 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
 
     Route::resource('yys/beban', BebanController::class);
     Route::post('yys/beban/search', [BebanController::class, 'cari'])->name('beban.search');
+
+    Route::resource('yys/pengguna', PenggunaController::class);
+    Route::post('yys/pengguna/search', [PenggunaController::class, 'cari'])->name('pengguna.search');
+    Route::patch('yys/pengguna/{pengguna}', [PenggunaController::class, 'reset'])->name('pengguna.reset');
+
+
+    Route::get('yys/ubah-password', [PenggunaController::class, 'saya'])->name('pengguna-aktif.saya');
+    Route::put('yys/ubah-password', [PenggunaController::class, 'ubah'])->name('pengguna-aktif.ubah');
 
 });
 

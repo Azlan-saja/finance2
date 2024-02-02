@@ -29,12 +29,24 @@ class PemasukanController extends Controller
         $request->validate([
                 'cari' => 'required',
         ]);        
-        $pemasukan = Pemasukan::where('nama','like','%'.$request->cari.'%')
+        $xunit = 5;
+        if (strtolower($request->cari) == 'yys') $xunit = 3;
+        if (strtolower($request->cari) == 'smp') $xunit = 2;
+        if (strtolower($request->cari) == 'sd') $xunit = 1;
+        if (strtolower($request->cari) == 'ra') $xunit = 0; 
+        if($xunit <=3){
+            $pemasukan = Pemasukan::Where('unit','like','%'.$xunit.'%')            
+                ->latest()->paginate(5);    
+        }else{
+            $pemasukan = Pemasukan::where('nama','like','%'.$request->cari.'%')
                 ->orWhere('sumber','like','%'.$request->cari.'%')            
                 ->orWhere('nominal','like','%'.$request->cari.'%')            
                 ->orWhere('tanggal','like','%'.$request->cari.'%')            
                 ->orWhere('tahun','like','%'.$request->cari.'%')            
-                ->latest()->paginate(5);                  
+                ->orWhere('unit','like','%'.$request->cari.'%')            
+                ->latest()->paginate(5);    
+        }
+                      
         return view('yys.pemasukan.index',compact('pemasukan'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);      
     }

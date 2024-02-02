@@ -29,11 +29,22 @@ class RencanaController extends Controller
         $request->validate([
                 'cari' => 'required',
         ]);        
-        $rencana = Rencana::orWhere('anggaran','like','%'.$request->cari.'%')
+         $xunit = 5;
+        if (strtolower($request->cari) == 'yys') $xunit = 3;
+        if (strtolower($request->cari) == 'smp') $xunit = 2;
+        if (strtolower($request->cari) == 'sd') $xunit = 1;
+        if (strtolower($request->cari) == 'ra') $xunit = 0; 
+        if($xunit <=3){
+            $rencana = Rencana::Where('unit','like','%'.$xunit.'%')               
+                 ->latest()->paginate(5);        
+        }else{
+            $rencana = Rencana::orWhere('anggaran','like','%'.$request->cari.'%')
                  ->orWhere('tahun','like','%'.$request->cari.'%')             
                  ->orWhere('unit','like','%'.$request->cari.'%')             
                  ->orWhere('status','like','%'.$request->cari.'%')             
-                 ->latest()->paginate(5);                  
+                 ->latest()->paginate(5);        
+        }
+                  
         return view('yys.rencana.index',compact('rencana'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);      
     }

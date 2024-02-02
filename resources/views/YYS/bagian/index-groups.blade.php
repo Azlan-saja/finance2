@@ -38,7 +38,7 @@
                   </form>
                      
                 <div class="table-responsive rounded-2 mb-4">
-                  <table class="table border text-nowrap customize-table mb-0 align-middle table-striped">
+                  <table class="table table-border  text-nowrap customize-table mb-0 align-middle">
                     <thead class="text-dark fs-4">
                       <tr class="bg-dark">
                         <th class="border-bottom-0">
@@ -61,50 +61,45 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @forelse ($bagian as $data)
-                      <tr>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-normal mb-0">{{ ++$i }}</h6>
+                      @forelse ($bagian as $types => $data)
+                       <tr class="bg-primary-subtle">
+                        <td class="">
+                            <h6 class="fw-bold mb-0">{{$loop->iteration}}  </h6>
                         </td>                     
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">                          
-                             
-                                {{ $data->type }}
-                             
+                        <td class="">
+                          <p class="mb-0 fw-bold">                          
+                              {{$types}}                                                              
                           </p>
                         </td>
-                         <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">{{ $data->bagian }}</p>
+                         <td class="">
+                          <p class="mb-0 fw-normal d-none">  {{ $data->count() }}</p>
                         </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <div class="dropdown dropstart">
-                              <a href="#" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="ti ti-dots-vertical fs-6"></i>
-                              </a>
-                              <ul class="dropdown-menu mt-0 pt-0" aria-labelledby="dropdownMenuButton">
-                                <li>
-                                  <a class="dropdown-item d-flex align-items-center gap-3 text-primary" href="{{ route('subbagian.index', $data->id) }}"><i class="fs-4 ti ti-eye-plus"></i>Sub Bagian</a>
-                                </li>
-                                <li>
-                                  <span class="bg-dark  dropdown-item d-flex align-items-center gap-3 text-white text-center" >{{ $data->type }}<br>{{$data->bagian }}</span>
-                                </li>
-                                <li>
-                                  <a class="dropdown-item d-flex align-items-center gap-3 text-warning" href="{{ route('bagian.edit',$data->id) }}"><i class="fs-4 ti ti-edit"></i>Edit</a>
-                                </li>
-                                <li>
-                                  <form action="{{ route('bagian.destroy',$data->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')                
-                                    <button type="submit" class="dropdown-item d-flex align-items-center gap-3 text-danger show_confirm"><i class="fs-4 ti ti-trash"></i>Delete</button>
-                                  </form>
-                                </li>
-                              </ul>
-                            </div> 
-                             
-                          </div>
+                        <td class="">                        
                         </td>                    
                       </tr>    
+                        @forelse ($data as $datas)
+                          <tr class="bg-white">
+                            <td class="border-0">                              
+                            </td>    
+                            <td>
+                               <h6 class="fw-bold mb-0 text-end">{{$loop->parent->iteration}}.{{$loop->iteration}}  </h6>
+                            </td>
+                            </td>
+                            <td class="border-1">
+                              <p class="mb-0 fw-normal"> {{$datas->bagian}}     </p>
+                            </td>
+                            <td class="border-1">                        
+                            </td>                    
+                          </tr>                              
+                        @empty
+                        <tr>
+                        <td colspan="4">
+                          <div class="alert alert-danger text-center" role="alert">
+                              Data Bagian Kosong.
+                          </div>
+                        </td>
+                      </tr>     
+                      @endforelse                       
                       @empty
                       <tr>
                         <td colspan="4">

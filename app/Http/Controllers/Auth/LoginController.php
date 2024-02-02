@@ -41,7 +41,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)//: RedirectResponse
+    public function login(Request $request): RedirectResponse
     {   
         $input = $request->all();
     //  return $input;
