@@ -28,6 +28,7 @@
                                 <select class="form-control @error('unit') is-invalid @enderror" name="unit" value="{{ old('unit') }}" required>
                                         <option disabled selected value="" class="bg-dark text-white fw-bold fs-5">Pilih</option>
                                         <!-- <option class="bg-danger border m-3 p-3" disabled>&nbsp;</option>   -->
+                                        <option value="4">SEMUA</option>
                                         <option value="0">RA</option>
                                         <option value="1">SD</option>
                                         <option value="2">SMP</option>

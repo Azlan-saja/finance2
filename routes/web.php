@@ -14,6 +14,7 @@ use App\Http\Controllers\RencanaDetailController;
 use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\RealisasiController;
 use App\Http\Controllers\LabaRugiController;
+use App\Http\Controllers\BebanController;
 
 
 /*
@@ -80,6 +81,9 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
 
     Route::get('yys/laba-rugi', [LabaRugiController::class,'index'])->name('laba-rugi.index');
     Route::post('yys/laba-rugi', [LabaRugiController::class,'search'])->name('laba-rugi.search');
+
+    Route::resource('yys/beban', BebanController::class);
+    Route::post('yys/beban/search', [BebanController::class, 'cari'])->name('beban.search');
 
 });
 

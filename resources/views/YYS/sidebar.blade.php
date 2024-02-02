@@ -53,9 +53,45 @@
                 </span>
                 <span class="hide-menu">Dashboard</span>
               </a>
+            </li>            
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">FITUR</span>
             </li>
-            
-             <li class="nav-small-cap mt-0">
+            <li class="sidebar-item {{ request()->is('yys/rencana*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/rencana')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-article"></i>
+                </span>
+                <span class="hide-menu">R A B</span>
+              </a>
+            </li>
+            <li class="sidebar-item {{ request()->is('yys/pemasukan*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/pemasukan')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-trending-up"></i>
+                </span>
+                <span class="hide-menu">Pemasukan</span>
+              </a>
+            </li>
+            <li class="sidebar-item {{ request()->is('yys/beban*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/beban')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-trending-down"></i>
+                </span>
+                <span class="hide-menu">Beban</span>
+              </a>
+            </li>
+           
+            <li class="sidebar-item {{ request()->is('yys/laba-rugi*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('yys/laba-rugi')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-report-analytics"></i>
+                </span>
+                <span class="hide-menu">Laba Rugi</span>
+              </a>
+            </li>
+           <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">TEMPLATE</span>
             </li>        
@@ -102,37 +138,6 @@
                 <span class="hide-menu">Satuan</span>
               </a>
             </li>
-            
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">FITUR</span>
-            </li>
-            <li class="sidebar-item {{ request()->is('yys/rencana*') ? 'selected' : ''}}">
-              <a class="sidebar-link" href="{{ url('yys/rencana')}}" aria-expanded="false">
-                <span>
-                  <i class="ti ti-article"></i>
-                </span>
-                <span class="hide-menu">R A B</span>
-              </a>
-            </li>
-            <li class="sidebar-item {{ request()->is('yys/pemasukan*') ? 'selected' : ''}}">
-              <a class="sidebar-link" href="{{ url('yys/pemasukan')}}" aria-expanded="false">
-                <span>
-                  <i class="ti ti-trending-up"></i>
-                </span>
-                <span class="hide-menu">Pemasukan</span>
-              </a>
-            </li>
-           
-            <li class="sidebar-item {{ request()->is('yys/laba-rugi*') ? 'selected' : ''}}">
-              <a class="sidebar-link" href="{{ url('yys/laba-rugi')}}" aria-expanded="false">
-                <span>
-                  <i class="ti ti-report-analytics"></i>
-                </span>
-                <span class="hide-menu">Laba Rugi</span>
-              </a>
-            </li>
-           
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Akun</span>

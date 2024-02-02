@@ -18,4 +18,6 @@ class LabaRugi extends Model
         );
     }
 
+   
+
 }

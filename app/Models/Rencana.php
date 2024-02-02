@@ -61,5 +61,15 @@ class Rencana extends Model
         );
     }
 
+    // public function pemasukans()
+    // {
+    //     return $this->hasMany(Pemasukan::class, 'tahun', 'tahun');
+    // }
+    
+    // public function pengeluarans()
+    // {
+    //     return $this->hasMany(Realisasi::class, 'rencana_id');
+    // }
+
     
 }
