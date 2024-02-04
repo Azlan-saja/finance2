@@ -44,7 +44,6 @@ class LoginController extends Controller
     public function login(Request $request): RedirectResponse
     {   
         $input = $request->all();
-    //  return $input;
          $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
@@ -52,18 +51,10 @@ class LoginController extends Controller
      
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         {
-            if (auth()->user()->type == 'RA') {
-                return redirect()->route('RA.home');
-            }else if (auth()->user()->type == 'SD') {
-                return redirect()->route('SD.home');
-            }else if (auth()->user()->type == 'SMP') {
-                return redirect()->route('SMP.home');
-            }else if (auth()->user()->type == 'YYS') {
+            if (auth()->user()->type == 'YYS') {
                 return redirect()->route('YYS.home');
             }else{
-                // return redirect()->route('login');
-                 return redirect()->route('login')
-                ->with('error','Email dan Password anda salah.');
+                return redirect()->route('USER.home');        
             }
         }else{
             return redirect()->route('login')

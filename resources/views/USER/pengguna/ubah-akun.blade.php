@@ -1,5 +1,5 @@
-@extends('yys.sidebar')
-@section('title')Ubah Password Saya - YYS @endsection
+@extends('user.sidebar')
+@section('title')Ubah Akun - {{ Auth::user()->type }} @endsection
 
 @section('cssSidebar')
 @endsection
@@ -9,7 +9,7 @@
 <div class="container mt-4">
     <h4 class="fw-semibold mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 18l6 -6l-6 -6v12" /></svg>
-        Ubah Password Saya
+        Ubah Akun
     </h4>
     <div class="card mb-0">
         <div class="card-body p-4">
@@ -22,15 +22,15 @@
                         </div>                           
                     @endif    
 
-                 <form action="{{ route('pengguna-aktif.ubah') }}" method="POST">
+                 <form action="{{ route('user.pengguna-aktif.ubah-akun') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
                             <div class="row">
-                                <label class="col-lg-2 form-label pt-2">Password Baru</label>                         
+                                <label class="col-lg-2 form-label pt-2">Nama</label>                         
                               <div class="col-lg-10">
-                                <input type="password" class="form-control  @error('password_baru') is-invalid @enderror" name="password_baru" required>
-                                  @error('password_baru')
+                                <input type="text" class="form-control  @error('nama') is-invalid @enderror" name="nama" value="{{ Auth::User()->name }}" required>
+                                  @error('nama')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -41,10 +41,10 @@
                                                                                                                          
                     <div class="mb-3">
                             <div class="row">
-                                <label class="col-lg-2 form-label pt-2">Ulangi Password Baru</label>                         
+                                <label class="col-lg-2 form-label pt-2">Email</label>                         
                               <div class="col-lg-10">
-                                <input type="password" class="form-control  @error('ulangi_password_baru') is-invalid @enderror" name="ulangi_password_baru" required>
-                                  @error('ulangi_password_baru')
+                                <input type="email" class="form-control  @error('email') is-invalid @enderror" name="email" value="{{ Auth::User()->email }}" required>
+                                  @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -68,4 +68,5 @@
 
 
 @section('jsSidebar')
+
 @endsection

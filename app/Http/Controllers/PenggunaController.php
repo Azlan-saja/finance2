@@ -12,8 +12,11 @@ class PenggunaController extends Controller
 {
     
    public function __construct()
-    {
-        $this->middleware(['auth', 'user-access:YYS']);
+    {      
+        $this->middleware([
+            'auth',
+            'user-access:YYS',
+        ]);                
     }
     public function index(Request $request)
     {
@@ -25,6 +28,12 @@ class PenggunaController extends Controller
         return view('yys.pengguna.index',compact('pengguna'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);     
     }
+
+    public function create()
+    {        
+        return view('yys.pengguna.create');
+    }
+
 
     public function cari(Request $request)
     {              
@@ -42,10 +51,7 @@ class PenggunaController extends Controller
         return view('yys.pengguna.index',compact('pengguna'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);      
     }
-    public function create()
-    {        
-        return view('yys.pengguna.create');
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -137,7 +143,7 @@ class PenggunaController extends Controller
        return view('yys.pengguna.ubah-password');
     }
 
-    public function ubah(Request $request)
+    public function ubah_saya(Request $request)
     {
         $request->validate([
             'password_baru' => 'required|min:8',
@@ -151,6 +157,27 @@ class PenggunaController extends Controller
 
         return redirect()->route('pengguna-aktif.saya')
                         ->with('success','Perubahan Password Baru Berhasil Disimpan.');
+    }
+
+    public function akun()
+    {        
+        return view('yys.pengguna.ubah-akun');
+    }
+
+    public function ubah_akun(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'email'=> 'required|email|unique:users,email,'.Auth::User()->id,            
+            ]
+        );   
+
+        $pengguna = User::find(Auth::User()->id);
+        $pengguna->name = $request->nama;
+        $pengguna->email = $request->email;
+        $pengguna->save();
+        return redirect()->route('pengguna-aktif.akun')
+                        ->with('success','Perubahan Akun Berhasil Disimpan.');
     }
 
     

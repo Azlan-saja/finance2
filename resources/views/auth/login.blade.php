@@ -2,6 +2,7 @@
 @section('title')Login @endsection
 
 @section('content')
+
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <div
@@ -10,7 +11,22 @@
         <div class="row justify-content-center w-100">
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
-              <div class="card-body">                
+              <div class="card-body">   
+                
+              @if (Route::has('login'))
+              @auth
+                <div class="text-center">
+                  @if (Auth::user()->type == 'YYS')
+                    <h5 class="text-center">Status</h5>
+                    <h4> {{ Auth::user()->name }} [YYS]</h4>
+                    <a href="{{ route('YYS.home'); }}" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Home</a>                 
+                  @else
+                  <h5 class="text-center">Status</h5>
+                  <h4> {{ Auth::user()->name }} [{{Auth::user()->type}}]</h4>
+                    <a href="{{ route('USER.home'); }}" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Home</a>                                   
+                  @endif
+                </div>
+              @else
                 <h1 class="text-center">Log In</h1>
 
                 <form method="POST" action="{{ route('login') }}">
@@ -48,6 +64,9 @@
                     <p class="fs-2 mb-0 fw-bold">Lupa password? <br> Silahkan hubungi admin.</p>
                   </div>
                 </form>
+
+                @endauth
+              @endif
               </div>
             </div>
           </div>

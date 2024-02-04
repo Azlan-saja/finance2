@@ -1,9 +1,6 @@
-@extends('yys.sidebar')
-@section('title')Laporan Laba Rugi - YYS @endsection
+@extends(Auth::user()->lvl == 3 ? 'yys.sidebar' : 'user.sidebar')
+@section('title')Laporan Laba Rugi - {{ Auth::user()->type }} @endsection
 
-@section('cssSidebar')
-
-@endsection
 
 @section('pages')
   <div class="container">
@@ -14,7 +11,7 @@
               <div class="card mb-0">
                 <div class="card-body p-4" >
                 <!-- ISI START -->
-                <a href="{{ route('laba-rugi.index') }}" class="btn btn-dark m-1">Kembali</a>
+                <a href="{{url()->previous()}}" class="btn btn-dark m-1">Kembali</a>
                 <hr>
 
              

@@ -17,6 +17,10 @@ use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\BebanController;
 use App\Http\Controllers\PenggunaController;
 
+use App\Http\Controllers\UserPenggunaController;
+use App\Http\Controllers\UserRABController;
+use App\Http\Controllers\UserRealisasiController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -92,22 +96,38 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
 
 
     Route::get('yys/ubah-password', [PenggunaController::class, 'saya'])->name('pengguna-aktif.saya');
-    Route::put('yys/ubah-password', [PenggunaController::class, 'ubah'])->name('pengguna-aktif.ubah');
+    Route::put('yys/ubah-password', [PenggunaController::class, 'ubah_saya'])->name('pengguna-aktif.ubah');
+   
+    Route::get('yys/ubah-akun', [PenggunaController::class, 'akun'])->name('pengguna-aktif.akun');
+    Route::put('yys/ubah-akun', [PenggunaController::class, 'ubah_akun'])->name('pengguna-aktif.ubah-akun');
 
 });
 
-Route::middleware(['auth', 'user-access:SD'])->group(function () {
-    Route::get('/sd/home', [HomeController::class, 'SDHome'])->name('SD.home');
-});
 
-Route::middleware(['auth', 'user-access:RA'])->group(function () {
-    // Route::get('/ra/home', [HomeController::class, 'RAHome'])->name('RA.home');
-});
+Route::middleware(['auth', 'user-access:RA|SD|SMP'])->group(function () {
+    Route::get('/home', [HomeController::class, 'user'])->name('USER.home');
 
-Route::middleware(['auth', 'user-access:SMP'])->group(function () {
-    // Route::get('/smp/home', [HomeController::class, 'SMPHome'])->name('SMP.home');
-});
+    Route::get('ubah-password', [UserPenggunaController::class, 'saya'])->name('user.pengguna-aktif.saya');
+    Route::put('ubah-password', [UserPenggunaController::class, 'ubah_saya'])->name('user.pengguna-aktif.ubah');
+   
+    Route::get('ubah-akun', [UserPenggunaController::class, 'akun'])->name('user.pengguna-aktif.akun');   
+    Route::put('ubah-akun', [UserPenggunaController::class, 'ubah_akun'])->name('user.pengguna-aktif.ubah-akun');
 
-Route::middleware(['auth', 'user-access:YYS'])->group(function () {
-    // Route::get('/yys/home', [HomeController::class, 'YYSHome'])->name('YYS.home');
+    Route::get('rencana', [UserRABController::class, 'index'])->name('user.rencana.index');
+    Route::post('rencana/search', [UserRABController::class, 'cari'])->name('user.rencana.search');
+
+    // Route::resource('rencana/{rencana_id}/rencana-detail', RencanaDetailController::class)->except(['create','store','destroy','show','update','edit']);
+    Route::get('rencana/{rencana_id}/rencana-detail', [UserRABController::class, 'detail'])->name('user.rencana-detail.index');
+    Route::get('rencana/{rencana_id}/rencana-detail/history', [UserRABController::class, 'history'])->name('user.rencana-detail.history');
+    Route::get('rencana/{rencana_id}/rencana-detail/{subbagian}/create', [UserRABController::class, 'create'])->name('user.rencana-detail.create');
+    Route::post('rencana/{rencana_id}/rencana-detail/{subbagian}/create', [UserRABController::class, 'store'])->name('user.rencana-detail.store');
+    Route::delete('rencana/{rencana_id}/rencana-detail/{subbagian}/create/{rencana_detail}', [UserRABController::class, 'destroy'])->name('user.rencana-detail.destroy');
+
+    Route::get('rencana/{rencana_id}/realisasi', [UserRealisasiController::class, 'index'])->name('user.realisasi.index');
+    Route::get('rencana/{rencana_id}/realisasi/create/{kegiatan_id}/{bulan}', [UserRealisasiController::class, 'create'])->name('user.realisasi.create');
+    Route::post('rencana/{rencana_id}/realisasi/create/{kegiatan_id}/{bulan}', [UserRealisasiController::class, 'store'])->name('user.realisasi.store');
+
+    Route::get('laba-rugi', [LabaRugiController::class,'index'])->name('user.laba-rugi.index');
+    Route::post('laba-rugi', [LabaRugiController::class,'search'])->name('user.laba-rugi.search');
+
 });

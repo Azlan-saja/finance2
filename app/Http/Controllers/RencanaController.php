@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rencana;
 use Illuminate\Http\Request;
 
+use App\Models\Rencana;
 use Illuminate\Support\Str;
 
 class RencanaController extends Controller

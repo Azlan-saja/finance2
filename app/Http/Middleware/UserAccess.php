@@ -10,26 +10,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserAccess
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    // public function handle(Request $request, Closure $next): Response
-    // {
-    //     return $next($request);
-    // }
+    
     public function handle(Request $request, Closure $next, $userType): Response
     {
         if (!auth()->check()) {
             return redirect()->route('login');
         }
 
-        if(auth()->user()->type == $userType){
+
+        // if(auth()->user()->type == $userType){
+        //     return $next($request);
+        // }
+       
+        // printf($userType.'<br><br>');       
+        $allowedUserTypes = explode('|', $userType);
+        // print_r($allowedUserTypes);       
+        
+        if (in_array(auth()->user()->type, $allowedUserTypes)) {
             return $next($request);
         }
-          
-        // return response()->json(['You do not have permission to access for this page.']);
+
+
         return response()->view('errors.check-permission'); 
     }
 }

@@ -1,5 +1,5 @@
-@extends('yys.sidebar')
-@section('title')Ubah Password Saya - YYS @endsection
+@extends('user.sidebar')
+@section('title')Ubah Password Saya - {{ Auth::user()->type }} @endsection
 
 @section('cssSidebar')
 @endsection
@@ -22,7 +22,7 @@
                         </div>                           
                     @endif    
 
-                 <form action="{{ route('pengguna-aktif.ubah') }}" method="POST">
+                 <form action="{{ route('user.pengguna-aktif.ubah') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">

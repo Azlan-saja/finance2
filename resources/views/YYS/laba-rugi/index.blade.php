@@ -1,5 +1,6 @@
-@extends('yys.sidebar')
-@section('title')Laba Rugi - YYS @endsection
+
+@extends(Auth::user()->lvl == 3 ? 'yys.sidebar' : 'user.sidebar')
+@section('title')Laba Rugi - {{ Auth::user()->type }} @endsection
  
 
 @section('pages')
@@ -17,10 +18,12 @@
                             <strong> {{ $message }} </strong>
                         </div>                           
                     @endif
-                 
+
+                    @if (Auth::user()->lvl == 3)
                     <form action="{{ route('laba-rugi.search') }}" method="POST">
                     @csrf
                     <div class="form-body">   
+                    <!-- ============= -->
                       <div class="mb-3">
                         <div class="row">
                           <label class="col-lg-2 form-label pt-2">Unit</label>                         
@@ -41,7 +44,12 @@
                                 @enderror
                               </div>                          
                         </div>
-                      </div>                  
+                      </div>     
+                      @else
+                      <form action="{{ route('user.laba-rugi.search') }}" method="POST">
+                      @csrf
+                      <div class="form-body">   
+                      @endif           
                       <div class="mb-3">
                             <div class="row">
                                 <label class="col-lg-2 form-label pt-2">Tahun Ajaran</label>                         
@@ -67,7 +75,4 @@
         </div>        
 @endsection
 
-
-@section('jsSidebar')
-@endsection
 

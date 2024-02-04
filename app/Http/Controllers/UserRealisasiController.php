@@ -13,18 +13,21 @@ use App\Models\RencanaDetailKegiatan;
 use Illuminate\Support\Facades\Auth;
 use DB;
 
-class RealisasiController extends Controller
+
+class UserRealisasiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'user-access:YYS']);
+         $this->middleware(['auth','user-access:RA|SD|SMP']);          
     }
-    
+
     public function index($rencana_id)
     {                                                   
-        $rencana = Rencana::where('id',$rencana_id)->first(['anggaran','unit','tahun']);       
-        if ($rencana){
-           
+        $rencana = Rencana::where('id',$rencana_id)
+                    ->where('unit',Auth::user()->lvl)
+                    ->first(['anggaran','unit','tahun']);       
+        
+        if ($rencana){           
             $rencana['bagian'] = [];
             $rencana_detail = RencanaDetail::where('rencana_id',$rencana_id)->orderBy('bagian_id','asc')->get(['id','nama_bagian']);
             
@@ -70,17 +73,15 @@ class RealisasiController extends Controller
             } 
             $rencana['total_all'] = $total_all;
             // return $rencana;
-            return view('yys.realisasi.index',compact('rencana','rencana_id'));                             
+            return view('user.realisasi.index',compact('rencana','rencana_id'));                             
         }else{
-             return redirect()->route('rencana.index')
+             return redirect()->route('user.rencana.index')
                         ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan.');
  
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create($rencana_id, $kegiatan_id, $bulan)
     {
         $kegiatan = RencanaDetailKegiatan::where('id',$kegiatan_id)->first(['id', 'rencana_id','rencana_detail_id','rencana_detail_subbagian_id','nama_kegiatan','volume']);
@@ -98,16 +99,13 @@ class RealisasiController extends Controller
                             ->where('rencana_detail_kegiatan_id', $kegiatan->id)
                             ->first();
             if ($realisasi) $nominal = $realisasi->$xbulan;
-            return view('yys.realisasi.create',compact('nominal','rencana', 'rencanadetail', 'rencanasubbagian', 'kegiatan', 'rencana_id', 'kegiatan_id', 'bulan'));                                    
+            return view('user.realisasi.create',compact('nominal','rencana', 'rencanadetail', 'rencanasubbagian', 'kegiatan', 'rencana_id', 'kegiatan_id', 'bulan'));                                    
         }else{
-            return redirect()->route('realisasi.index', $rencana_id)
+            return redirect()->route('user.realisasi.index', $rencana_id)
                         ->with('error','Uraian Kegiatan Realisasi Tidak Ditemukan.');
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request, $rencana_id, $kegiatan_id, $bulan)
     {
         $request->validate([
@@ -134,43 +132,13 @@ class RealisasiController extends Controller
             ]
         );
         if ($realisasi){
-            return redirect()->route('realisasi.index', $rencana_id)
+            return redirect()->route('user.realisasi.index', $rencana_id)
                         ->with('success','Input Realisasi Anggaran Berhasil.');
         }else{
-              return redirect()->route('realisasi.index', $rencana_id)
+              return redirect()->route('user.realisasi.index', $rencana_id)
                         ->with('error','Gagal Input Realisasi Anggaran.');
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Realisasi $realisasi)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Realisasi $realisasi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Realisasi $realisasi)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Realisasi $realisasi)
-    {
-        //
-    }
 }
