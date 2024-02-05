@@ -1,4 +1,4 @@
-@extends('USER.sidebar')
+@extends('user.sidebar')
 @section('title')Dashoboard -  {{ Auth::user()->type }} @endsection
 
 @section('pages')

@@ -19,25 +19,25 @@ class CreateUsersSeeder extends Seeder
                'name'=>'Anto',
                'email'=>'ra@gmail.com',
                'type'=>0,
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('12345678'),
             ],
             [
                'name'=>'Ucok',
                'email'=>'sd@gmail.com',
                'type'=> 1,
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('12345678'),
             ],
             [
                'name'=>'Kudut',
                'email'=>'smp@gmail.com',
                'type'=>2,
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('12345678'),
             ],
             [
                'name'=>'Azlan',
                'email'=>'yys@gmail.com',
                'type'=>3,
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('12345678'),
             ],
         ];
     
