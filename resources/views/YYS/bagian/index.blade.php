@@ -12,9 +12,10 @@
                 Bagian</h4>
               <div class="card mb-0">
                 <div class="card-body p-4">
-                <!-- ISI START -->
+                <!-- ISI START --> 
                 <a href="{{ route('bagian.create') }}" class="btn btn-primary m-1">Tambah</a>
                 <a href="{{ route('bagian.index') }}" class="btn btn-outline-primary m-1">Segarkan</a>
+                <a href="{{ route('laporan.bagian') }}" target="_blank" class="btn btn-outline-danger m-1 position-absolute end-0 me-4">Cetak</a>
                 <hr>
                    @if ($message = Session::get('success'))
                          <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">

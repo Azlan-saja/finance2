@@ -150,7 +150,7 @@
                         @empty
                            <tr>
                             <td colspan="2"></td>
-                            <td colspan="3">
+                            <td colspan="5">
                               <div class="alert alert-danger text-center" role="alert">
                                   Data Sub Bagian {{ $data->bagian}} Kosong.
                               </div>

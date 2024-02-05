@@ -16,6 +16,7 @@ use App\Http\Controllers\RealisasiController;
 use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\BebanController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\LaporanController;
 
 use App\Http\Controllers\UserPenggunaController;
 use App\Http\Controllers\UserRABController;
@@ -49,7 +50,9 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
     
     Route::resource('yys/bagian', BagianController::class);
     Route::post('/yys/bagian/search', [BagianController::class, 'cari'])->name('bagian.search');
-    
+    Route::get('yys/laporan/bagian', [LaporanController::class, 'bagian'])->name('laporan.bagian');
+     
+
     Route::resource('yys/bagian/{id}/subbagian', SubBagianController::class);
     Route::post('yys/bagian/{id}/subbagian/search', [SubBagianController::class, 'cari'])->name('subbagian.search');
     
@@ -100,6 +103,7 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
    
     Route::get('yys/ubah-akun', [PenggunaController::class, 'akun'])->name('pengguna-aktif.akun');
     Route::put('yys/ubah-akun', [PenggunaController::class, 'ubah_akun'])->name('pengguna-aktif.ubah-akun');
+
 
 });
 
