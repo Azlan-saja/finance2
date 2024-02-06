@@ -104,8 +104,8 @@ class LabaRugiController extends Controller
             $beban = Beban::where('akhir','>=',$xmasuk)                       
                             ->get();        
             // return $beban;
-            // return $hasil;
-            return view('yys.laba-rugi.search-all',compact('hasil','beban'));
+            // return $hasil;          
+            return view('yys.laba-rugi.search-all',compact('tahun','hasil','beban'));
 
 
         }else{
@@ -134,8 +134,14 @@ class LabaRugiController extends Controller
 
                     $unit = $rencana->unit;
                     $pendapatan = $pemasukan['total'] - $pengeluaran['total'];     
-                            
-                    return view('yys.laba-rugi.search',compact('unit','tahun','pemasukan','pengeluaran', 'pendapatan'));
+                    
+                    $pi =5;
+                    if ($unit == "YYS") $pi = 3;
+                    if ($unit == "SMP") $pi = 2;
+                    if ($unit == "SD") $pi = 1;
+                    if ($unit == "RA") $pi = 0;
+
+                    return view('yys.laba-rugi.search',compact('pi', 'unit','tahun','pemasukan','pengeluaran', 'pendapatan'));
                 }else{
                     return redirect()->back()->withInput()
                                 ->with('error','Laba Rugi Tidak Ditemukan.');

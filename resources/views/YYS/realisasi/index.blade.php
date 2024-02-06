@@ -27,6 +27,7 @@
                 <a href="{{ route('rencana.index') }}" class="btn btn-dark m-1">Kembali</a>
                 <!-- <button id="toggle" type="button" class="btn btn-outline-warning m-1">Full Layer</button> -->
                 <a href="{{ route('realisasi.index', $rencana_id) }}" class="btn btn-outline-primary m-1">Segarkan</a>
+                <a href="{{ route('laporan.realisasi', $rencana_id) }}" target="_blank" class="btn btn-outline-danger m-1 position-absolute end-0 me-4">Cetak</a>                
                 <hr>
 
                 @if ($message = Session::get('success'))
@@ -46,7 +47,7 @@
                   <div class="d-flex align-items-center gap-4 p-1 mb-3 rounded bg-info-subtle shadow-none" style="overflow: auto;">
                     <div class="position-relative">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-check" width="60" height="60" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /><path d="M15 19l2 2l4 -4" /></svg>
-                    </div>                   
+                    </div>                    
                     <div class="pe-5">
                        <h5 class="fw-semibold">
                         {{ $rencana->unit }}

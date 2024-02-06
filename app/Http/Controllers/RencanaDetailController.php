@@ -28,7 +28,8 @@ class RencanaDetailController extends Controller
     public function index(Request $request, $id)
     {              
                                          
-        $rencana = Rencana::where('id',$id)->where('status','Open')->first();       
+        // $rencana = Rencana::where('id',$id)->where('status','Open')->first();       
+        $rencana = Rencana::where('id',$id)->first();       
         if ($rencana){
             $bagian = Bagian::where('type', $rencana->lvl)->oldest()->with('subbagians')->oldest()->get();   
             $totalsubbagian = 0;
@@ -49,7 +50,7 @@ class RencanaDetailController extends Controller
                                  
             }
             $rencana['grandtotal'] = $grandtotal;
-
+            // return $rencana;
             return view('yys.rencana-detail.index',compact('rencana','bagian','id'));                             
         }else{
              return redirect()->route('rencana.index')
@@ -136,7 +137,7 @@ class RencanaDetailController extends Controller
                 return response()->view('errors.check-permission'); 
             }
         }else{
-              return redirect()->route('rencana.index')
+              return redirect()->route('rencana-detail.index',$rencana_id)
                         ->with('error','Rencana Anggaran Belanja - RAB Sudah Closed.');
         }
 
@@ -208,33 +209,7 @@ class RencanaDetailController extends Controller
         }       
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(RencanaDetail $rencanaDetail)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(RencanaDetail $rencanaDetail)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, RencanaDetail $rencanaDetail)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy($rencana_id, $subbagian, $rencanaDetail)
     {
         $kegiatan = RencanaDetailKegiatan::where('rencana_id', $rencana_id)

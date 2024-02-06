@@ -1,7 +1,7 @@
 @extends('yys.sidebar')
 @section('title')History Detail - Rencana Anggaran Belanja - RAB - YYS @endsection
 
-
+ 
 @section('pages')
   <div class="container">
               <h4 class="fw-semibold mb-4">

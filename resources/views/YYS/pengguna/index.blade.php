@@ -18,6 +18,7 @@
                 <!-- ISI START -->
                 <a href="{{ route('pengguna.create') }}" class="btn btn-primary m-1">Tambah</a>
                 <a href="{{ route('pengguna.index') }}" class="btn btn-outline-primary m-1">Segarkan</a>
+                <a href="{{ route('laporan.pengguna') }}" target="_blank" class="btn btn-outline-danger m-1 position-absolute end-0 me-4">Cetak</a>                
                 <hr>
                    @if ($message = Session::get('success'))
                          <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">

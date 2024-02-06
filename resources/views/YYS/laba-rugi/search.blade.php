@@ -11,7 +11,22 @@
               <div class="card mb-0">
                 <div class="card-body p-4" >
                 <!-- ISI START -->
-                <a href="{{url()->previous()}}" class="btn btn-dark m-1">Kembali</a>
+                <div class="row">
+                  <div class="col-lg-5"><a href="{{url()->previous()}}" class="btn btn-dark m-1">Kembali</a></div>
+                  @if(Auth::user()->lvl ==3)
+                  <div class="col-lg-5">
+                    <form action="{{ route('laporan.laba-rugi') }}" method="POST" >
+                    @csrf
+                      <input type="hidden" name="unit" value="{{$pi}}">
+                      <input type="hidden" name="tahun" value="{{$tahun}}">
+                      <button type="submit" class="btn btn-outline-danger m-1 position-absolute end-0 me-4" >Cetak</button>                
+                    </form>
+                  </div>
+                  @endif
+                </div>
+                
+                
+
                 <hr>
 
              

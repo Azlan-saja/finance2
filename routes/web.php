@@ -50,7 +50,6 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
     
     Route::resource('yys/bagian', BagianController::class);
     Route::post('/yys/bagian/search', [BagianController::class, 'cari'])->name('bagian.search');
-    Route::get('yys/laporan/bagian', [LaporanController::class, 'bagian'])->name('laporan.bagian');
      
 
     Route::resource('yys/bagian/{id}/subbagian', SubBagianController::class);
@@ -58,7 +57,7 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
     
     Route::resource('yys/kegiatan', KegiatanController::class);
     Route::post('yys/kegiatan/search', [KegiatanController::class, 'cari'])->name('kegiatan.search');
-    
+
     Route::resource('yys/sasaran', SasaranController::class);
     Route::post('yys/sasaran/search', [SasaranController::class, 'cari'])->name('sasaran.search');
 
@@ -133,5 +132,21 @@ Route::middleware(['auth', 'user-access:RA|SD|SMP'])->group(function () {
 
     Route::get('laba-rugi', [LabaRugiController::class,'index'])->name('user.laba-rugi.index');
     Route::post('laba-rugi', [LabaRugiController::class,'search'])->name('user.laba-rugi.search');
+
+});
+
+Route::middleware(['auth', 'user-access:RA|SD|SMP|YYS'])->group(function () {
+    Route::get('yys/laporan/bagian', [LaporanController::class, 'bagian'])->name('laporan.bagian');
+    Route::get('yys/laporan/kegiatan', [LaporanController::class, 'kegiatan'])->name('laporan.kegiatan');
+    Route::get('yys/laporan/sasaran', [LaporanController::class, 'sasaran'])->name('laporan.sasaran');
+    Route::get('yys/laporan/anggaran', [LaporanController::class, 'anggaran'])->name('laporan.anggaran');
+    Route::get('yys/laporan/satuan', [LaporanController::class, 'satuan'])->name('laporan.satuan');
+    Route::get('yys/laporan/pemasukan', [LaporanController::class, 'pemasukan'])->name('laporan.pemasukan');
+    Route::get('yys/laporan/rencana', [LaporanController::class, 'rencana'])->name('laporan.rencana');
+    Route::get('yys/laporan/rencana/{rencana_id}/rencana-detail', [LaporanController::class, 'rencana_detail'])->name('laporan.rencana-detail');
+    Route::get('yys/laporan/rencana/{rencana_id}/realisasi', [LaporanController::class, 'realisasi'])->name('laporan.realisasi');
+    Route::post('yys/laporan/laba-rugi', [LaporanController::class, 'laba_rugi'])->name('laporan.laba-rugi');
+    Route::get('yys/laporan/beban', [LaporanController::class, 'beban'])->name('laporan.beban');
+    Route::get('yys/laporan/pengguna', [LaporanController::class, 'pengguna'])->name('laporan.pengguna');
 
 });

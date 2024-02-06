@@ -14,8 +14,18 @@
               <div class="card mb-0">
                 <div class="card-body p-4" >
                 <!-- ISI START -->
-                <a href="{{ route('laba-rugi.index') }}" class="btn btn-dark m-1">Kembali</a>
-                <hr>
+                <div class="row">
+                  <div class="col-lg-5"><a href="{{url()->previous()}}" class="btn btn-dark m-1">Kembali</a></div>
+                  <div class="col-lg-5">
+                    <form action="{{ route('laporan.laba-rugi') }}" method="POST" >
+                    @csrf
+                      <input type="hidden" name="unit" value="4">
+                      <input type="hidden" name="tahun" value="{{$tahun}}">
+                      <button type="submit" class="btn btn-outline-danger m-1 position-absolute end-0 me-4" >Cetak</button>                
+                    </form>
+                  </div>
+                </div>
+
 
                 @forelse ($hasil as $hasils)
                   <div class="d-flex align-items-center gap-4 p-1 mb-3 rounded bg-info-subtle shadow-none" style="overflow: auto;">
@@ -213,10 +223,10 @@
                                   Nama Beban                     
                                 </th>                                                                                       
                                 <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
-                                  Besaran                       
+                                  Masa                       
                                 </th>                                                                                                                                    
                                 <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
-                                  Masa                       
+                                  Besaran                       
                                 </th>                                                                                                                                    
                               </tr>
                             </thead>
@@ -232,17 +242,17 @@
                                   <p class="mb-0 fw-bold">
                                     {{ $bebans['nama'] }}
                                   </p>
+                                </td>     
+                                 <td class="border-bottom-0 text-wrap">
+                                  <p class="mb-0 fw-bold">
+                                    {{ $bebans['masuk'] .'-'. $bebans['akhir'] }}
+                                  </p>
                                 </td>                        
                                 <td class="border-bottom-0">
                                   <h6 class="fw-bold"> 
                                     {{ 'Rp. '.number_format($bebans['besaran'],0,",",".") }}
                                   </h6>
-                                </td>  
-                                 <td class="border-bottom-0 text-wrap">
-                                  <p class="mb-0 fw-bold">
-                                    {{ $bebans['masuk'] .'-'. $bebans['akhir'] }}
-                                  </p>
-                                </td>     
+                                </td>                                  
                               </tr>
                                @empty
                                <tr>
@@ -256,7 +266,7 @@
                             </tbody>
                             <tfoot>
                               <tr class="bg-dark">
-                                <td colspan="2" class="text-end">
+                                <td colspan="3" class="text-end">
                                   <h6 class="fw-bold fs-5 text-success"> 
                                     Total Keseluruhan
                                   </h6>                                  
@@ -265,8 +275,7 @@
                                   <h6 class="fw-bold fs-5 text-success"> 
                                     {{ 'Rp. '.number_format($beban->sum('besaran'),0,",",".") }}
                                   </h6>
-                                </td>    
-                                <td></td>
+                                </td>                                    
                               </tr>
                             </tfoot>
                           </table>   

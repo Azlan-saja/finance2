@@ -34,6 +34,7 @@
     table{
         border-collapse: collapse !important;
         border: 1px solid #2A3547;
+        width: 100%;
         
     }
     /* Style for the table header */
@@ -46,7 +47,8 @@
     .table-container th {
         padding: 10px;
         text-align: left;
-        vertical-align: top;
+        vertical-align: middle;
+        /* font-size:12px; */
     }
 
     /* Style for the table body rows */
@@ -86,5 +88,30 @@
         text-align: center;
         margin-top: 20px;
     }
+
+    .table-unit {
+        width: 100%;
+        margin: 0px;
+        padding:0px;        
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    /* Style for the table header */
+    .table-unit thead {
+        background-color: #DDEBFF;
+        color: black;
+    }
+    .table-unit thead tr:nth-child(even)  {
+        font-size:12px;
+    }
+
+    /* Style for the table header cells */
+    .table-unit th {
+        padding: 0px 10px 3px 10px;
+        text-align: left;
+        vertical-align: top;
+    }
+    .page-break {
+            page-break-after: always;
+        }
     </style>
 </head>

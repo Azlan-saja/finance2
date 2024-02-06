@@ -15,6 +15,7 @@
                 <!-- ISI START -->
                 <a href="{{ route('rencana.create') }}" class="btn btn-primary m-1">Tambah</a>
                 <a href="{{ route('rencana.index') }}" class="btn btn-outline-primary m-1">Segarkan</a>
+                <a href="{{ route('laporan.rencana') }}" target="_blank" class="btn btn-outline-danger m-1 position-absolute end-0 me-4">Cetak</a>                
                 <hr>
                    @if ($message = Session::get('success'))
                          <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
