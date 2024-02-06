@@ -92,7 +92,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                    @forelse ($bagian as $data)
+                    @forelse ($bagian as $index => $data)
                       <tr class="bg-primary-subtle">    
                         <td class="">
                           <h6 class="fw-bold mb-0">{{ $loop->iteration}}</h6>
@@ -129,7 +129,7 @@
                                             <tr>                                              
                                               <td class="bg-primary-subtle border-0"></td>
                                               <td class="bg-info text-white border-0">  {{ $rencana->unit }} </td>
-                                              <td class="bg-info text-white border-0 text-end">{{ $data->index+1 }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}</td>
+                                              <td class="bg-info text-white border-0 text-end">{{ $index+1 }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}</td>
                                               <td class="bg-info text-white border-0">
                                                 {{ $data3->nama_kegiatan }}
                                               </td>

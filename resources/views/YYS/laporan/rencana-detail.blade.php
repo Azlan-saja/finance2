@@ -48,7 +48,7 @@
                 </tr>               
             </thead>
             <tbody>
-                @forelse ($rencana->bagian as $data)
+                @forelse ($rencana->bagian as $index => $data)
                       <tr>    
                         <td>
                           <p>{{ $loop->iteration}}</p>
@@ -77,7 +77,7 @@
                                             <tr>                                              
                                               <td class="bg-primary-subtle border-0"></td>
                                               <td class="bg-info text-white border-0"> <p> {{ $rencana->unit }} </p></td>
-                                              <td class="bg-info text-white border-0" style="text-align:right;"><p>{{ $data->index+1 }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}</p></td>
+                                              <td class="bg-info text-white border-0" style="text-align:right;"><p>{{ $index+1 }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}</p></td>
                                               <td class="bg-info text-white border-0 text-wrap">
                                                 <p>{{ $data3->nama_kegiatan }}</p>
                                               </td>

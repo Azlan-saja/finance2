@@ -50,7 +50,7 @@
                   <ol  type="1">
                     <li> Semua Password  &nbsp;<strong>Pengguna Baru </strong> &nbsp;Disetting Otomatis Menjadi <strong>12345678</strong>.</li>
                     <li> Fitur <strong>Reset Password Pengguna Lama </strong>&nbsp;Disetting Otomatis Menjadi <strong>12345678</strong>.</li>
-                    <li> Ketika Anda Login Menggunakan Password 123456, Silahkan Ubah Password Anda Menggunakan <strong>Fitur Ubah Password</strong> di Akun Masing-masing.</li>
+                    <li> Ketika Anda <strong>Login Menggunakan Password 12345678,</strong> Silahkan Ubah Password Anda Menggunakan <strong>Fitur Ubah Password</strong> di Akun Masing-masing.</li>
                   </ol>                  
                 </div>
 
