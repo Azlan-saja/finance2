@@ -163,7 +163,7 @@
                                               <td class="bg-info text-white border-0 text-wrap frezz">{{ $data3->sasaran }}</td>
                                               <td class="bg-info text-white border-0 text-wrap" frezz>{{ $data3->anggaran }}</td>
                                               <td class="bg-info text-white border-0 frezz">{{ $data3->satuan }}</td>
-                                              @for ($i = 1; $i <= 12; $i++)
+                                              @for ($i = 1; $i <= $data3->volume; $i++)
                                                   <td class="bg-info text-white border-0 border-start border-end">                                                 
                                                   <a href="{{ route('user.realisasi.create', ['rencana_id' => $rencana_id, 'kegiatan_id' => $data3->id, 'bulan' => $i]) }}" class="btn mb-1 bg-primary-subtle text-primary me-2 btn-sm d-inline-flex align-items-center justify-content-center">
                                                     {{ $i }}<i class="fs-5 ti ti-edit text-primary"></i> 
@@ -181,7 +181,9 @@
                                                   </td>
                                               @endfor 
 
-                                                                                                                       
+                                              @for ($i = 1; $i <= 12-$data3->volume; $i++)
+                                              <td class="bg-info text-white border-0 bg-dark"></td>
+                                              @endfor                                                                                 
                                               <td class="bg-danger text-white border-0">  {{ 'Rp. '.number_format($data3->total_realisasi,0,",",".") }} </td>
                                             </tr>                                              
                                   @empty

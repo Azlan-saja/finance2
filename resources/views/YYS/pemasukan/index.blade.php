@@ -137,7 +137,7 @@
                       </tr>    
                       @empty
                       <tr>
-                        <td colspan="7">
+                        <td colspan="8">
                           <div class="alert alert-danger text-center" role="alert">
                               Data Pemasukan Kosong.
                           </div>

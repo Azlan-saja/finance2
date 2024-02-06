@@ -85,8 +85,9 @@ class UserRealisasiController extends Controller
     public function create($rencana_id, $kegiatan_id, $bulan)
     {
         $kegiatan = RencanaDetailKegiatan::where('id',$kegiatan_id)->first(['id', 'rencana_id','rencana_detail_id','rencana_detail_subbagian_id','nama_kegiatan','volume']);
-        if($kegiatan && $kegiatan->rencana_id == $rencana_id && $bulan <= 12 && $kegiatan->volume >= $bulan ){
-            $nominal = 0;
+        // if($kegiatan && $kegiatan->rencana_id == $rencana_id && $bulan <= 12 && $kegiatan->volume >= $bulan ){
+        if($kegiatan && $kegiatan->rencana_id == $rencana_id && $bulan <= 12 && $bulan >=1 ){
+            $nominal = 0; 
             $xbulan = 'b'.$bulan;
 
             $rencana = Rencana::find($kegiatan->rencana_id);
