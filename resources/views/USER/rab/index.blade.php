@@ -55,13 +55,7 @@
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
                               Besar Anggaran
                             </a>
-                        </th>
-                        <th class="border-bottom-0">
-                           <a class="fw-semibold mb-0 text-white" href="{{ route('user.rencana.index', ['sort' => 'unit', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
-                              Ke Unit
-                            </a>
-                        </th>
+                        </th>                        
                         <th class="border-bottom-0">                          
                             <a class="fw-semibold mb-0 text-white" href="{{ route('user.rencana.index', ['sort' => 'tahun', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
@@ -86,10 +80,7 @@
                         </td>                     
                         <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">  Rp. {{ $data->anggaran }}</p>
-                        </td>
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal"> {{ $data->unit }}</p>
-                        </td>
+                        </td>                      
                          <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">{{ $data->tahun }}</p>
                         </td>

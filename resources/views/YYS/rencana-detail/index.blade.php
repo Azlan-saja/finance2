@@ -88,7 +88,7 @@
                         </th>
                         <th class="border-bottom-0 fw-semibold mb-0 text-white">  
                           Volume                       
-                        </th>                         
+                        </th>                          
                         <th class="border-bottom-0 fw-semibold mb-0 text-white">  
                           Jumlah Harga                       
                         </th>                       

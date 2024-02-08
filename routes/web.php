@@ -121,6 +121,7 @@ Route::middleware(['auth', 'user-access:RA|SD|SMP'])->group(function () {
 
     // Route::resource('rencana/{rencana_id}/rencana-detail', RencanaDetailController::class)->except(['create','store','destroy','show','update','edit']);
     Route::get('rencana/{rencana_id}/rencana-detail', [UserRABController::class, 'detail'])->name('user.rencana-detail.index');
+    Route::post('rencana/{rencana_id}/rencana-detail', [UserRABController::class, 'closed'])->name('user.rencana-detail.closed');
     Route::get('rencana/{rencana_id}/rencana-detail/history', [UserRABController::class, 'history'])->name('user.rencana-detail.history');
     Route::get('rencana/{rencana_id}/rencana-detail/{subbagian}/create', [UserRABController::class, 'create'])->name('user.rencana-detail.create');
     Route::post('rencana/{rencana_id}/rencana-detail/{subbagian}/create', [UserRABController::class, 'store'])->name('user.rencana-detail.store');

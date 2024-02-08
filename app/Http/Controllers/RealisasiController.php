@@ -22,7 +22,9 @@ class RealisasiController extends Controller
     
     public function index($rencana_id)
     {                                                   
-        $rencana = Rencana::where('id',$rencana_id)->first(['anggaran','unit','tahun']);       
+        $rencana = Rencana::where('id',$rencana_id)
+                    ->where('status','Closed')                 
+                    ->first(['anggaran','unit','tahun']);       
         if ($rencana){
            
             $rencana['bagian'] = [];
@@ -73,7 +75,7 @@ class RealisasiController extends Controller
             return view('yys.realisasi.index',compact('rencana','rencana_id'));                             
         }else{
              return redirect()->route('rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Belum Closed.');
  
         }
     }
@@ -89,7 +91,7 @@ class RealisasiController extends Controller
             $nominal = 0;
             $xbulan = 'b'.$bulan;
 
-            $rencana = Rencana::where('id',$kegiatan->rencana_id)->where('status','Open')->first();
+            $rencana = Rencana::where('id',$kegiatan->rencana_id)->where('status','Closed')->first();
             if($rencana){
                 $rencanadetail = RencanaDetail::find($kegiatan->rencana_detail_id);
                 $rencanasubbagian = RencanaDetailSubBagian::find($kegiatan->rencana_detail_subbagian_id);
@@ -103,7 +105,7 @@ class RealisasiController extends Controller
                 return view('yys.realisasi.create',compact('nominal','rencana', 'rencanadetail', 'rencanasubbagian', 'kegiatan', 'rencana_id', 'kegiatan_id', 'bulan'));                                    
             }else{
              return redirect()->route('realisasi.index', $rencana_id)
-                        ->with('error','Realisasi Anggaran Sudah Closed.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Masih Open.');
             }
         }else{
             return redirect()->route('realisasi.index', $rencana_id)

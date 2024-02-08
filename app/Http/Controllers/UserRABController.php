@@ -62,7 +62,7 @@ class UserRABController extends Controller
                         ->where('unit',Auth::user()->lvl)
                         ->first();       
         if ($rencana){
-            $bagian = Bagian::where('type', $rencana->lvl)->oldest()->with('subbagians')->oldest()->get();   
+            $bagian = Bagian::oldest()->with('subbagians')->oldest()->get();   
             $totalsubbagian = 0;
             $jumlah_kegiatan = 0;
             $totalbagian = 0;
@@ -72,7 +72,7 @@ class UserRABController extends Controller
                 foreach ($value['subbagians'] as $key2 => $value2) {                
                     $kegiatan = RencanaDetailKegiatan::where('rencana_id', $id)
                                         ->where('subbagian_id', $value2->id)->oldest();                                                                                     
-                    $totalsubbagian = $kegiatan->sum(DB::raw('volume*harga'));  
+                    $totalsubbagian = $kegiatan->sum(DB::raw('volume*harga*jumlah_sasaran'));  
                     $value2['totalsubbagian'] = $totalsubbagian;                  
                     $value2['jumlah_kegiatan'] = $kegiatan->count();                        
                     $value2['kegiatan'] = $kegiatan->get(); 
@@ -85,7 +85,7 @@ class UserRABController extends Controller
             return view('user.rab.detail',compact('rencana','bagian','id'));                             
         }else{
              return redirect()->route('user.rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/Closed.');
  
         }
     }
@@ -95,6 +95,7 @@ class UserRABController extends Controller
     {                                                   
         $rencana = Rencana::where('id',$rencana_id)
                         ->where('unit',Auth::user()->lvl)
+                        ->where('status','Open')
                         ->first(['anggaran','unit','tahun']);       
         if ($rencana){
             $grandtotal = 0;
@@ -111,7 +112,7 @@ class UserRABController extends Controller
                     $rencana_detail_kegiatan2 = $rencana_detail_kegiatan->get(['nama_kegiatan','sasaran','anggaran','satuan','jumlah_sasaran','volume','harga']);
                     foreach ($rencana_detail_kegiatan2 as $key3 => $value3) {
                         
-                        $value2['subtotal2'] = $rencana_detail_kegiatan->sum(DB::raw('volume*harga'));
+                        $value2['subtotal2'] = $rencana_detail_kegiatan->sum(DB::raw('volume*harga*jumlah_sasaran'));
                         $value2['kegiatan'] = $rencana_detail_kegiatan2;
                         
                     }
@@ -126,7 +127,7 @@ class UserRABController extends Controller
             return view('user.rab.history',compact('rencana'));                             
         }else{
              return redirect()->route('user.rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/Closed.');
  
         }
     }
@@ -143,7 +144,7 @@ class UserRABController extends Controller
         if ($rencana){
             $subbagian = SubBagian::where('id',$subbagian_id)
                     ->with('bagians')
-                    ->whereRelation('bagians','type',$rencana->lvl)->first();                
+                    ->first();                
             if ($subbagian){
                 $kegiatan = Kegiatan::OrderBy('kegiatan','asc')->get();
                 $sasaran = Sasaran::OrderBy('sasaran','asc')->get();       
@@ -153,7 +154,7 @@ class UserRABController extends Controller
 
                 $rencanadetailKeg = RencanaDetailKegiatan::where('rencana_id', $rencana_id)
                                     ->where('subbagian_id', $subbagian_id);
-                $grantotal = $rencanadetailKeg->sum(DB::raw('volume*harga'));
+                $grantotal = $rencanadetailKeg->sum(DB::raw('volume*harga*jumlah_sasaran'));
 
                 if ($request->sort && $request->order){
                     $rencanadetailkegiatan = $rencanadetailKeg->orderBy($request->sort, $request->order)->paginate(5);  
@@ -242,7 +243,7 @@ class UserRABController extends Controller
         }       
     }
 
-     public function destroy($rencana_id, $subbagian, $rencanaDetail)
+    public function destroy($rencana_id, $subbagian, $rencanaDetail)
     {
         $kegiatan = RencanaDetailKegiatan::where('rencana_id', $rencana_id)
                     ->where('subbagian_id', $subbagian)
@@ -251,6 +252,19 @@ class UserRABController extends Controller
         $kegiatan->delete();         
         return redirect()->back()
                 ->with('success','Hapus Data Uraian Kegiatan Berhasil.');
+    }
+
+    public function closed($rencana_id)
+    {
+        $rencana = Rencana::where('id',$rencana_id)
+                        ->where('status','Open')
+                        ->where('unit',Auth::user()->lvl)
+                        ->first();  
+        $rencana->update([
+            'status' => 'Closed',
+        ]);        
+        return redirect()->route('user.rencana.index')
+                        ->with('success','Rencana Anggaran Belanja - RAB Berhasil di Closed.');        
     }
 
 }

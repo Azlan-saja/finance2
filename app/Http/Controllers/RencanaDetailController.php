@@ -31,7 +31,7 @@ class RencanaDetailController extends Controller
         // $rencana = Rencana::where('id',$id)->where('status','Open')->first();       
         $rencana = Rencana::where('id',$id)->first();       
         if ($rencana){
-            $bagian = Bagian::where('type', $rencana->lvl)->oldest()->with('subbagians')->oldest()->get();   
+            $bagian = Bagian::oldest()->with('subbagians')->oldest()->get();   
             $totalsubbagian = 0;
             $jumlah_kegiatan = 0;
             $totalbagian = 0;
@@ -105,12 +105,11 @@ class RencanaDetailController extends Controller
 
        $rencana = Rencana::where('id',$rencana_id)                    
                     ->where('status','Open')                   
-                    ->first();
-        
+                    ->first();        
         if ($rencana){
             $subbagian = SubBagian::where('id',$subbagian_id)
                     ->with('bagians')
-                    ->whereRelation('bagians','type',$rencana->lvl)->first();                
+                    ->first();                
             if ($subbagian){
                 $kegiatan = Kegiatan::OrderBy('kegiatan','asc')->get();
                 $sasaran = Sasaran::OrderBy('sasaran','asc')->get();       

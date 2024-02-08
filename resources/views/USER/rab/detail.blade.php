@@ -17,9 +17,18 @@
               <div class="card mb-0">
                 <div class="card-body p-4">
                 <!-- ISI START -->
-                <a href="{{ route('user.rencana.index') }}" class="btn btn-dark m-1">Kembali</a>
-                <a href="{{ route('user.rencana-detail.history', $id) }}" target="_blank" class="btn btn-outline-success m-1">History</a>
-                <a href="{{ route('user.rencana-detail.index', $id) }}" class="btn btn-outline-primary m-1">Segarkan</a>
+                
+                      <a href="{{ route('user.rencana.index') }}" class="btn btn-dark m-1">Kembali</a>
+                      <a href="{{ route('user.rencana-detail.history', $id) }}" target="_blank" class="btn btn-outline-success m-1">History</a>
+                      <a href="{{ route('user.rencana-detail.index', $id) }}" class="btn btn-outline-primary m-1">Segarkan</a>                
+                      <a class="btn btn-outline-danger m-1 position-absolute end-0 me-4 show_confirm" href="{{ route('user.rencana-detail.closed', $id) }}">
+                          Closed?
+                      </a>
+                        <form id="closed-form" action="{{ route('user.rencana-detail.closed', $id) }}" method="POST" class="d-none">
+                          @csrf
+                        </form>
+                          
+                
                 <hr>
                    @if ($message = Session::get('success'))
                          <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
@@ -74,15 +83,18 @@
                         <th class="border-bottom-0 fw-semibold mb-0 text-white">  
                           Uraian Kegiatan                       
                         </th>                                                                                       
+                       <th class="border-bottom-0 fw-semibold mb-0 text-white">  
+                          Jumlah Sasaran                       
+                        </th>                                                                                                                                    
+                        <th class="border-bottom-0 fw-semibold mb-0 text-white">  
+                          Harga Satuan                     
+                        </th>
                         <th class="border-bottom-0 fw-semibold mb-0 text-white">  
                           Volume                       
-                        </th>                       
+                        </th>                          
                         <th class="border-bottom-0 fw-semibold mb-0 text-white">  
-                          Harga                       
-                        </th>                       
-                        <th class="border-bottom-0 fw-semibold mb-0 text-white">  
-                          Total                       
-                        </th>                       
+                          Jumlah Harga                       
+                        </th>                          
                       </tr>
                     </thead>
                     <tbody>
@@ -97,7 +109,7 @@
                         <td class="">
                           <p class="mb-0 fw-normal"></p>
                         </td> 
-                        <td class="" colspan="4">
+                        <td class="" colspan="5">
                           <p class="mb-0 fw-bold"> {{ $data->bagian}}</p>
                         </td>                         
                       </tr>    
@@ -112,7 +124,7 @@
                                     <i class="fs-5 ti ti-playlist-add text-primary"></i> 
                                   </a> {{ $data2->subbagian }} 
                                 </td>                                                                    
-                                 <td colspan="2"></td>
+                                 <td colspan="3"></td>
                                  <td class="bg-info border-bottom-0">
                                   <h6 class="fw-bold text-white"> 
                                       {{ 'Rp. '.number_format($data2->totalsubbagian,0,",",".") }} 
@@ -127,14 +139,15 @@
                                               <td class="bg-info text-white border-0">
                                                 {{ $data3->nama_kegiatan }}
                                               </td>
-                                              <td class="bg-info text-white border-0">{{ $data3->volume }}</td>
+                                                 <td class="bg-info text-white border-0 text-center">{{ $data3->jumlah_sasaran }}</td>
                                               <td class="bg-info text-white border-0"> {{ 'Rp. '.$data3->harga }} </td>
+                                              <td class="bg-info text-white border-0 text-center">{{ $data3->volume }}</td>
                                               <td class="bg-info text-white border-0"> {{ 'Rp. '.$data3->total }}</td>
                                             </tr>                                              
                                   @empty
                                             <tr class="bg-primary-subtle">
                                               <td colspan="3"> </td>                                              
-                                              <td colspan="4" class="">
+                                              <td colspan="5" class="">
                                                <div class="alert alert-danger" role="alert">
                                                     Data Uraian Kegiatan Kosong. 
                                                 </div>
@@ -142,15 +155,15 @@
                                             </tr>
                                   @endforelse
                                   <tr class="bg-primary-subtle" >
-                                    <td colspan="8" class="border-0 p-0 pb-3" style="height:1px !important;"></td>
+                                    <td colspan="9" class="border-0 p-0 pb-3" style="height:1px !important;"></td>
                                   </tr>
 
-                                  
+                                   
 
                         @empty
                            <tr>
                             <td colspan="2" class="bg-primary-subtle"></td>
-                            <td colspan="5">
+                            <td colspan="6">
                               <div class="alert alert-danger text-center" role="alert">
                                   Data Sub Bagian {{ $data->bagian}} Kosong. <br> Silahkan Hubungi Admin.
                               </div>
@@ -158,11 +171,11 @@
                           </tr>  
                         @endforelse
                         <tr class="bg-primary" >
-                                    <td colspan="8" class="border-0 p-0 pb-3" style="height:1px !important;"></td>
+                                    <td colspan="9" class="border-0 p-0 pb-3" style="height:1px !important;"></td>
                                   </tr>
                       @empty
                       <tr>
-                        <td colspan="7">
+                        <td colspan="8">
                           <div class="alert alert-danger text-center" role="alert">
                               Data Rencana Anggaran Belanjan Kosong. <br> Silahkan Hubungi Admin.
                           </div>
@@ -177,4 +190,28 @@
                 </div>
               </div>        
         </div>        
+@endsection
+
+@section('jsSidebar')
+<script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+<script>
+$( document ).ready(function() {
+ $('.show_confirm').click(function(event) {                            
+    var form =  document.getElementById('closed-form');
+    event.preventDefault();
+    swal({
+              title: "Closed RAB?",
+              text: "Jika anda closed sekarang, maka rencana anggaran belanja tidak bisa dibuka atau diakses kembali.",
+              icon: "warning",
+              buttons: ["Cancel", "Oke. Closed!"],
+              dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        form.submit();
+      }
+    });
+  });
+});
+</script>
 @endsection

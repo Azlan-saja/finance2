@@ -69,18 +69,18 @@
                         <th class="border-bottom-0 fw-semibold mb-0 text-white align-middle">  
                           Satuan                       
                         </th>                                                                                       
-                        <th class="border-bottom-0 fw-semibold mb-0 text-white text-wrap align-middle">  
+                         <th class="border-bottom-0 fw-semibold mb-0 text-white text-wrap">  
                           Jumlah Sasaran                       
-                        </th>                                                                                       
-                        <th class="border-bottom-0 fw-semibold mb-0 text-white align-middle">  
+                        </th>                                                                                                                                    
+                        <th class="border-bottom-0 fw-semibold mb-0 text-white text-wrap">  
+                          Harga Satuan                     
+                        </th>
+                        <th class="border-bottom-0 fw-semibold mb-0 text-white">  
                           Volume                       
-                        </th>                       
-                        <th class="border-bottom-0 fw-semibold mb-0 text-white align-middle">  
-                          Harga                       
-                        </th>                       
-                        <th class="border-bottom-0 fw-semibold mb-0 text-white align-middle">  
-                          Total                       
-                        </th>                       
+                        </th>                          
+                        <th class="border-bottom-0 fw-semibold mb-0 text-white text-wrap">  
+                          Jumlah Harga                       
+                        </th>                     
                       </tr>
                     </thead>
                     <tbody>
@@ -127,9 +127,9 @@
                                               <td class="bg-info text-white border-0">{{ $data3->sasaran }}</td>
                                               <td class="bg-info text-white border-0 text-wrap">{{ $data3->anggaran }}</td>
                                               <td class="bg-info text-white border-0">{{ $data3->satuan }}</td>
-                                              <td class="bg-info text-white border-0">{{ $data3->jumlah_sasaran }}</td>
-                                              <td class="bg-info text-white border-0">{{ $data3->volume }}</td>
+                                              <td class="bg-info text-white border-0 text-center">{{ $data3->jumlah_sasaran }}</td>
                                               <td class="bg-info text-white border-0"> {{ 'Rp. '.$data3->harga }} </td>
+                                              <td class="bg-info text-white border-0 text-center">{{ $data3->volume }}</td>
                                               <td class="bg-info text-white border-0"> {{ 'Rp. '.$data3->total }}</td>
                                             </tr>                                              
                                   @empty

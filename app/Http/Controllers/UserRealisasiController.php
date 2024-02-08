@@ -25,6 +25,7 @@ class UserRealisasiController extends Controller
     {                                                   
         $rencana = Rencana::where('id',$rencana_id)
                     ->where('unit',Auth::user()->lvl)
+                    ->where('status','Closed')
                     ->first(['anggaran','unit','tahun']);       
         
         if ($rencana){           
@@ -76,7 +77,7 @@ class UserRealisasiController extends Controller
             return view('user.realisasi.index',compact('rencana','rencana_id'));                             
         }else{
              return redirect()->route('user.rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/RAB Belum Closed.');
  
         }
     }

@@ -169,7 +169,7 @@
                                   <div class="row">
                                     <label class="col-lg-2 form-label">Jumlah Sasaran</label>                         
                                     <div class="col-lg-10">
-                                      <input value="{{ old('jumlah_sasaran') }}" type="text" class="form-control  @error('jumlah_sasaran') is-invalid @enderror" name="jumlah_sasaran"  required>
+                                      <input value="{{ old('jumlah_sasaran') }}" type="number" class="form-control  @error('jumlah_sasaran') is-invalid @enderror" name="jumlah_sasaran"  required>
                                         @error('jumlah_sasaran')
                                           <span class="invalid-feedback" role="alert">
                                               <strong>{{ $message }}</strong>
@@ -177,8 +177,21 @@
                                         @enderror
                                     </div>                          
                                   </div>
-                          </div>                                                                                                        
+                          </div>                                                                                                                                                                                                                                         
                             <div class="mb-3">
+                                  <div class="row">
+                                    <label class="col-lg-2 form-label mt-2">Harga Satuan</label>                         
+                                    <div class="col-lg-10">
+                                      <input value="{{ old('harga') }}" id="harga" type="text" class="form-control  @error('harga') is-invalid @enderror" name="harga"  required>
+                                        @error('harga')
+                                          <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                          </span>
+                                        @enderror
+                                    </div>                          
+                                  </div>
+                          </div>                                                                                                        
+                              <div class="mb-3">
                                   <div class="row">
                                     <label class="col-lg-2 form-label mt-2">Volume</label>                         
                                     <div class="col-lg-10">
@@ -190,21 +203,7 @@
                                         @enderror
                                     </div>                          
                                   </div>
-                          </div>                                                                                                        
-                            <div class="mb-3">
-                                  <div class="row">
-                                    <label class="col-lg-2 form-label mt-2">Harga</label>                         
-                                    <div class="col-lg-10">
-                                      <input value="{{ old('harga') }}" id="harga" type="text" class="form-control  @error('harga') is-invalid @enderror" name="harga"  required>
-                                        @error('harga')
-                                          <span class="invalid-feedback" role="alert">
-                                              <strong>{{ $message }}</strong>
-                                          </span>
-                                        @enderror
-                                    </div>                          
-                                  </div>
-                          </div>                                                                                                        
-                                                                                                                               
+                          </div>                                                                                                    
                           <div class="form-actions col-lg-10 ms-auto">
                               <button type="submit" class="btn btn-primary me-6"> Simpan </button>            
                           </div>
@@ -257,21 +256,22 @@
                               </a>
                           </th>
                           <th class="border-bottom-0 align-middle">                          
+                              <a class="fw-semibold mb-0 text-white" href="{{ route('rencana-detail.create',  ['rencana_id' => $rencana_id,'subbagian' => $subbagian->id,'sort' => 'harga', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
+                                Harga<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Satuan
+                              </a>
+                          </th>
+                          <th class="border-bottom-0 align-middle">                          
                               <a class="fw-semibold mb-0 text-white" href="{{ route('rencana-detail.create',  ['rencana_id' => $rencana_id,'subbagian' => $subbagian->id,'sort' => 'volume', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
                                 Volume
                               </a>
                           </th>
-                          <th class="border-bottom-0 align-middle">                          
-                              <a class="fw-semibold mb-0 text-white" href="{{ route('rencana-detail.create',  ['rencana_id' => $rencana_id,'subbagian' => $subbagian->id,'sort' => 'harga', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
-                                Harga
-                              </a>
-                          </th>
+                         
                           <th class="border-bottom-0 align-middle">                          
                               <a class="fw-semibold mb-0 text-white" href="{{ route('rencana-detail.create',  ['rencana_id' => $rencana_id,'subbagian' => $subbagian->id,'sort' => 'total', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
-                                Total
+                                Jumlah<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Harga
                               </a>
                           </th>
                           <th class="border-bottom-0">                         
@@ -296,18 +296,18 @@
                           <td class="border-bottom-0">
                             <p class="mb-0 fw-normal">{{ $data->satuan }}</p>
                           </td>                                    
-                          <td class="border-bottom-0">
+                          <td class="border-bottom-0 text-center">
                             <p class="mb-0 fw-normal">{{ $data->jumlah_sasaran }}</p>
                           </td>                                    
                           <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">Rp.{{ $data->harga }}</p>
+                          </td>                                    
+                          <td class="border-bottom-0 text-center">
                             <p class="mb-0 fw-normal">{{ $data->volume }}</p>
                           </td>                                    
                           <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">Rp. {{ $data->harga }}</p>
-                          </td>                                    
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">{{ $data->total }}</p>
-                          </td>                                    
+                            <p class="mb-0 fw-normal">Rp.{{ $data->total }}</p>
+                          </td>                                     
                          
                           <td class="border-bottom-0">
                             
