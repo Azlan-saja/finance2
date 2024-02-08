@@ -12,7 +12,6 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Unit</th>
                     <th>Bagian</th>                    
                     <th>Sub Bagian</th>                    
                 </tr>
@@ -21,7 +20,6 @@
                 @forelse ($bagian as $data)
                 <tr>
                     <td>{{ $loop->iteration }}.</td>
-                    <td>{{ $data->type }}</td>
                     <td>{{ $data->bagian }}</td>                   
                     <td>
                         <ol style="margin:0px;padding:top;">

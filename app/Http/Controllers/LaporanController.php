@@ -32,7 +32,7 @@ class LaporanController extends Controller
 
     public function bagian()
     {
-        $bagian = Bagian::orderBy('type','asc')->with('subbagians')->get();
+        $bagian = Bagian::latest()->with('subbagians')->get();
         // return $bagian;
         $title = "Laporan Data Bagian";
         $pdf = PDF::loadView('yys.laporan.bagian', compact('bagian','title'));  

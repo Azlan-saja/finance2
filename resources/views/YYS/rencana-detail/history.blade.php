@@ -96,7 +96,7 @@
                         </td>                         
                         <td class="bg-danger-subtle border-bottom-0">
                           <h6 class="fw-bold"> 
-                            {{ 'Rp. '.number_format($data->subtotal,0,",",".") }} 
+                            {{ 'Rp.'.number_format($data->subtotal,0,",",".") }} 
                           </h6>
                         </td>                      
                       </tr>    
@@ -106,13 +106,13 @@
                                 <td class="border-0">
                                   <p class="mb-0 fw-bold"> {{ $loop->parent->iteration }}.{{ $loop->iteration }} </p>
                                 </td> 
-                                <td class="border-0 text-wrap"> 
+                                <td class="text-wrap border-0"> 
                                    {{ $data2->nama_subbagian }} 
                                 </td>                                                                    
                                  <td colspan="6" class="border-0"></td>
                                  <td class="bg-info border-0">
                                   <h6 class="fw-bold text-white"> 
-                                      {{ 'Rp. '.number_format($data2->subtotal2,0,",",".") }} 
+                                      {{ 'Rp.'.number_format($data2->subtotal2,0,",",".") }} 
                                   </h6>
                                 </td>
                               </tr>                                  
