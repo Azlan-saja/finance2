@@ -39,7 +39,7 @@ class RencanaDetailKegiatan extends Model
     protected function total(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  number_format($this->volume * str_replace('.','',$this->harga),0,",","."),
+            get: fn ($value) =>  number_format($this->jumlah_sasaran * str_replace('.','',$this->harga) * $this->volume,0,",","."),
         );
     }
 

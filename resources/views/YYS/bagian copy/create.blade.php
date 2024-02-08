@@ -16,6 +16,26 @@
                     @csrf
                     <div class="form-body">
                       <div class="mb-3">
+                        <div class="row">
+                          <label class="col-lg-1 form-label pt-2">Unit</label>                         
+                              <div class="col-md-11">                              
+                                <select class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type') }}" required>
+                                        <option disabled selected value="" class="bg-dark text-white fw-bold fs-5">Pilih</option>
+                                        <!-- <option class="bg-danger border m-3 p-3" disabled>&nbsp;</option>   -->
+                                        <option value="0">RA</option>
+                                        <option value="1">SD</option>
+                                        <option value="2">SMP</option>
+                                        <option value="3">YYS</option>
+                                </select>                                
+                                @error('type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                              </div>                          
+                        </div>
+                      </div>
+                      <div class="mb-3">
                             <div class="row">
                                 <label class="col-lg-1 form-label pt-2">Bagian</label>                         
                               <div class="col-md-11">

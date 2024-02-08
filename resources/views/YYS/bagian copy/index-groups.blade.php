@@ -12,10 +12,9 @@
                 Bagian</h4>
               <div class="card mb-0">
                 <div class="card-body p-4">
-                <!-- ISI START --> 
+                <!-- ISI START -->
                 <a href="{{ route('bagian.create') }}" class="btn btn-primary m-1">Tambah</a>
                 <a href="{{ route('bagian.index') }}" class="btn btn-outline-primary m-1">Segarkan</a>
-                <a href="{{ route('laporan.bagian') }}" target="_blank" class="btn btn-outline-danger m-1 position-absolute end-0 me-4">Cetak</a>
                 <hr>
                    @if ($message = Session::get('success'))
                          <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
@@ -39,12 +38,18 @@
                   </form>
                      
                 <div class="table-responsive rounded-2 mb-4">
-                  <table class="table border text-nowrap customize-table mb-0 align-middle table-striped">
+                  <table class="table table-border  text-nowrap customize-table mb-0 align-middle">
                     <thead class="text-dark fs-4">
                       <tr class="bg-dark">
                         <th class="border-bottom-0">
                           <span class="fw-semibold mb-0 text-white">#</span>
-                        </th>                        
+                        </th>
+                        <th class="border-bottom-0">
+                           <a class="fw-semibold mb-0 text-white" href="{{ route('bagian.index', ['sort' => 'type', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
+                              Unit
+                            </a>
+                        </th>
                         <th class="border-bottom-0">                          
                             <a class="fw-semibold mb-0 text-white" href="{{ route('bagian.index', ['sort' => 'bagian', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
@@ -56,46 +61,48 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @forelse ($bagian as $data)
-                      <tr>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-normal mb-0">{{ ++$i }}</h6>
-                        </td>                                             
-                         <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">{{ $data->bagian }}</p>
+                      @forelse ($bagian as $types => $data)
+                       <tr class="bg-primary-subtle">
+                        <td class="">
+                            <h6 class="fw-bold mb-0">{{$loop->iteration}}  </h6>
+                        </td>                     
+                        <td class="">
+                          <p class="mb-0 fw-bold">                          
+                              {{$types}}                                                              
+                          </p>
                         </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <div class="dropdown dropstart">
-                              <a href="#" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="ti ti-dots-vertical fs-6"></i>
-                              </a>
-                              <ul class="dropdown-menu mt-0 pt-0" aria-labelledby="dropdownMenuButton">
-                                <li>
-                                  <a class="dropdown-item d-flex align-items-center gap-3 text-primary" href="{{ route('subbagian.index', $data->id) }}"><i class="fs-4 ti ti-eye-plus"></i>Sub Bagian</a>
-                                </li>
-                                <li>
-                                  <span class="bg-dark  dropdown-item d-flex align-items-center gap-3 text-white text-center" >{{ $data->type }}<br>{{$data->bagian }}</span>
-                                </li>
-                                <li>
-                                  <a class="dropdown-item d-flex align-items-center gap-3 text-warning" href="{{ route('bagian.edit',$data->id) }}"><i class="fs-4 ti ti-edit"></i>Edit</a>
-                                </li>
-                                <li>
-                                  <form action="{{ route('bagian.destroy',$data->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')                
-                                    <button type="submit" class="dropdown-item d-flex align-items-center gap-3 text-danger show_confirm"><i class="fs-4 ti ti-trash"></i>Delete</button>
-                                  </form>
-                                </li>
-                              </ul>
-                            </div> 
-                             
-                          </div>
+                         <td class="">
+                          <p class="mb-0 fw-normal d-none">  {{ $data->count() }}</p>
+                        </td>
+                        <td class="">                        
                         </td>                    
                       </tr>    
+                        @forelse ($data as $datas)
+                          <tr class="bg-white">
+                            <td class="border-0">                              
+                            </td>    
+                            <td>
+                               <h6 class="fw-bold mb-0 text-end">{{$loop->parent->iteration}}.{{$loop->iteration}}  </h6>
+                            </td>
+                            </td>
+                            <td class="border-1">
+                              <p class="mb-0 fw-normal"> {{$datas->bagian}}     </p>
+                            </td>
+                            <td class="border-1">                        
+                            </td>                    
+                          </tr>                              
+                        @empty
+                        <tr>
+                        <td colspan="4">
+                          <div class="alert alert-danger text-center" role="alert">
+                              Data Bagian Kosong.
+                          </div>
+                        </td>
+                      </tr>     
+                      @endforelse                       
                       @empty
                       <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                           <div class="alert alert-danger text-center" role="alert">
                               Data Bagian Kosong.
                           </div>

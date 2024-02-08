@@ -41,7 +41,7 @@ class RencanaDetailController extends Controller
                 foreach ($value['subbagians'] as $key2 => $value2) {                
                     $kegiatan = RencanaDetailKegiatan::where('rencana_id', $id)
                                         ->where('subbagian_id', $value2->id)->oldest();                                                                                     
-                    $totalsubbagian = $kegiatan->sum(DB::raw('volume*harga'));  
+                    $totalsubbagian = $kegiatan->sum(DB::raw('jumlah_sasaran*harga*volume'));  
                     $value2['totalsubbagian'] = $totalsubbagian;                  
                     $value2['jumlah_kegiatan'] = $kegiatan->count();                        
                     $value2['kegiatan'] = $kegiatan->get(); 
@@ -59,7 +59,7 @@ class RencanaDetailController extends Controller
         }
     }
     public function history($rencana_id)
-    {                                                   
+    {                                                    
         $rencana = Rencana::where('id',$rencana_id)->first(['anggaran','unit','tahun']);       
         if ($rencana){
             $grandtotal = 0;
@@ -76,9 +76,9 @@ class RencanaDetailController extends Controller
                     $rencana_detail_kegiatan2 = $rencana_detail_kegiatan->get(['nama_kegiatan','sasaran','anggaran','satuan','jumlah_sasaran','volume','harga']);
                     foreach ($rencana_detail_kegiatan2 as $key3 => $value3) {
                         
-                        $value2['subtotal2'] = $rencana_detail_kegiatan->sum(DB::raw('volume*harga'));
+                        $value2['subtotal2'] = $rencana_detail_kegiatan->sum(DB::raw('volume*harga*jumlah_sasaran'));
                         $value2['kegiatan'] = $rencana_detail_kegiatan2;
-                        
+                         
                     }
                     $subtotal += $value2['subtotal2'];
                     $value['subtotal'] = $subtotal;
@@ -120,7 +120,7 @@ class RencanaDetailController extends Controller
 
                 $rencanadetailKeg = RencanaDetailKegiatan::where('rencana_id', $rencana_id)
                                     ->where('subbagian_id', $subbagian_id);
-                $grantotal = $rencanadetailKeg->sum(DB::raw('volume*harga'));
+                $grantotal = $rencanadetailKeg->sum(DB::raw('jumlah_sasaran*harga*volume'));
 
                 if ($request->sort && $request->order){
                     $rencanadetailkegiatan = $rencanadetailKeg->orderBy($request->sort, $request->order)->paginate(5);  

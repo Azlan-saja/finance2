@@ -41,9 +41,9 @@
                     <th> Sumber Anggaran </th>
                     <th> Satuan </th>
                     <th> Jumlah Sasaran</th>
+                    <th> Harga Satuan</th>
                     <th> Volume</th>
-                    <th> Harga</th>
-                    <th> Total</th>
+                    <th> Jumlah Harga</th>
                                       
                 </tr>               
             </thead>
@@ -85,8 +85,8 @@
                                               <td class="bg-info text-white border-0 text-wrap"><p>{{ $data3->anggaran }}</p></td>
                                               <td class="bg-info text-white border-0"><p>{{ $data3->satuan }}</p></td>
                                               <td class="bg-info text-white border-0"><p>{{ $data3->jumlah_sasaran }}</p></td>
+                                              <td class="bg-info text-white border-0"> <p>{{ 'Rp.'.$data3->harga }}</p> </td>
                                               <td class="bg-info text-white border-0"><p>{{ $data3->volume }}</p></td>
-                                              <td class="bg-info text-white border-0"> <p>{{ 'Rp. '.$data3->harga }}</p> </td>
                                               <td class="bg-info text-white border-0"> <p>{{ 'Rp.'.$data3->total }}</p></td>
                                             </tr>                                              
                                   @empty

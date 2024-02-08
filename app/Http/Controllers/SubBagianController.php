@@ -6,7 +6,7 @@ use App\Models\SubBagian;
 use Illuminate\Http\Request;
 
 use App\Models\Bagian;
-
+ 
 class SubBagianController extends Controller
 {
   

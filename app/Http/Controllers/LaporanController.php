@@ -135,7 +135,7 @@ class LaporanController extends Controller
                     $rencana_detail_kegiatan2 = $rencana_detail_kegiatan->get(['nama_kegiatan','sasaran','anggaran','satuan','jumlah_sasaran','volume','harga']);
                     foreach ($rencana_detail_kegiatan2 as $key3 => $value3) {
                         
-                        $value2['subtotal2'] = $rencana_detail_kegiatan->sum(DB::raw('volume*harga'));
+                        $value2['subtotal2'] = $rencana_detail_kegiatan->sum(DB::raw('volume*harga*jumlah_sasaran'));
                         $value2['kegiatan'] = $rencana_detail_kegiatan2;
                         
                     }

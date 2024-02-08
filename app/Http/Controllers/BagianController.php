@@ -28,13 +28,7 @@ class BagianController extends Controller
         $request->validate([
                 'cari' => 'required',
         ]);        
-        if (strtolower($request->cari) == 'yys') $request->cari = 3;
-        if (strtolower($request->cari) == 'smp') $request->cari = 2;
-        if (strtolower($request->cari) == 'sd') $request->cari = 1;
-        if (strtolower($request->cari) == 'ra') $request->cari = 0;
-        // $bagian = Bagian::sortable()->where('bagian','like','%'.$request->cari.'%')             
          $bagian = Bagian::where('bagian','like','%'.$request->cari.'%')
-                 ->orWhere('type','like','%'.$request->cari.'%')             
                  ->latest()->paginate(5);                  
         return view('yys.bagian.index',compact('bagian'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);      
@@ -54,11 +48,7 @@ class BagianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type' => 'required',
             'bagian' => 'required',
-        ],
-        [
-            'type.required' => 'The unit field is required.',
         ]);        
         Bagian::create($request->all());         
         return redirect()->route('bagian.index')
@@ -70,7 +60,7 @@ class BagianController extends Controller
      */
     public function show(Bagian $bagian)
     {
-        return view('yys.bagian.show',compact('bagian'));
+        
     }
 
     /**
@@ -87,7 +77,6 @@ class BagianController extends Controller
     public function update(Request $request, Bagian $bagian)
     {
        $request->validate([
-            'type' => 'required',
             'bagian' => 'required',
         ]);        
         $bagian->update($request->all());        

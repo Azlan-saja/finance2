@@ -130,6 +130,7 @@
                     <th>{{ $rencana->tahun }}</th>
                     <th>{{ 'Rp.'.$rencana->anggaran }}</th>
                     <th>{{ 'Rp.'.number_format($rencana->total_all,0,",",".") }}</th>
+                    <th>{{ 'Rp.'.number_format(str_replace('.','',$rencana->anggaran) - $rencana->total_all,0,",",".") }}</th>
                                       
                 </tr>
                 <tr> 
@@ -137,6 +138,7 @@
                     <th>Tahun Anggaran</th>
                     <th>Besaran Anggaran</th>
                     <th>Realisasi Anggaran</th>
+                    <th>Sisa Anggaran</th>
                                       
                 </tr>
             </thead>
@@ -152,7 +154,8 @@
                     <th>Uraian Kegiatan</th>
                     <th>Sasaran </th>
                     <th> Sumber Anggaran </th>
-                    <th> Satuan </th>
+                    <th> Besar Anggaran </th> 
+                    <th> Volume </th> 
                     @for ($i = 1; $i <= 12; $i++)
                     <th>  
                         {{ $i }}                      
@@ -173,7 +176,7 @@
                         <td colspan="4">
                           <p > {{ $data->nama_bagian}}</p>
                         </td>              
-                        <td colspan="12"></td>           
+                        <td colspan="13"></td>           
                         <td >
                           <p> 
                             {{ 'Rp.'.number_format($data->total_bagian,0,",",".") }}
@@ -190,7 +193,7 @@
                                 <td > 
                                    <p >{{ $data2->nama_subbagian }} </p>
                                 </td>            
-                                <td colspan="15" ></td>                                                        
+                                <td colspan="16" ></td>                                                        
                                  <td >
                                   <p> 
                                       {{ 'Rp.'.number_format($data2->total_subbagian,0,",",".") }}
@@ -209,7 +212,8 @@
                                               </td>
                                               <td ><p>{{ $data3->sasaran }}</p></td>
                                               <td ><p>{{ $data3->anggaran }}</p></td>
-                                              <td ><p>{{ $data3->satuan }}</p></td>
+                                              <td ><p>Rp.{{ number_format($data3->jumlah_sasaran * str_replace('.','',$data3->harga) * $data3->volume,0,",",".") }}</p></td>
+                                              <td ><p>{{ $data3->volume }}</p></td>
                                               @for ($i = 1; $i <= 12; $i++)
                                                   <td>     
                                                   <p style="display:none;"> {{ $x = 'b'.$i}}</p>                                            
@@ -228,17 +232,17 @@
                                             </tr>                                              
                                   @empty
                                             <tr >
-                                              <td colspan="19"> </td>                                                                                          
+                                              <td colspan="20"> </td>                                                                                          
                                             </tr>
                                   @endforelse
                                   <tr >
-                                    <td colspan="19"  style="height:1px !important;"></td>
+                                    <td colspan="20"  style="height:1px !important;"></td>
                                   </tr>
 
                         @empty
                            <tr>
                             <td colspan="2"></td>
-                            <td colspan="9">
+                            <td colspan="10">
                               <div>
                                   Data Sub Bagian {{ $data->bagian}} Kosong.
                               </div>
@@ -246,12 +250,12 @@
                           </tr>  
                         @endforelse
                       <tr class="bg-primary" >
-                        <td colspan="18" style="height:1px !important;"></td>
+                        <td colspan="19" style="height:1px !important;"></td>
                         <td class="border-0 p-0 pb-3 bg-dark" style="height:1px !important;"></td>
                       </tr>   
                       @empty
                       <tr>
-                        <td colspan="19">
+                        <td colspan="20">
                           <div class="alert alert-danger text-center" role="alert">
                               Data Rencana Anggaran Belanjan Kosong.
                           </div>

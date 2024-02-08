@@ -72,6 +72,12 @@
                       </h5>
                       <span class="fw-bold">Realisasi Anggaran</span>
                     </div>
+                     <div class="pe-5 bg-danger p-2 text-white rounded">
+                      <h5 class="fw-semibold ">
+                           {{ 'Rp.'.number_format(str_replace('.','',$rencana->anggaran) - $rencana->total_all,0,",",".") }}
+                      </h5>
+                      <span class="fw-bold">Sisa Anggaran</span>
+                    </div>
                   </div>
            
                   <div class="alert alert-warning alert-dismissible rounded-pill  border-0 fade show text-middle" role="alert">
@@ -101,9 +107,12 @@
                         </th>                                                                                       
                         <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
                           Sumber Anggaran                       
-                        </th>                                                                                       
+                        </th>                                                                                                                   
+                        <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
+                          Besar Anggaran                       
+                        </th>
                         <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
-                          Satuan                       
+                          Volume                       
                         </th>    
                         @for ($i = 1; $i <= 12; $i++)
                         <th class="border-bottom-0 fw-semibold mb-0 text-white text-wrap align-middle">  
@@ -126,7 +135,7 @@
                         <td class="text-wrap frezz" colspan="4">
                           <p class="mb-0 fw-bold"> {{ $data->nama_bagian}}</p>
                         </td>              
-                        <td colspan="12"></td>           
+                        <td colspan="13"></td>           
                         <td class="bg-danger-subtle border-bottom-0">
                           <h6 class="fw-bold"> 
                             {{ 'Rp. '.number_format($data->total_bagian,0,",",".") }}
@@ -144,7 +153,7 @@
                                    {{ $data2->nama_subbagian }} 
                                 </td>            
                                 <td colspan="3" class="frezz"></td>                                                        
-                                 <td colspan="8" class="border-0"></td>
+                                 <td colspan="9" class="border-0"></td>
                                  <td class="bg-warning-subtle border-0">
                                   <h6 class="fw-bold"> 
                                       {{ 'Rp. '.number_format($data2->total_subbagian,0,",",".") }}
@@ -163,7 +172,8 @@
                                               </td>
                                               <td class="bg-info text-white border-0 text-wrap frezz">{{ $data3->sasaran }}</td>
                                               <td class="bg-info text-white border-0 text-wrap" frezz>{{ $data3->anggaran }}</td>
-                                              <td class="bg-info text-white border-0 frezz">{{ $data3->satuan }}</td>
+                                              <td class="bg-info text-white border-0">Rp.{{ number_format($data3->jumlah_sasaran * str_replace('.','',$data3->harga) * $data3->volume,0,",",".") }}</td>
+                                              <td class="bg-info text-white border-0 text-center">{{ $data3->volume }}</td>
                                               @for ($i = 1; $i <= 12; $i++)
                                                   <td class="bg-info text-white border-0 border-start border-end">                                                 
                                                   <a href="{{ route('realisasi.create', ['rencana_id' => $rencana_id, 'kegiatan_id' => $data3->id, 'bulan' => $i]) }}" class="btn mb-1 bg-primary-subtle text-primary me-2 btn-sm d-inline-flex align-items-center justify-content-center">
@@ -187,17 +197,17 @@
                                             </tr>                                              
                                   @empty
                                             <tr class="bg-primary-subtle">
-                                              <td colspan="21"> </td>                                                                                          
+                                              <td colspan="22"> </td>                                                                                          
                                             </tr>
                                   @endforelse
                                   <tr class="bg-primary-subtle" >
-                                    <td colspan="20" class="border-0 p-0 pb-3" style="height:1px !important;"></td>
+                                    <td colspan="21" class="border-0 p-0 pb-3" style="height:1px !important;"></td>
                                   </tr>
 
                         @empty
                            <tr>
                             <td colspan="2"></td>
-                            <td colspan="9">
+                            <td colspan="10">
                               <div class="alert alert-danger text-center" role="alert">
                                   Data Sub Bagian {{ $data->bagian}} Kosong.
                               </div>
@@ -205,12 +215,12 @@
                           </tr>  
                         @endforelse
                       <tr class="bg-primary" >
-                        <td colspan="18" class="border-0 p-0 pb-3" style="height:1px !important;"></td>
+                        <td colspan="19" class="border-0 p-0 pb-3" style="height:1px !important;"></td>
                         <td class="border-0 p-0 pb-3 bg-dark" style="height:1px !important;"></td>
                       </tr>   
                       @empty
                       <tr>
-                        <td colspan="19">
+                        <td colspan="20">
                           <div class="alert alert-danger text-center" role="alert">
                               Data Rencana Anggaran Belanjan Kosong.
                           </div>
