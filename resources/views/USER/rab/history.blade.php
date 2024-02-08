@@ -106,7 +106,7 @@
                                 <td class="border-0">
                                   <p class="mb-0 fw-bold"> {{ $loop->parent->iteration }}.{{ $loop->iteration }} </p>
                                 </td> 
-                                <td class="border-0"> 
+                                <td class="border-0 text-wrap"> 
                                    {{ $data2->nama_subbagian }} 
                                 </td>                                                                    
                                  <td colspan="6" class="border-0"></td>
