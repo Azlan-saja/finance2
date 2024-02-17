@@ -55,6 +55,22 @@
               </a>
             </li>
            
+            <li class="sidebar-item {{ request()->is('pemasukan*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('pemasukan')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-trending-up"></i>
+                </span>
+                <span class="hide-menu">Pemasukan</span>
+              </a>
+            </li>
+            <li class="sidebar-item {{ request()->is('beban*') ? 'selected' : ''}}">
+              <a class="sidebar-link" href="{{ url('beban')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-trending-down"></i>
+                </span>
+                <span class="hide-menu">Beban</span>
+              </a>
+            </li>         
             <li class="sidebar-item {{ request()->is('laba-rugi*') ? 'selected' : ''}}">
               <a class="sidebar-link" href="{{ url('laba-rugi')}}" aria-expanded="false">
                 <span>

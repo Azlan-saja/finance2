@@ -106,10 +106,9 @@
                                 <td class="border-0">
                                   <p class="mb-0 fw-bold"> {{ $loop->parent->iteration }}.{{ $loop->iteration }} </p>
                                 </td> 
-                                <td class="text-wrap border-0"> 
+                                <td class="text-wrap border-0" colspan="7"> 
                                    {{ $data2->nama_subbagian }} 
                                 </td>                                                                    
-                                 <td colspan="6" class="border-0"></td>
                                  <td class="bg-info border-0">
                                   <h6 class="fw-bold text-white"> 
                                       {{ 'Rp.'.number_format($data2->subtotal2,0,",",".") }} 

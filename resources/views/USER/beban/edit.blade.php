@@ -1,5 +1,5 @@
-@extends('yys.sidebar')
-@section('title')Edit Beban - YYS @endsection
+@extends('user.sidebar')
+@section('title')Edit Beban - {{ Auth::user()->type }} @endsection
 
 @section('cssSidebar')
 @endsection
@@ -14,10 +14,10 @@
     <div class="card mb-0">
         <div class="card-body p-4">
             <!-- ISI START -->
-                <a href="{{ route('beban.index') }}" class="btn btn-dark m-1">Kembali</a>
+                <a href="{{ route('user.beban.index') }}" class="btn btn-dark m-1">Kembali</a>
                 <hr>
 
-                 <form action="{{ route('beban.update', $beban->id) }}" method="POST">
+                 <form action="{{ route('user.beban.update', $beban->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-body">     

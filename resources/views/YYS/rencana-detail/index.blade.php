@@ -116,12 +116,11 @@
                                 <td class="border-bottom-0">
                                   <p class="mb-0 fw-bold"> {{ $loop->parent->iteration }}.{{ $loop->iteration }} </p>
                                 </td> 
-                                <td class="border-bottom-0"> 
+                                <td class="border-bottom-0" colspan="4"> 
                                   <a href="{{ route('rencana-detail.create', ['rencana_id' => $id, 'subbagian' => $data2->id]) }}" class="btn mb-1 bg-primary-subtle me-2 btn-sm d-inline-flex align-items-center justify-content-center">
                                     <i class="fs-5 ti ti-playlist-add text-primary"></i> 
                                   </a> {{ $data2->subbagian }} 
                                 </td>                                                                    
-                                 <td colspan="3"></td>
                                  <td class="bg-info border-bottom-0">
                                   <h6 class="fw-bold text-white"> 
                                       {{ 'Rp. '.number_format($data2->totalsubbagian,0,",",".") }} 

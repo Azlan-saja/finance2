@@ -149,11 +149,11 @@ class RencanaController extends Controller
         if ($rencana->status == 'Closed'){
             $rencana->update(['status' => 'Open']);  
             return redirect()->route('rencana.index')
-                        ->with('success','Data Rencana Anggaran Belanja - RAB Berhasil di Open.');
+                        ->with('success','Data Rencana Anggaran Belanja - RAB Berhasil di Buka.');
         }else{
             $rencana->update(['status' => 'Closed']);  
             return redirect()->route('rencana.index')
-                        ->with('success','Data Rencana Anggaran Belanja - RAB Berhasil di Closed.');
+                        ->with('success','Data Rencana Anggaran Belanja - RAB Berhasil di Tutup.');
         }
 
     }

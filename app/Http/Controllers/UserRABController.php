@@ -85,7 +85,7 @@ class UserRABController extends Controller
             return view('user.rab.detail',compact('rencana','bagian','id'));                             
         }else{
              return redirect()->route('user.rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/Closed.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/RAB Telah di Tutup.');
  
         }
     }
@@ -95,7 +95,7 @@ class UserRABController extends Controller
     {                                                   
         $rencana = Rencana::where('id',$rencana_id)
                         ->where('unit',Auth::user()->lvl)
-                        ->where('status','Open')
+                        // ->where('status','Open')
                         ->first(['anggaran','unit','tahun']);       
         if ($rencana){
             $grandtotal = 0;
@@ -127,7 +127,7 @@ class UserRABController extends Controller
             return view('user.rab.history',compact('rencana'));                             
         }else{
              return redirect()->route('user.rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/Closed.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/RAB Telah di Tutup.');
  
         }
     }
@@ -172,7 +172,7 @@ class UserRABController extends Controller
             }
         }else{
               return redirect()->route('user.rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/RAB Telah di Tutup.');
         }
 
     }
@@ -264,7 +264,7 @@ class UserRABController extends Controller
             'status' => 'Closed',
         ]);        
         return redirect()->route('user.rencana.index')
-                        ->with('success','Rencana Anggaran Belanja - RAB Berhasil di Closed.');        
+                        ->with('success','Rencana Anggaran Belanja - RAB Berhasil di Tutup.');        
     }
 
 }

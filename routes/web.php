@@ -15,12 +15,15 @@ use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\RealisasiController;
 use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\BebanController;
+
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\LaporanController;
 
 use App\Http\Controllers\UserPenggunaController;
 use App\Http\Controllers\UserRABController;
 use App\Http\Controllers\UserRealisasiController;
+use App\Http\Controllers\UserBebanController;
+use App\Http\Controllers\UserPemasukanController;
 
 
 /*
@@ -94,7 +97,7 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
 
     Route::resource('yys/pengguna', PenggunaController::class);
     Route::post('yys/pengguna/search', [PenggunaController::class, 'cari'])->name('pengguna.search');
-    Route::patch('yys/pengguna/{pengguna}', [PenggunaController::class, 'reset'])->name('pengguna.reset');
+    Route::patch('yys/pengguna/reset/{pengguna}', [PenggunaController::class, 'reset'])->name('pengguna.reset');
 
 
     Route::get('yys/ubah-password', [PenggunaController::class, 'saya'])->name('pengguna-aktif.saya');
@@ -133,6 +136,29 @@ Route::middleware(['auth', 'user-access:RA|SD|SMP'])->group(function () {
 
     Route::get('laba-rugi', [LabaRugiController::class,'index'])->name('user.laba-rugi.index');
     Route::post('laba-rugi', [LabaRugiController::class,'search'])->name('user.laba-rugi.search');
+   
+    Route::resource('pemasukan', UserPemasukanController::class)->names([
+        'index' => 'user.pemasukan.index',
+        'create' => 'user.pemasukan.create',
+        'store' => 'user.pemasukan.store',
+        'show' => 'user.pemasukan.show',
+        'edit' => 'user.pemasukan.edit',
+        'update' => 'user.pemasukan.update',
+        'destroy' => 'user.pemasukan.destroy',
+    ]);
+    Route::post('pemasukan/search', [UserPemasukanController::class, 'cari'])->name('user.pemasukan.search');
+
+    Route::resource('beban', UserBebanController::class)->names([
+        'index' => 'user.beban.index',
+        'create' => 'user.beban.create',
+        'store' => 'user.beban.store',
+        'show' => 'user.beban.show',
+        'edit' => 'user.beban.edit',
+        'update' => 'user.beban.update',
+        'destroy' => 'user.beban.destroy',
+    ]);
+    Route::post('beban/search', [UserBebanController::class, 'cari'])->name('user.beban.search');
+
 
 });
 

@@ -54,7 +54,7 @@ class RencanaDetailController extends Controller
             return view('yys.rencana-detail.index',compact('rencana','bagian','id'));                             
         }else{
              return redirect()->route('rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Sudah Closed.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Sudah di Tutup.');
  
         }
     }
@@ -91,7 +91,7 @@ class RencanaDetailController extends Controller
             return view('yys.rencana-detail.history',compact('rencana'));                             
         }else{
              return redirect()->route('rencana.index')
-                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Tidak Ditemukan/RAB Telah di Tutup.');
  
         }
     }
@@ -137,7 +137,7 @@ class RencanaDetailController extends Controller
             }
         }else{
               return redirect()->route('rencana-detail.index',$rencana_id)
-                        ->with('error','Rencana Anggaran Belanja - RAB Sudah Closed.');
+                        ->with('error','Rencana Anggaran Belanja - RAB Sudah di Tutup.');
         }
 
     }
