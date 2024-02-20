@@ -1,5 +1,5 @@
-@extends('yys.sidebar')
-@section('title')Input Realisasi Anggaran - RAB - YYS @endsection
+@extends('user.sidebar')
+@section('title')Input Realisasi Anggaran - RAB - {{ Auth::user()->type }} @endsection
 
 @section('pages')
 <div class="container mt-4">
@@ -10,45 +10,45 @@
     <div class="card mb-0">
         <div class="card-body p-4">
             <!-- ISI START -->
-                <a href="{{ route('realisasi.index', $rencana_id) }}" class="btn btn-dark m-1">Kembali</a>
+                <a href="{{ route('user.realisasi.index', $rencana_id) }}" class="btn btn-dark m-1">Kembali</a>
                 <hr>
-                <form action="{{ route('realisasi.store', ['rencana_id' => $rencana_id, 'kegiatan_id' => $kegiatan_id, 'bulan' => $bulan]) }}" method="POST">
+                <form action="{{ route('user.realisasi.store', ['rencana_id' => $rencana_id, 'kegiatan_id' => $kegiatan_id, 'bulan' => $bulan]) }}" method="POST">
                     @csrf
                     <div class="form-body">
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Unit</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $rencana->unit }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $rencana->unit }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Tahun</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $rencana->tahun }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $rencana->tahun }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Bagian</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $rencanadetail->nama_bagian }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $rencanadetail->nama_bagian }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Sub Bagian</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $rencanasubbagian->nama_subbagian }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $rencanasubbagian->nama_subbagian }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Uraian Kegiatan</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $kegiatan->nama_kegiatan }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $kegiatan->nama_kegiatan }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Bulan Ke-</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info"> {{ $bulan }} </span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $bulan }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            

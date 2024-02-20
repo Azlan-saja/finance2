@@ -1,9 +1,6 @@
 @extends('yys.sidebar')
 @section('title')Realisasi Anggaran - RAB - YYS @endsection
 
-
-
-
 @section('cssSidebar')
 <style>
   th:last-child, td:last-child
@@ -127,7 +124,7 @@
                         </th>                       
                       </tr>
                     </thead>
-                    <tbody class="draggable">
+                    <tbody>
                     @forelse ($rencana->bagian as $index => $data)
                       <tr class="bg-primary-subtle">    
                         <td class="frezz">
@@ -242,29 +239,6 @@
         </div>        
 @endsection
 
-@section('jsSidebar')  
-  <script>
-    let isMouseDown = false;
-    let startX;
-    let scrollLeft;
-   const table = document.querySelector('.table-responsive');
+@section('jsSidebar')
 
-    table.addEventListener('mousedown', (e) => {
-        isMouseDown = true;
-        startX = e.pageX - table.offsetLeft;
-        scrollLeft = table.scrollLeft;
-    });
-
-    table.addEventListener('mousemove', (e) => {
-        if (!isMouseDown) return;
-        e.preventDefault();
-        const x = e.pageX - table.offsetLeft;
-        const walk = (x - startX) * 2;
-        table.scrollLeft = scrollLeft - walk;
-    });
-
-    table.addEventListener('mouseup', () => {
-        isMouseDown = false;
-    });
-  </script>
 @endsection

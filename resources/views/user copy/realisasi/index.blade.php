@@ -1,8 +1,5 @@
-@extends('yys.sidebar')
-@section('title')Realisasi Anggaran - RAB - YYS @endsection
-
-
-
+@extends('user.sidebar')
+@section('title')Realisasi Anggaran - RAB - {{ Auth::user()->type }} @endsection
 
 @section('cssSidebar')
 <style>
@@ -27,10 +24,9 @@
               <div class="card mb-0">
                 <div class="card-body p-4" >
                 <!-- ISI START -->
-                <a href="{{ route('rencana.index') }}" class="btn btn-dark m-1">Kembali</a>
+                <a href="{{ route('user.rencana.index') }}" class="btn btn-dark m-1">Kembali</a>
                 <!-- <button id="toggle" type="button" class="btn btn-outline-warning m-1">Full Layer</button> -->
-                <a href="{{ route('realisasi.index', $rencana_id) }}" class="btn btn-outline-primary m-1">Segarkan</a>
-                <a href="{{ route('laporan.realisasi', $rencana_id) }}" target="_blank" class="btn btn-outline-danger m-1 position-absolute end-0 me-4">Cetak</a>                
+                <a href="{{ route('user.realisasi.index', $rencana_id) }}" class="btn btn-outline-primary m-1">Segarkan</a>
                 <hr>
 
                 @if ($message = Session::get('success'))
@@ -50,7 +46,7 @@
                   <div class="d-flex align-items-center gap-4 p-1 mb-3 rounded bg-info-subtle shadow-none" style="overflow: auto;">
                     <div class="position-relative">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-check" width="60" height="60" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /><path d="M15 19l2 2l4 -4" /></svg>
-                    </div>                    
+                    </div>                   
                     <div class="pe-5">
                        <h5 class="fw-semibold">
                         {{ $rencana->unit }}
@@ -82,7 +78,7 @@
                       <span class="fw-bold">Sisa Anggaran</span>
                     </div>
                   </div>
-            
+           
                   <div class="alert alert-warning alert-dismissible rounded-pill  border-0 fade show text-middle" role="alert">
                     <button type="button" class="btn-close btn-close-primary" data-bs-dismiss="alert" aria-label="Close"></button>
                     <div class="d-flex align-items-center font-medium me-3 me-md-0 ">
@@ -90,17 +86,17 @@
                      </div>
                   </div>     
 
-
+ 
 
                 <div class="table-responsive  rounded-2 mb-4">
                   <table class="table border text-nowrap customize-table mb-0 align-middle ">
-                    <thead class="text-dark fs-4">
+                    <thead class="text-dark fs-4" style="position:sticky;">
                       <tr class="bg-dark">
-                        <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">
-                          #
+                        <th class="border-bottom-0 frezz align-middle">
+                          <span class="fw-semibold mb-0 text-white align-middle">#</span>
                         </th>                       
                         <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
-                          Kode                        
+                          Kode                       
                         </th>                       
                         <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
                           Uraian Kegiatan                       
@@ -110,13 +106,13 @@
                         </th>                                                                                       
                         <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
                           Sumber Anggaran                       
-                        </th>                                                                                                                   
+                        </th>                                                                                       
                         <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
                           Besar Anggaran                       
                         </th>
                         <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
                           Volume                       
-                        </th>    
+                        </th>     
                         @for ($i = 1; $i <= 12; $i++)
                         <th class="border-bottom-0 fw-semibold mb-0 text-white text-wrap align-middle">  
                           {{ $i }}                      
@@ -127,8 +123,8 @@
                         </th>                       
                       </tr>
                     </thead>
-                    <tbody class="draggable">
-                    @forelse ($rencana->bagian as $index => $data)
+                    <tbody>
+                    @forelse ($rencana->bagian as $data)
                       <tr class="bg-primary-subtle">    
                         <td class="frezz">
                           <h6 class="fw-bold mb-0">{{ $loop->iteration}}</h6>
@@ -166,20 +162,20 @@
                                   @forelse($data2->kegiatan as $data3)
                                             <tr class="border-bottom">                                              
                                               <td class="bg-primary-subtle border-0 frezz"></td>
-                                              <td class="bg-info text-white border-0 text-end frezz">{{ $index+1 }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}</td>
+                                              <td class="bg-info text-white border-0 text-end frezz">{{ $data->index+1 }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}</td>
                                               <td class="bg-info text-white border-0 text-wrap frezz">
                                                 {{ $data3->nama_kegiatan }}
                                                 <br>
                                                 
-                                                
+                                                 
                                               </td>
                                               <td class="bg-info text-white border-0 text-wrap frezz">{{ $data3->sasaran }}</td>
                                               <td class="bg-info text-white border-0 text-wrap" frezz>{{ $data3->anggaran }}</td>
                                               <td class="bg-info text-white border-0">Rp.{{ number_format($data3->jumlah_sasaran * str_replace('.','',$data3->harga) * $data3->volume,0,",",".") }}</td>
                                               <td class="bg-info text-white border-0 text-center">{{ $data3->volume }}</td>
-                                              @for ($i = 1; $i <= 12; $i++)
+                                             @for ($i = 1; $i <= 12; $i++)
                                                   <td class="bg-info text-white border-0 border-start border-end">                                                 
-                                                  <a href="{{ route('realisasi.create', ['rencana_id' => $rencana_id, 'kegiatan_id' => $data3->id, 'bulan' => $i]) }}" class="btn mb-1 bg-primary-subtle text-primary me-2 btn-sm d-inline-flex align-items-center justify-content-center">
+                                                  <a href="{{ route('user.realisasi.create', ['rencana_id' => $rencana_id, 'kegiatan_id' => $data3->id, 'bulan' => $i]) }}" class="btn mb-1 bg-primary-subtle text-primary me-2 btn-sm d-inline-flex align-items-center justify-content-center">
                                                     {{ $i }}<i class="fs-5 ti ti-edit text-primary"></i> 
                                                   </a> 
                                                   @forelse($data3->realisasi as $data4)
@@ -242,29 +238,6 @@
         </div>        
 @endsection
 
-@section('jsSidebar')  
-  <script>
-    let isMouseDown = false;
-    let startX;
-    let scrollLeft;
-   const table = document.querySelector('.table-responsive');
+@section('jsSidebar')
 
-    table.addEventListener('mousedown', (e) => {
-        isMouseDown = true;
-        startX = e.pageX - table.offsetLeft;
-        scrollLeft = table.scrollLeft;
-    });
-
-    table.addEventListener('mousemove', (e) => {
-        if (!isMouseDown) return;
-        e.preventDefault();
-        const x = e.pageX - table.offsetLeft;
-        const walk = (x - startX) * 2;
-        table.scrollLeft = scrollLeft - walk;
-    });
-
-    table.addEventListener('mouseup', () => {
-        isMouseDown = false;
-    });
-  </script>
 @endsection

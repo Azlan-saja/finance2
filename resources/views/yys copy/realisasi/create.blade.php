@@ -18,37 +18,37 @@
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Unit</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $rencana->unit }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $rencana->unit }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Tahun</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $rencana->tahun }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $rencana->tahun }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Bagian</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $rencanadetail->nama_bagian }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $rencanadetail->nama_bagian }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Sub Bagian</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $rencanasubbagian->nama_subbagian }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $rencanasubbagian->nama_subbagian }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Uraian Kegiatan</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info">  {{ $kegiatan->nama_kegiatan }}</span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $kegiatan->nama_kegiatan }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label">Bulan Ke-</label>                         
-                                <label class="col-lg-10 "> <span class="ps-3 pe-4 badge rounded-2 pb-2 pt-2 w-100 text-start font-medium bg-info-subtle text-info"> {{ $bulan }} </span></label>                                                                                 
+                                <label class="col-lg-10 form-label">: {{ $bulan }}</label>                                                                                 
                             </div>                     
                         </div>                     
                         <div class="mb-3">                            
