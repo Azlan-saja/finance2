@@ -112,38 +112,17 @@
         text-align: left;
         vertical-align: top;
     }
-    .foot{
-      font-size:0.8em;
-    }
-    .smooth-rule {
-        height: 1px; /* Set the height of the line */
-        background-color: #2A3547; /* Set the color of the line */ /* Create a gradient for the line */
-        border: none; /* Remove any border */
-        margin: 2px 0 0 0; /* Add some spacing above and below the line */
-        padding: 0; /* Add some spacing above and below the line */
-    }
     </style>
 </head>
 
 <body>
-    <div class="head">
-        <table style="border:1px;">
-            <tr>
-                <td> 
-                    <img src="{{ public_path('assets/logo.jpg') }}" alt="logo">                   
-                </td>
-                <td  style="width:50%;vertical-align: bottom;">
-                    <h3>YSPDI ROBBANI</h3>
-                </td>
-                <td  style="width:100%;text-align:right;vertical-align: bottom;padding:0;margin:0;"> 
-                    <h5 style="padding:0;margin:0;">{{ $title }}</h5>
-                    <p style="padding:0;margin:0;margin-bottom:2px;">{{ date('d M Y')}}</p>
-                </td>
-            </tr>
-        </table> 
-        <div class="smooth-rule"></div>  
-
-    <div class="table-unit" style="padding-top:3px;">
+    <div class="pdf-content">
+        <!-- Your content goes here -->
+        <h2>{{ $title }}</h2>
+        <p>{{ date('d/m/y')}}</p>
+    
+                  
+    <div class="table-unit">
         <table>
             <thead>
                 <tr> 
@@ -286,20 +265,5 @@
             </tbody>
         </table>
     </div></div>
-
-<table class="foot" style="border:1px;text-align:center;">
-        <tr>
-            <td style="width:50%"></td>
-            <td style="width:50%"> Rantau Prapat, {{ date('d M Y')}}</td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="padding-bottom: 40px;width:50%">Divalidasi Oleh,</td>
-            <td style="padding-bottom: 40px;width:50%">Diserahkan Oleh,</td>
-        </tr>        
-        <tr>
-            <td style="width:50%">__________________________</td>
-            <td style="width:50%"><u>{{ Auth()->user()->name }}</u></td>
-        </tr>           
-    </table> 
 </body>
 </html>

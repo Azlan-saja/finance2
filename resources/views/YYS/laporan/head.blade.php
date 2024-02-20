@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -5,6 +7,7 @@
     <style>
      body {
         font-family: "Times New Roman", Times, serif;
+        font-size: 0.5em;
     }
 
     .pdf-content {
@@ -101,7 +104,7 @@
         color: black;
     }
     .table-unit thead tr:nth-child(even)  {
-        font-size:12px;
+        font-size:0.7em;
     }
 
     /* Style for the table header cells */
@@ -111,7 +114,32 @@
         vertical-align: top;
     }
     .page-break {
-            page-break-after: always;
-        }
+        page-break-after: always;
+    }
+    .smooth-rule {
+        height: 1px; /* Set the height of the line */
+        background-color: #2A3547; /* Set the color of the line */ /* Create a gradient for the line */
+        border: none; /* Remove any border */
+        margin: 2px 0 0 0; /* Add some spacing above and below the line */
+        padding: 0; /* Add some spacing above and below the line */
+    }
     </style>
-</head>
+</head>   
+<body>
+    <div class="pdf-content">
+        <table style="border:1px;">
+            <tr>
+                <td> 
+                    <img src="{{ public_path('assets/logo.jpg') }}" alt="logo">                   
+                </td>
+                <td  style="width:50%;vertical-align: bottom;">
+                    <h1>YSPDI ROBBANI</h1>
+                </td>
+                <td  style="width:100%;text-align:right;vertical-align: bottom;"> 
+                    <h2>{{ $title }}</h2>
+                    <p>{{ date('d M Y')}}</p>
+                </td>
+            </tr>
+        </table> 
+        <div class="smooth-rule"></div>              
+    </div>

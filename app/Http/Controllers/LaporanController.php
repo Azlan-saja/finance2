@@ -55,11 +55,13 @@ class LaporanController extends Controller
     {
         $kegiatan = Kegiatan::orderBy('kegiatan','asc')->get();
         $title = "Laporan Data Kegiatan";
+        //return view('yys.laporan.kegiatan', compact('kegiatan','title'));  
+        
         $pdf = PDF::loadView('yys.laporan.kegiatan', compact('kegiatan','title'));  
         $pdf->output();
         $domPdf = $pdf->getDomPDF();  
         $canvas = $domPdf->get_canvas();
-        $canvas->page_text($canvas->get_width() - 70, $canvas->get_height() - 30, "Hal {PAGE_NUM}/{PAGE_COUNT}", null, 10, [0, 0, 0]);
+        $canvas->page_text($canvas->get_width() - 70, $canvas->get_height() - 30, "Hal {PAGE_NUM}/{PAGE_COUNT}", null, 10, [0, 0, 0]);        
         return $pdf->download($title.'-'.date('d-m-Y').'.pdf');
     }
     public function sasaran()
@@ -362,8 +364,12 @@ class LaporanController extends Controller
                     $unit = $rencana->unit;
                     $pendapatan = $pemasukan['total'] - $pengeluaran['total'];     
                     
+                    $xmasuk = substr($tahun, 0, 4);
+                    $beban = Beban::where('akhir','>=',$xmasuk)                       
+                                    ->get();        
+                                    
                     $title = "Laporan Data Laba Rugi Unit ".$unit;    
-                    $pdf = PDF::loadView('yys.laporan.laba-rugi', compact('unit','tahun','pemasukan','pengeluaran', 'pendapatan','title'));  
+                    $pdf = PDF::loadView('yys.laporan.laba-rugi', compact('unit','tahun','pemasukan','pengeluaran', 'pendapatan','title','beban'));  
                     $pdf->output();
                     $domPdf = $pdf->getDomPDF();  
                     $canvas = $domPdf->get_canvas();

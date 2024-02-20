@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    @include('yys.laporan.head')
-<body>
-    <div class="pdf-content">
-        <!-- Your content goes here -->
-        <h2>{{ $title }}</h2>
-        <p>{{ date('d/m/y')}}</p>
-    </div>
+@include('yys.laporan.head')
 @forelse ($hasil as $hasils)
-    <div class="table-unit">
+    <div class="table-unit" style="padding-top:3px;">
         <table>
             <thead>
                 <tr> 
@@ -141,5 +133,4 @@
         </table>
     </div>
 
-</body>
-</html>
+@include('yys.laporan.foot')

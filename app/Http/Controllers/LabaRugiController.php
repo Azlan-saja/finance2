@@ -141,7 +141,11 @@ class LabaRugiController extends Controller
                     if ($unit == "SD") $pi = 1;
                     if ($unit == "RA") $pi = 0;
 
-                    return view('yys.laba-rugi.search',compact('pi', 'unit','tahun','pemasukan','pengeluaran', 'pendapatan'));
+                    $xmasuk = substr($tahun, 0, 4);
+                    $beban = Beban::where('akhir','>=',$xmasuk)                       
+                                    ->get();    
+                                    
+                    return view('yys.laba-rugi.search',compact('pi', 'unit','tahun','pemasukan','pengeluaran', 'pendapatan','beban'));
                 }else{
                     return redirect()->back()->withInput()
                                 ->with('error','Laba Rugi Tidak Ditemukan.');

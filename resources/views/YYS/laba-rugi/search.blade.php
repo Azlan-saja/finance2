@@ -205,7 +205,7 @@
                     </div>
                   </div>
 
-                  <div class="card bg-primary-subtle rounded-2">
+                  <!-- <div class="card bg-primary-subtle rounded-2">
                     <div class="card-body text-center">
                       <div class="d-flex align-items-center justify-content-center mb-4 pt-8">
                         <i class="ti ti-arrows-down fs-6"></i>
@@ -215,10 +215,83 @@
                         Total Pendapatan
                       </p>             
                   </div>
-                </div>
+                </div> -->
 
-
+<hr>
                
+                 <div class="d-flex mt-4">
+                          <div class="p-6 bg-success text-white rounded-2 me-6 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-arrows-down fs-6"></i> &nbsp; Data Beban Tersedia
+                          </div>                          
+                        </div>
+                 <div class="table-responsive rounded-2 mb-4">
+                            <table class="table border text-nowrap customize-table mb-0 align-middle table-striped">                 
+                            <thead class="text-dark fs-4">
+                              <tr class="bg-success">
+                                <th class="border-bottom-0 frezz">
+                                  <span class="fw-semibold mb-0 text-white align-middle">#</span>
+                                </th>                                                                
+                                <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
+                                  Nama Beban                     
+                                </th>                                                                                       
+                                <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
+                                  Masa                       
+                                </th>                                                                                                                                    
+                                <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
+                                  Besaran                       
+                                </th>                                                                                                                                    
+                              </tr>
+                            </thead>
+                            <tbody>
+                           @forelse ($beban as $bebans)
+                              <tr>    
+                                <td class="border-bottom-0">
+                                  <h6 class="fw-bold mb-0">
+                                    {{ $loop->index+1 }}
+                                  </h6>
+                                </td>             
+                                <td class="border-bottom-0 text-wrap">
+                                  <p class="mb-0 fw-bold">
+                                    {{ $bebans['nama'] }}
+                                  </p>
+                                </td>     
+                                 <td class="border-bottom-0 text-wrap">
+                                  <p class="mb-0 fw-bold">
+                                    {{ $bebans['masuk'] .'-'. $bebans['akhir'] }}
+                                  </p>
+                                </td>                        
+                                <td class="border-bottom-0">
+                                  <h6 class="fw-bold"> 
+                                    {{ 'Rp. '.number_format($bebans['besaran'],0,",",".") }}
+                                  </h6>
+                                </td>                                  
+                              </tr>
+                               @empty
+                               <tr>
+                                <td colspan="4">
+                                  <div class="alert alert-danger text-center" role="alert">
+                                      Data Beban Kosong.
+                                  </div>
+                                </td>
+                              </tr>                
+                              @endforelse                                        
+                            </tbody>
+                            <tfoot>
+                              <tr class="bg-dark">
+                                <td colspan="3" class="text-end">
+                                  <h6 class="fw-bold fs-5 text-success"> 
+                                    Total Keseluruhan
+                                  </h6>                                  
+                                </td>
+                               <td>
+                                  <h6 class="fw-bold fs-5 text-success"> 
+                                    {{ 'Rp. '.number_format($beban->sum('besaran'),0,",",".") }}
+                                  </h6>
+                                </td>                                    
+                              </tr>
+                            </tfoot>
+                          </table>  
+
                 <!-- ISI END -->
                 </div>
               </div>        

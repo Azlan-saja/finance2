@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-    @include('yys.laporan.head')
-<body>
-    <div class="pdf-content">
-        <!-- Your content goes here -->
-        <h2>{{ $title }}</h2>
-        <p>{{ date('d/m/y')}}</p>
-    </div>
-
-    <div class="table-unit">
+@include('yys.laporan.head')
+    <div class="table-unit" style="padding-top:3px;">
         <table>
             <thead>
                 <tr> 
@@ -101,7 +92,41 @@
         </table>
     </div>
 
+<div class="page-break"></div>
+ <div class="table-container">
+        <h3 style="padding:0px;margin:0px;">Data Beban Tersedia</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nama Beban</th>
+                    <th>Masa</th>                                      
+                    <th>Besaran</th>                                      
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($beban as $bebans)
+                <tr>
+                    <td>{{ $loop->index+1 }}.</td>
+                    <td>{{ $bebans['nama'] }}</td>                    
+                    <td>{{ $bebans['masuk'] .'-'. $bebans['akhir'] }}</td>   
+                    <td>{{ 'Rp.'.number_format($bebans['besaran'],0,",",".") }}</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="3" class="text-center"> Data Beban Kosong. </td>
+                </tr>
+                @endforelse
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" style="text-align:right;">Total Keseluruhan</td>
+                    <td>                                  
+                        {{ 'Rp.'.number_format($beban->sum('besaran'),0,",",".") }}
+                    </td>    
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 
-
-</body>
-</html>
+@include('yys.laporan.foot')

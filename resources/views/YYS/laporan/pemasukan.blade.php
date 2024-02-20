@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-    @include('yys.laporan.head')
-<body>
-    <div class="pdf-content">
-        <!-- Your content goes here -->
-        <h2>{{ $title }}</h2>
-        <p>{{ date('d/m/y')}}</p>
-    </div>
+@include('yys.laporan.head')
     <div class="table-container">
         <table>
             <thead>
@@ -40,5 +32,4 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
+@include('yys.laporan.foot')
