@@ -144,27 +144,27 @@ class RealisasiController extends Controller
             //                     ->max(1024),
             //             ],
         ]);
-        return $request->all();
-        // $realisasi = Realisasi::updateOrCreate(
-        //     [
-        //         'rencana_id' => $request->rencana_id, 
-        //         'rencana_detail_id' => $request->rencana_detail_id, 
-        //         'rencana_detail_subbagian_id' => $request->rencana_detail_subbagian_id, 
-        //         'rencana_detail_kegiatan_id' => $request->rencana_detail_kegiatan_id, 
-        //         'subbagian_id' => $request->subbagian_id, 
-        //         'bagian_id' => $request->bagian_id, 
-        //     ],
-        //     [
-        //         'b'.$bulan => str_replace('.','',$request->nominal), 
-        //     ]
-        // );
-        // if ($realisasi){
-        //     return redirect()->route('realisasi.index', $rencana_id)
-        //                 ->with('success','Input Realisasi Anggaran Berhasil.');
-        // }else{
-        //       return redirect()->route('realisasi.index', $rencana_id)
-        //                 ->with('error','Gagal Input Realisasi Anggaran.');
-        // }
+        // return $request->all();
+        $realisasi = Realisasi::updateOrCreate(
+            [
+                'rencana_id' => $request->rencana_id, 
+                'rencana_detail_id' => $request->rencana_detail_id, 
+                'rencana_detail_subbagian_id' => $request->rencana_detail_subbagian_id, 
+                'rencana_detail_kegiatan_id' => $request->rencana_detail_kegiatan_id, 
+                'subbagian_id' => $request->subbagian_id, 
+                'bagian_id' => $request->bagian_id, 
+            ],
+            [
+                'b'.$bulan => str_replace('.','',$request->nominal), 
+            ]
+        );
+        if ($realisasi){
+            return redirect()->route('realisasi.index', $rencana_id)
+                        ->with('success','Input Realisasi Anggaran Berhasil.');
+        }else{
+              return redirect()->route('realisasi.index', $rencana_id)
+                        ->with('error','Gagal Input Realisasi Anggaran.');
+        }
     }
 
     /**
