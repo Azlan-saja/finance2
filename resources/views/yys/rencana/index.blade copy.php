@@ -33,7 +33,7 @@
                   <form action="{{ route('rencana.search') }}" method="POST">
                      @csrf               
                     <div class="input-group mb-3">
-                      <input type="search" class="form-control @error('cari') is-invalid @enderror" placeholder="Pencarian" name="cari" required>                      
+                      <input type="text" class="form-control @error('cari') is-invalid @enderror" placeholder="Pencarian" name="cari" required>                      
                       <button class="btn bg-primary-subtle text-primary rounded-end font-medium" type="submit">
                         Cari
                       </button> 
@@ -116,7 +116,7 @@
                                       <a class="dropdown-item d-flex align-items-center gap-3 text-primary" href="{{ route('rencana-detail.index',$data->id) }}"><i class="fs-4 ti ti-calendar-plus"></i>Rencana</a>
                                     </li>
                                       <li>
-                                      <form action="{{ route('rencana.closed.rencana',$data->id) }}" method="POST">
+                                      <form action="{{ route('rencana.closed',$data->id) }}" method="POST">
                                         @csrf  
                                         @method('PUT')                                                  
                                         <button type="submit" class="dropdown-item d-flex align-items-center gap-3 {{ $data->status == 'Open' ? 'text-bg-danger show_closed' : 'text-bg-success show_open' }}"><i class="fs-4 ti {{ $data->status == 'Open' ? 'ti-lock-off' : 'ti-lock-question' }}"></i>{{ $data->status == 'Open' ? 'Closed Rencana?' : 'Open Rencana?' }}</button>
@@ -127,35 +127,10 @@
                             </div>
                             <span class="mb-1 badge rounded-pill {{ $data->status == 'Open' ? 'text-bg-success' : 'text-bg-danger' }}">{{ $data->status }} </span>
                           </div>
+
                         </td>
                          <td class="border-bottom-0">
-                           <div class="d-flex align-items-center">
-                            <div class="d-flex align-items-center gap-2">
-                              <div class="dropdown dropstart d-block">
-                                  <a href="#" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="ti ti-dots-vertical fs-6"></i>
-                                  </a>
-                                  <ul class="dropdown-menu mt-0 pt-0" aria-labelledby="dropdownMenuButton">
-                                     <li>
-                                      <span class="bg-dark dropdown-item d-flex align-items-center gap-3 text-white text-center">{{ $data->unit }}<br>Rp. {{$data->anggaran }}</span>
-                                    </li> 
-                                     @if ($data->status_realisasi !== 'Waiting')
-                                     <li>
-                                        <a class="dropdown-item d-flex align-items-center gap-3 text-secondary" href="{{ route('realisasi.index',$data->id) }}"><i class="fs-4 ti ti-calendar-week"></i>Realisasi</a>
-                                      </li>
-                                      <li>
-                                        <form action="{{ route('rencana.closed.realisasi',$data->id) }}" method="POST">
-                                          @csrf  
-                                          @method('PUT')                                                  
-                                          <button type="submit" class="dropdown-item d-flex align-items-center gap-3 {{ $data->status_realisasi == 'Open' ? 'text-bg-danger show_closed_realisasi' : 'text-bg-success show_open_realisasi' }}"><i class="fs-4 ti {{ $data->status_realisasi == 'Open' ? 'ti-lock-off' : 'ti-lock-question' }}"></i>{{ $data->status_realisasi == 'Open' ? 'Closed Realisasi?' : 'Open Realisasi?' }}</button>
-                                        </form>
-                                      </li>
-                                      @endif
-                                  </ul>
-                              </div>
-                            </div>
-                            <span class="mb-1 badge rounded-pill {{ $data->status_realisasi == 'Waiting' ? 'text-bg-warning' : ($data->status_realisasi == 'Open' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $data->status_realisasi }} </span>
-                          </div>
+                          <span class="mb-1 badge rounded-pill {{ $data->status_realisasi == 'Waiting' ? 'text-bg-warning' : ($data->status_realisasi == 'Open' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $data->status_realisasi }} </span>
                         </td>
                            <td class="border-bottom-0">
                           <div class="d-flex align-items-center gap-2">
@@ -163,7 +138,17 @@
                               <a href="#" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="ti ti-dots-vertical fs-6"></i>
                               </a>
-                              <ul class="dropdown-menu mt-0 pt-0" aria-labelledby="dropdownMenuButton">                                                             
+                              <ul class="dropdown-menu mt-0 pt-0" aria-labelledby="dropdownMenuButton">                               
+                                <li>
+                                  <a class="dropdown-item d-flex align-items-center gap-3 text-success" href="{{ route('realisasi.index',$data->id) }}"><i class="fs-4 ti ti-calendar-week"></i>Realisasi</a>
+                                </li>
+                                <li>
+                                  <form action="{{ route('rencana.closed',$data->id) }}" method="POST">
+                                    @csrf  
+                                    @method('PUT')                                                  
+                                    <button type="submit" class="dropdown-item d-flex align-items-center gap-3 {{ $data->status == 'Open' ? 'text-bg-danger show_closed' : 'text-bg-success show_open' }}"><i class="fs-4 ti {{ $data->status == 'Open' ? 'ti-lock-off' : 'ti-lock-question' }}"></i>{{ $data->status == 'Open' ? 'Closed Rencana?' : 'Open Rencana?' }}</button>
+                                  </form>
+                                </li>
                                 <li>
                                   <span class="bg-dark dropdown-item d-flex align-items-center gap-3 text-white text-center">{{ $data->unit }}<br>Rp. {{$data->anggaran }}</span>
                                 </li>                               
@@ -212,28 +197,13 @@
 <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
 <script>
 $( document ).ready(function() {
+
    $('.show_closed').click(function(event) {
     var form =  $(this).closest("form");
     event.preventDefault();
     swal({
-              title: "Closed Rencana RAB?",
-              text: "Jika rencana RAB di tutup, maka data tersebut tidak bisa diubah kembali.",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        form.submit();
-      }
-    });
-  });
-   $('.show_closed_realisasi').click(function(event) {
-    var form =  $(this).closest("form");
-    event.preventDefault();
-    swal({
-              title: "Closed Realisasi RAB?",
-              text: "Jika realisasi RAB di tutup, maka data tersebut tidak bisa diubah kembali.",
+              title: "Closed RAB Terpilih?",
+              text: "Jika RAB di tutup, maka data tersebut tidak bisa diubah kembali.",
               icon: "warning",
               buttons: true,
               dangerMode: true,
@@ -248,24 +218,8 @@ $( document ).ready(function() {
     var form =  $(this).closest("form");
     event.preventDefault();
     swal({
-              title: "Open Rencana RAB?",
-              text: "Jika rencana RAB di buka, maka data tersebut bisa diubah kembali.",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        form.submit();
-      }
-    });
-  });
-   $('.show_open_realisasi').click(function(event) {
-    var form =  $(this).closest("form");
-    event.preventDefault();
-    swal({
-              title: "Open Realisasi RAB?",
-              text: "Jika realisasi RAB di buka, maka data tersebut bisa diubah kembali.",
+              title: "Open RAB Terpilih?",
+              text: "Jika RAB di buka, maka data tersebut bisa diubah kembali.",
               icon: "warning",
               buttons: true,
               dangerMode: true,

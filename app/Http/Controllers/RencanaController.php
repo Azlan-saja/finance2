@@ -142,18 +142,46 @@ class RencanaController extends Controller
                         ->with('success','Hapus Data Rencana Anggaran Belanja - RAB Berhasil.');
     }
     
-    public function closed(rencana $rencana)
+    public function closed_rencana(rencana $rencana)
     {
         // $rencana = Rencana::find($id);
         // return $rencana;
         if ($rencana->status == 'Closed'){
-            $rencana->update(['status' => 'Open']);  
+            $rencana->update([
+                'status' => 'Open',
+                'status_realisasi' => 'Waiting',
+            ]);  
             return redirect()->route('rencana.index')
                         ->with('success','Data Rencana Anggaran Belanja - RAB Berhasil di Buka.');
         }else{
-            $rencana->update(['status' => 'Closed']);  
+            $rencana->update([
+                'status' => 'Closed',
+                 'status_realisasi' => 'Open',
+            ]);  
             return redirect()->route('rencana.index')
                         ->with('success','Data Rencana Anggaran Belanja - RAB Berhasil di Tutup.');
+        }
+
+    }
+
+    public function closed_realisasi(rencana $rencana)
+    {
+        // $rencana = Rencana::find($id);
+        // return $rencana;
+        if ($rencana->status_realisasi == 'Closed'){
+            $rencana->update([
+                'status_realisasi' => 'Open',
+                'status' => 'Closed',
+            ]);  
+            return redirect()->route('rencana.index')
+                        ->with('success','Data Realisasi RAB Berhasil di Buka.');
+        }else if($rencana->status_realisasi == 'Open'){
+            $rencana->update([
+                'status_realisasi' => 'Closed',
+                'status' => 'Closed',
+            ]);  
+            return redirect()->route('rencana.index')
+                        ->with('success','Data Realisasi RAB Berhasil di Tutup.');
         }
 
     }

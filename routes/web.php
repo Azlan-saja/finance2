@@ -76,7 +76,8 @@ Route::middleware(['auth', 'user-access:YYS'])->group(function () {
     
     Route::resource('yys/rencana', RencanaController::class);
     Route::post('yys/rencana/search', [RencanaController::class, 'cari'])->name('rencana.search');
-    Route::put('yys/rencana/closed/{rencana}', [RencanaController::class, 'closed'])->name('rencana.closed');
+    Route::put('yys/rencana/closed/{rencana}/rencana', [RencanaController::class, 'closed_rencana'])->name('rencana.closed.rencana');
+    Route::put('yys/rencana/closed/{rencana}/realisasi', [RencanaController::class, 'closed_realisasi'])->name('rencana.closed.realisasi');
 
 
     Route::resource('yys/rencana/{rencana_id}/rencana-detail', RencanaDetailController::class)->except(['create','store','destroy','show','update','edit']);

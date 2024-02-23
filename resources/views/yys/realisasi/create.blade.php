@@ -12,7 +12,7 @@
             <!-- ISI START -->
                 <a href="{{ route('realisasi.index', $rencana_id) }}" class="btn btn-dark m-1">Kembali</a>
                 <hr>
-                <form action="{{ route('realisasi.store', ['rencana_id' => $rencana_id, 'kegiatan_id' => $kegiatan_id, 'bulan' => $bulan]) }}" method="POST">
+                <form action="{{ route('realisasi.store', ['rencana_id' => $rencana_id, 'kegiatan_id' => $kegiatan_id, 'bulan' => $bulan]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-body">
                         <div class="mb-3">                            
@@ -68,6 +68,23 @@
                                     </span>
                                     @enderror
                                 </div>                          
+                            </div>
+                        </div>                                                                                                        
+                        <div class="mb-3">                            
+                            <div class="row">
+                                <label class="col-lg-2 form-label pt-2">Bukti (PDF)</label>                         
+                                <div class="col-lg-10">
+                                    <input class="form-control  @error('bukti') is-invalid @enderror" name="bukti" type="file" accept="application/pdf" >
+                                    @error('bukti')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    <div class="d-flex justify-content-start">
+                                        <small class="badge badge-default text-success font-medium bg-success-subtle form-text">**Jika ada.</small>
+                                    </div>  
+                                </div>  
+                                                      
                             </div>
                         </div>                                                                                                        
                         <div class="form-actions col-lg-10 ms-auto">

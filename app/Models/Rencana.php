@@ -13,7 +13,7 @@ class Rencana extends Model
     use HasFactory;
 
     protected $table = 'rencana';
-    protected $fillable = ['anggaran','unit','tahun','status'];
+    protected $fillable = ['anggaran','unit','tahun','status','status_realisasi'];
     protected $appends = [
         'lvl'
     ];

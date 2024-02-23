@@ -12,6 +12,8 @@ use App\Models\RencanaDetailKegiatan;
 
 use Illuminate\Support\Facades\Auth;
 use DB;
+// use Illuminate\Validation\Rules\File;
+// use Illuminate\Support\Facades\Validator;
 
 class RealisasiController extends Controller
 {
@@ -24,9 +26,9 @@ class RealisasiController extends Controller
     {                                                   
         $rencana = Rencana::where('id',$rencana_id)
                     // ->where('status','Closed')                 
+                    // ->where('status_realisasi','Open')                 
                     ->first(['anggaran','unit','tahun']);       
-        if ($rencana){
-           
+        if ($rencana){           
             $rencana['bagian'] = [];
             $rencana_detail = RencanaDetail::where('rencana_id',$rencana_id)->orderBy('bagian_id','asc')->get(['id','nama_bagian']);
             
@@ -92,7 +94,7 @@ class RealisasiController extends Controller
             $xbulan = 'b'.$bulan;
 
             $rencana = Rencana::where('id',$kegiatan->rencana_id)
-                        // ->where('status','Closed')
+                        ->where('status_realisasi','Open')
                         ->first();
             if($rencana){
                 $rencanadetail = RencanaDetail::find($kegiatan->rencana_detail_id);
@@ -107,7 +109,7 @@ class RealisasiController extends Controller
                 return view('yys.realisasi.create',compact('nominal','rencana', 'rencanadetail', 'rencanasubbagian', 'kegiatan', 'rencana_id', 'kegiatan_id', 'bulan'));                                    
             }else{
              return redirect()->route('realisasi.index', $rencana_id)
-                        ->with('error','Rencana Anggaran Belanja - RAB Masih Open.');
+                        ->with('error','Realisasi Anggaran Belanja Sudah Di Tutup.');
             }
         }else{
             return redirect()->route('realisasi.index', $rencana_id)
@@ -120,6 +122,8 @@ class RealisasiController extends Controller
      */
     public function store(Request $request, $rencana_id, $kegiatan_id, $bulan)
     {
+        // return $request->all();
+        // dd($request->file('bukti'));
         $request->validate([
             'nominal' => 'required',
             'rencana_id' => 'required',
@@ -127,29 +131,40 @@ class RealisasiController extends Controller
             'rencana_detail_subbagian_id' => 'required',
             'rencana_detail_kegiatan_id' => 'required',
             'subbagian_id' => 'required',
-            'bagian_id' => 'required',
+            'bagian_id' => 'required',            
+            'bukti' => 'nullable|mimes:pdf|max:1024',
+            // 'bukti' => 'nullable|extensions:pdf|max:1024',
+            // 'bukti' => [
+            //                 'nullable',
+            //                 // 'extensions:pdf',
+            //                 // 'mimes:pdf',
+            //                 File::types(['pdf'])
+            //                     // ->min(1024)
+            //                     // ->max(2 * 1024),
+            //                     ->max(1024),
+            //             ],
         ]);
-        // return $request->all();
-        $realisasi = Realisasi::updateOrCreate(
-            [
-                'rencana_id' => $request->rencana_id, 
-                'rencana_detail_id' => $request->rencana_detail_id, 
-                'rencana_detail_subbagian_id' => $request->rencana_detail_subbagian_id, 
-                'rencana_detail_kegiatan_id' => $request->rencana_detail_kegiatan_id, 
-                'subbagian_id' => $request->subbagian_id, 
-                'bagian_id' => $request->bagian_id, 
-            ],
-            [
-                'b'.$bulan => str_replace('.','',$request->nominal), 
-            ]
-        );
-        if ($realisasi){
-            return redirect()->route('realisasi.index', $rencana_id)
-                        ->with('success','Input Realisasi Anggaran Berhasil.');
-        }else{
-              return redirect()->route('realisasi.index', $rencana_id)
-                        ->with('error','Gagal Input Realisasi Anggaran.');
-        }
+        return $request->all();
+        // $realisasi = Realisasi::updateOrCreate(
+        //     [
+        //         'rencana_id' => $request->rencana_id, 
+        //         'rencana_detail_id' => $request->rencana_detail_id, 
+        //         'rencana_detail_subbagian_id' => $request->rencana_detail_subbagian_id, 
+        //         'rencana_detail_kegiatan_id' => $request->rencana_detail_kegiatan_id, 
+        //         'subbagian_id' => $request->subbagian_id, 
+        //         'bagian_id' => $request->bagian_id, 
+        //     ],
+        //     [
+        //         'b'.$bulan => str_replace('.','',$request->nominal), 
+        //     ]
+        // );
+        // if ($realisasi){
+        //     return redirect()->route('realisasi.index', $rencana_id)
+        //                 ->with('success','Input Realisasi Anggaran Berhasil.');
+        // }else{
+        //       return redirect()->route('realisasi.index', $rencana_id)
+        //                 ->with('error','Gagal Input Realisasi Anggaran.');
+        // }
     }
 
     /**
