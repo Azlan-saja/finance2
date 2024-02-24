@@ -19,7 +19,7 @@
     <link
         rel="shortcut icon"
         type="image/png"
-        href="{{ asset('assets/logo.png') }}"
+        href="{{ asset('assets/favicon.png') }}"
         />
 
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
