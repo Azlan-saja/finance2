@@ -3,25 +3,18 @@
 
 @section('content')
 
-  <div id="main-wrapper">
-    <div class="position-relative overflow-hidden radial-gradient min-vh-100 w-100">
-      <div class="position-relative z-index-5">
-        <div class="row">
-          <div class="col-xl-7 col-xxl-8">
-            <div class="d-none d-xl-flex align-items-center justify-content-center" style="height: calc(100vh - 80px);">
-              <img src="{{ asset('assets/images/login-security.svg') }}" alt="" class="img-fluid" width="500">
-            </div>
-          </div>
-          <div class="col-xl-5 col-xxl-4">
-            <div class="authentication-login min-vh-100 bg-body row justify-content-center align-items-center p-4">
-              <div class="auth-max-width col-sm-10 col-md-10 col-xl-10 px-4">
-                 <a href="/" class="text-nowrap logo-img d-block px-4 pt-4 w-100 text-center">             
-                  <img src="{{ asset('assets/logo.jpg') }}" class="light-logo" alt="Logo-light" />
-                </a>
-                <h2 class="mb-1 fs-7 fw-bolder  text-center">Selamat Datang!</h2>                                      
-                  @if (Route::has('login'))
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">   
+                
+              @if (Route::has('login'))
               @auth
-               <p class="mb-7  text-center">Awali Harimu Dengan Senyuman.</p>      
                 <div class="text-center">
                   @if (Auth::user()->type == 'YYS')
                     <h5 class="text-center">Status</h5>
@@ -34,7 +27,7 @@
                   @endif
                 </div>
               @else
-              <p class="mb-7  text-center">Silahkan Login.</p>      
+                <h1 class="text-center">Log In</h1>
 
                 <form method="POST" action="{{ route('login') }}">
                         @csrf

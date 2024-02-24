@@ -6,6 +6,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
+    <link
+        rel="shortcut icon"
+        type="image/jpg"
+        href="{{ asset('assets/logo.jpg') }}"
+        />
+
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
     @yield('css')
 
