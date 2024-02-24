@@ -18,8 +18,8 @@
     <title>@yield('title') | Finance Sekolah Online</title>
     <link
         rel="shortcut icon"
-        type="image/jpg"
-        href="{{ asset('assets/logo.jpg') }}"
+        type="image/png"
+        href="{{ asset('assets/logo.png') }}"
         />
 
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
