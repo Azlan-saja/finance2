@@ -5,6 +5,49 @@
 @section('cssSidebar')
 <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/select2-bootstrap-5-theme.min.css') }}">
+<style>
+  .twitter-typeahead {
+  width: 100%;
+}
+
+.twitter-typeahead .tt-menu {
+  width: 100%;
+  background: var(--bs-white);
+  border: 1px solid var(--bs-gray-100);
+  border-radius: 5px;
+  padding: 0.75rem 0;
+}
+
+.twitter-typeahead .tt-menu .tt-suggestion {
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+}
+
+.twitter-typeahead .tt-menu .tt-suggestion:hover {
+  background-color: var(--bs-primary);
+  color: var(--bs-white);
+}
+
+.twitter-typeahead .empty-message {
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.twitter-typeahead .rtl-typeahead .tt-menu {
+  text-align: right;
+}
+
+.twitter-typeahead .league-name {
+  margin: 0 10px 5px;
+  padding: 7px 5px 10px;
+  border-bottom: 1px solid var(--bs-gray-200);
+}
+
+.scrollable-dropdown .twitter-typeahead .tt-menu {
+  max-height: 80px;
+  overflow-y: auto;
+}
+</style>
 @endsection
 
 @section('pages')
@@ -94,15 +137,12 @@
                           <div class="form-body">                      
                             <div class="mb-3">
                                   <div class="row">
-                                    <label class="col-lg-2 form-label">Uraian Kegiatan</label>                         
+                                    <label class="col-lg-2 form-label mt-2">Uraian Kegiatan</label>                         
                                     <div class="col-lg-10">
-                                    <select name="nama_kegiatan" class="form-select form-control  @error('nama_kegiatan') is-invalid @enderror" id="pilih_kegiatan" data-placeholder="Pilih" required>
-                                          <option></option>
-                                          @foreach ($kegiatan as $kegiatans)
-                                            <option value="{{ $kegiatans->kegiatan }}"> {{ $kegiatans->kegiatan }}</option>
-                                          @endforeach
-                                    </select>
-
+                                      <div id="the-basics">
+                                        <span class="twitter-typeahead" style="position: relative; display: inline-block;">
+                                        <input value="" type="text" class="typeahead form-control tt-hint  @error('nama_kegiatan') is-invalid @enderror" name="nama_kegiatan"  required>
+                                      </div>
                                         @error('nama_kegiatan')
                                           <span class="invalid-feedback" role="alert">
                                               <strong>{{ $message }}</strong>
@@ -110,7 +150,7 @@
                                         @enderror
                                     </div>                          
                                   </div>
-                          </div>                                                                                                        
+                          </div>                                                                                                         
                             <div class="mb-3">
                                   <div class="row">
                                     <label class="col-lg-2 form-label mt-2">Sasaran</label>                         
@@ -357,6 +397,7 @@
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/js/accounting.js') }}"></script>
 <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+<script src="{{ asset('assets/js/typeahead.jquery.min.js') }}"></script>
 
 <script>
    function ribuan(string) {
@@ -417,6 +458,37 @@ $( document ).ready(function() {
     });
   });
 });
+
+var substringMatcher = function (strs) {
+  return function findMatches(q, cb) {
+    var matches, substringRegex;
+    matches = [];
+    substrRegex = new RegExp(q, "i");
+    $.each(strs, function (i, str) {
+      if (substrRegex.test(str)) {
+        matches.push(str);
+      }
+    });
+    cb(matches);
+  };
+};
+
+var xi = @json($kegiatan);
+var kegiatans = [];
+xi.forEach(function(item) {
+    kegiatans.push(item.kegiatan);
+});
+$("#the-basics .typeahead").typeahead(
+  {
+    hint: true,
+    highlight: true,
+    minLength: 1,
+  },
+  {
+    name: "states",
+    source: substringMatcher(kegiatans),
+  }
+);
 </script>
 @endsection
 

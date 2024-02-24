@@ -111,10 +111,10 @@ class RencanaDetailController extends Controller
                     ->with('bagians')
                     ->first();                
             if ($subbagian){
-                $kegiatan = Kegiatan::OrderBy('kegiatan','asc')->get();
-                $sasaran = Sasaran::OrderBy('sasaran','asc')->get();       
-                $anggaran = Anggaran::OrderBy('anggaran','asc')->get();
-                $satuan = Satuan::OrderBy('satuan','asc')->get();
+                $kegiatan = Kegiatan::OrderBy('kegiatan','asc')->get('kegiatan');
+                $sasaran = Sasaran::OrderBy('sasaran','asc')->get('sasaran');       
+                $anggaran = Anggaran::OrderBy('anggaran','asc')->get('anggaran');
+                $satuan = Satuan::OrderBy('satuan','asc')->get('satuan');
                 $grantotal = 0;
 
                 $rencanadetailKeg = RencanaDetailKegiatan::where('rencana_id', $rencana_id)
