@@ -262,6 +262,7 @@ class UserRABController extends Controller
                         ->first();  
         $rencana->update([
             'status' => 'Closed',
+            'status_realisasi' => 'Open',
         ]);        
         return redirect()->route('user.rencana.index')
                         ->with('success','Rencana Anggaran Belanja - RAB Berhasil di Tutup.');        

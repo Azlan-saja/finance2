@@ -110,13 +110,19 @@
                                     @if ($data->status == 'Open')
                                       <a class="dropdown-item d-flex align-items-center gap-3 text-primary" href="{{ route('user.rencana-detail.index',$data->id) }}"><i class="fs-4 ti ti-calendar-plus"></i>Rencana</a>                                  
                                     @else
-                                      <a class="dropdown-item d-flex align-items-center gap-3 text-danger" href="{{ route('user.rencana-detail.history', $data->id) }}"><i class="fs-4 ti ti-calendar-plus"></i>History Rencana</a>                                  
+                                      <a class="dropdown-item d-flex align-items-center gap-3 text-danger" href="{{ route('user.rencana-detail.history', $data->id) }}" target="_blank"><i class="fs-4 ti ti-eye"></i>History Rencana</a>                                  
+                                      <a class="dropdown-item d-flex align-items-center gap-3 text-danger" href="{{ route('laporan.rencana-detail', $data->id) }}" target="_blank"><i class="fs-4 ti ti-download"></i>Cetak Rencana</a>                                  
                                     @endif
                                 </li>
-                                <li>
-                                  <a class="dropdown-item d-flex align-items-center gap-3 text-success" href="{{ route('user.realisasi.index',$data->id) }}"><i class="fs-4 ti ti-calendar-week"></i>Realisasi</a>
-                                </li>
-                                                              
+                                  @if ($data->status_realisasi == 'Closed')
+                                  <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-3 text-danger" href="{{ route('laporan.realisasi', $data->id) }}" target="_blank"><i class="fs-4 ti ti-download"></i>Cetak Realisasi</a>                                  
+                                  </li>   
+                                  @else
+                                  <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-3 text-success" href="{{ route('user.realisasi.index',$data->id) }}"><i class="fs-4 ti ti-calendar-week"></i>Realisasi</a>
+                                  </li>
+                                  @endif
                               </ul>
                             </div>
                              

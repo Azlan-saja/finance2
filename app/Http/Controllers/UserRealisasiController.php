@@ -26,7 +26,7 @@ class UserRealisasiController extends Controller
         $rencana = Rencana::where('id',$rencana_id)
                     ->where('unit',Auth::user()->lvl)
                     ->where('status','Closed')
-                    ->where('status_realisasi', '!=', 'Closed')
+                    ->where('status_realisasi', 'Open')
                     ->first(['anggaran','unit','tahun']);       
         
         if ($rencana){           
@@ -78,7 +78,7 @@ class UserRealisasiController extends Controller
             return view('user.realisasi.index',compact('rencana','rencana_id'));                             
         }else{
              return redirect()->route('user.rencana.index')
-                        ->with('error','Realisasi RAB Belum di Buka.');
+                        ->with('error',nl2br('Realisasi RAB Sedang Tidak Terbuka Sekarang!'));
  
         }
     }
@@ -89,23 +89,30 @@ class UserRealisasiController extends Controller
         $kegiatan = RencanaDetailKegiatan::where('id',$kegiatan_id)->first(['id', 'rencana_id','rencana_detail_id','rencana_detail_subbagian_id','nama_kegiatan','volume']);
         // if($kegiatan && $kegiatan->rencana_id == $rencana_id && $bulan <= 12 && $kegiatan->volume >= $bulan ){
         if($kegiatan && $kegiatan->rencana_id == $rencana_id && $bulan <= 12 && $bulan >=1 ){
-            $nominal = 0; 
-            $xbulan = 'b'.$bulan;
-            $fileName = null;
-            $xpdf = 'pdf_'.$bulan;
-
+           
             $rencana = Rencana::find($kegiatan->rencana_id);
-            $rencanadetail = RencanaDetail::find($kegiatan->rencana_detail_id);
-            $rencanasubbagian = RencanaDetailSubBagian::find($kegiatan->rencana_detail_subbagian_id);
+            if ($rencana->status_realisasi == 'Open'){
+                $nominal = 0; 
+                $xbulan = 'b'.$bulan;
+                $fileName = null;
+                $xpdf = 'pdf_'.$bulan;
 
-            $realisasi = Realisasi::where('rencana_id', $kegiatan->rencana_id)
-                            ->where('rencana_detail_id', $kegiatan->rencana_detail_id)
-                            ->where('rencana_detail_subbagian_id', $kegiatan->rencana_detail_subbagian_id)
-                            ->where('rencana_detail_kegiatan_id', $kegiatan->id)
-                            ->first();
-            if ($realisasi) $nominal = $realisasi->$xbulan;
-            if ($realisasi) $fileName = $realisasi->$xpdf;
-            return view('user.realisasi.create',compact('nominal','rencana', 'rencanadetail', 'rencanasubbagian', 'kegiatan', 'rencana_id', 'kegiatan_id', 'bulan','fileName'));                                    
+                $rencanadetail = RencanaDetail::find($kegiatan->rencana_detail_id);
+                $rencanasubbagian = RencanaDetailSubBagian::find($kegiatan->rencana_detail_subbagian_id);
+
+                $realisasi = Realisasi::where('rencana_id', $kegiatan->rencana_id)
+                                ->where('rencana_detail_id', $kegiatan->rencana_detail_id)
+                                ->where('rencana_detail_subbagian_id', $kegiatan->rencana_detail_subbagian_id)
+                                ->where('rencana_detail_kegiatan_id', $kegiatan->id)
+                                ->first();
+                if ($realisasi) $nominal = $realisasi->$xbulan;
+                if ($realisasi) $fileName = $realisasi->$xpdf;
+                return view('user.realisasi.create',compact('nominal','rencana', 'rencanadetail', 'rencanasubbagian', 'kegiatan', 'rencana_id', 'kegiatan_id', 'bulan','fileName'));                                    
+            
+            }else{
+                 return redirect()->route('user.rencana.index')
+                        ->with('error',nl2br('Realisasi RAB Sedang Tidak Terbuka Sekarang!'));
+            }
         }else{
             return redirect()->route('user.realisasi.index', $rencana_id)
                         ->with('error','Uraian Kegiatan Realisasi Tidak Ditemukan.');
