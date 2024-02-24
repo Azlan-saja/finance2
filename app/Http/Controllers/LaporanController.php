@@ -385,5 +385,10 @@ class LaporanController extends Controller
         }  
 
     }
-    
+
+    public function file_pdf($fileName)
+    {
+        $file = storage_path('app/bukti/'.$fileName);
+        return response()->file($file);
+    }
 }

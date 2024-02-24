@@ -176,5 +176,5 @@ Route::middleware(['auth', 'user-access:RA|SD|SMP|YYS'])->group(function () {
     Route::post('yys/laporan/laba-rugi', [LaporanController::class, 'laba_rugi'])->name('laporan.laba-rugi');
     Route::get('yys/laporan/beban', [LaporanController::class, 'beban'])->name('laporan.beban');
     Route::get('yys/laporan/pengguna', [LaporanController::class, 'pengguna'])->name('laporan.pengguna');
-
+    Route::get('bukti/file/pdf/{file}', [LaporanController::class, 'file_pdf'])->name('laporan.bukti');
 });

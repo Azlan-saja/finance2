@@ -12,6 +12,7 @@ use App\Models\RencanaDetailKegiatan;
 
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Illuminate\Support\Facades\Storage;
 // use Illuminate\Validation\Rules\File;
 // use Illuminate\Support\Facades\Validator;
 
@@ -59,7 +60,7 @@ class RealisasiController extends Controller
                             ->where('rencana_detail_subbagian_id', $value2->id)
                             ->where('rencana_detail_kegiatan_id', $value3->id);
 
-                            $realiasi = $realiasi_raw->get(['b1','b2','b3','b4','b5','b6','b7','b8','b9','b10','b11','b12']);
+                            $realiasi = $realiasi_raw->get(['b1','b2','b3','b4','b5','b6','b7','b8','b9','b10','b11','b12','pdf_1','pdf_2','pdf_3','pdf_4','pdf_5','pdf_6','pdf_7','pdf_8','pdf_9','pdf_10','pdf_11','pdf_12']);
                             $value3['realisasi'] = $realiasi;
                             $value3['total_realisasi'] =  $realiasi_raw->sum(DB::raw('b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 + b11 + b12'));
                             $total_subbagian += $value3['total_realisasi'];
@@ -91,7 +92,9 @@ class RealisasiController extends Controller
         // if($kegiatan && $kegiatan->rencana_id == $rencana_id && $bulan <= 12 && $kegiatan->volume >= $bulan ){
         if($kegiatan && $kegiatan->rencana_id == $rencana_id && $bulan <= 12 && $bulan >=1 ){
             $nominal = 0;
-            $xbulan = 'b'.$bulan;
+            $xbulan = 'b'.$bulan;            
+            $fileName = null;
+            $xpdf = 'pdf_'.$bulan;
 
             $rencana = Rencana::where('id',$kegiatan->rencana_id)
                         ->where('status_realisasi','Open')
@@ -106,7 +109,8 @@ class RealisasiController extends Controller
                                 ->where('rencana_detail_kegiatan_id', $kegiatan->id)
                                 ->first();
                 if ($realisasi) $nominal = $realisasi->$xbulan;
-                return view('yys.realisasi.create',compact('nominal','rencana', 'rencanadetail', 'rencanasubbagian', 'kegiatan', 'rencana_id', 'kegiatan_id', 'bulan'));                                    
+                if ($realisasi) $fileName = $realisasi->$xpdf;
+                return view('yys.realisasi.create',compact('nominal','rencana', 'rencanadetail', 'rencanasubbagian', 'kegiatan', 'rencana_id', 'kegiatan_id', 'bulan','fileName'));                                    
             }else{
              return redirect()->route('realisasi.index', $rencana_id)
                         ->with('error','Realisasi Anggaran Belanja Sudah Di Tutup.');
@@ -132,39 +136,87 @@ class RealisasiController extends Controller
             'rencana_detail_kegiatan_id' => 'required',
             'subbagian_id' => 'required',
             'bagian_id' => 'required',            
-            'bukti' => 'nullable|mimes:pdf|max:1024',
-            // 'bukti' => 'nullable|extensions:pdf|max:1024',
-            // 'bukti' => [
-            //                 'nullable',
-            //                 // 'extensions:pdf',
-            //                 // 'mimes:pdf',
-            //                 File::types(['pdf'])
-            //                     // ->min(1024)
-            //                     // ->max(2 * 1024),
-            //                     ->max(1024),
-            //             ],
+            'bukti' => 'nullable|mimes:pdf|max:1024',          
         ]);
         // return $request->all();
-        $realisasi = Realisasi::updateOrCreate(
-            [
-                'rencana_id' => $request->rencana_id, 
-                'rencana_detail_id' => $request->rencana_detail_id, 
-                'rencana_detail_subbagian_id' => $request->rencana_detail_subbagian_id, 
-                'rencana_detail_kegiatan_id' => $request->rencana_detail_kegiatan_id, 
-                'subbagian_id' => $request->subbagian_id, 
-                'bagian_id' => $request->bagian_id, 
-            ],
-            [
-                'b'.$bulan => str_replace('.','',$request->nominal), 
-            ]
-        );
-        if ($realisasi){
-            return redirect()->route('realisasi.index', $rencana_id)
-                        ->with('success','Input Realisasi Anggaran Berhasil.');
-        }else{
-              return redirect()->route('realisasi.index', $rencana_id)
-                        ->with('error','Gagal Input Realisasi Anggaran.');
+        $pdf = $request->file('bukti');
+        // return $pdf->hashName();       
+        // Storage::delete('bukti/EihSFwv7pxrGE6Rn5bdnYstWU2Brx6wgcecUAFiV.pdf');
+        $realisasi = Realisasi::where('rencana_id',$request->rencana_id)
+                                ->where('rencana_detail_id',$request->rencana_detail_id)
+                                ->where('rencana_detail_subbagian_id',$request->rencana_detail_subbagian_id)
+                                ->where('rencana_detail_kegiatan_id',$request->rencana_detail_kegiatan_id)
+                                ->where('subbagian_id',$request->subbagian_id)
+                                ->where('bagian_id',$request->bagian_id)->first();
+
+        if ($realisasi){            
+            // Simpan dan Hapus PDF
+             if ($request->hasFile('bukti')) {   
+                // Simpan PDF
+                $pdf->storeAs('bukti', $pdf->hashName());
+                // Hapus PDF
+                $fields = 'pdf_'.$bulan;
+                Storage::delete('bukti/'.basename($realisasi->$fields));
+
+                $realisasi->update([
+                    'b'.$bulan => str_replace('.','',$request->nominal), 
+                    'pdf_'.$bulan => $pdf->hashName(), 
+                ]);                          
+            }else{
+                 $realisasi->update([
+                    'b'.$bulan => str_replace('.','',$request->nominal), 
+                ]);
+            }
+        }else{           
+            if ($request->hasFile('bukti')) {            
+                // Simpan PDF
+                $pdf->storeAs('bukti', $pdf->hashName());   
+                Realisasi::create([
+                    'rencana_id' => $request->rencana_id,
+                    'rencana_detail_id' => $request->rencana_detail_id,
+                    'rencana_detail_subbagian_id' => $request->rencana_detail_subbagian_id,
+                    'rencana_detail_kegiatan_id' => $request->rencana_detail_kegiatan_id,
+                    'subbagian_id' => $request->subbagian_id,
+                    'bagian_id' => $request->bagian_id,
+                    'b'.$bulan => str_replace('.','',$request->nominal), 
+                    'pdf_'.$bulan => $pdf->hashName(), 
+                ]);
+            }else{
+                  Realisasi::create([
+                    'rencana_id' => $request->rencana_id,
+                    'rencana_detail_id' => $request->rencana_detail_id,
+                    'rencana_detail_subbagian_id' => $request->rencana_detail_subbagian_id,
+                    'rencana_detail_kegiatan_id' => $request->rencana_detail_kegiatan_id,
+                    'subbagian_id' => $request->subbagian_id,
+                    'bagian_id' => $request->bagian_id,
+                    'b'.$bulan => str_replace('.','',$request->nominal), 
+                ]);
+            }
         }
+        return redirect()->route('realisasi.index', $rencana_id)
+                         ->with('success','Input Realisasi Anggaran Berhasil.');
+    
+        // $realisasi = Realisasi::updateOrCreate(
+        //     [
+        //         'rencana_id' => $request->rencana_id, 
+        //         'rencana_detail_id' => $request->rencana_detail_id, 
+        //         'rencana_detail_subbagian_id' => $request->rencana_detail_subbagian_id, 
+        //         'rencana_detail_kegiatan_id' => $request->rencana_detail_kegiatan_id, 
+        //         'subbagian_id' => $request->subbagian_id, 
+        //         'bagian_id' => $request->bagian_id, 
+        //     ],
+        //     [
+        //         'b'.$bulan => str_replace('.','',$request->nominal), 
+        //         'pdf_'.$bulan => $pdf->hashName(), 
+        //     ]
+        // );
+        // if ($realisasi){
+        //     return redirect()->route('realisasi.index', $rencana_id)
+        //                 ->with('success','Input Realisasi Anggaran Berhasil.');
+        // }else{
+        //       return redirect()->route('realisasi.index', $rencana_id)
+        //                 ->with('error','Gagal Input Realisasi Anggaran.');
+        // }
     }
 
     /**

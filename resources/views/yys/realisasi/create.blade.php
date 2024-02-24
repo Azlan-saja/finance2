@@ -1,6 +1,6 @@
 @extends('yys.sidebar')
 @section('title')Input Realisasi Anggaran - RAB - YYS @endsection
-
+ 
 @section('pages')
 <div class="container mt-4">
     <h4 class="fw-semibold mb-4">
@@ -72,7 +72,7 @@
                         </div>                                                                                                        
                         <div class="mb-3">                            
                             <div class="row">
-                                <label class="col-lg-2 form-label pt-2">Bukti (PDF)</label>                         
+                                <label class="col-lg-2 form-label pt-2">Bukti PDF <br>**Jika ada</label>                         
                                 <div class="col-lg-10">
                                     <input class="form-control  @error('bukti') is-invalid @enderror" name="bukti" type="file" accept="application/pdf" >
                                     @error('bukti')
@@ -80,8 +80,12 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                    <div class="d-flex justify-content-start">
-                                        <small class="badge badge-default text-success font-medium bg-success-subtle form-text">**Jika ada.</small>
+                                    <div class="d-flex justify-content-start">                                        
+                                        @if ($fileName !== null && $nominal != 0)
+                                        <a href="{{ route('laporan.bukti', $fileName) }}" target="_blank" class="mt-2 fs-2 me-2 d-inline-flex align-items-center justify-content-center">
+                                            <i class="fs-5 ti ti-download text-black"></i><i class="fs-5 ti ti-file-type-pdf text-black me-1"></i> Bukti Sudah Ada!
+                                        </a> 
+                                        @endif
                                     </div>  
                                 </div>  
                                                       
