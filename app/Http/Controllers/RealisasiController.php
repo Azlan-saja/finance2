@@ -52,7 +52,7 @@ class RealisasiController extends Controller
                         $value3['realisasi'] = [] ;
                         $value3['total_realisasi'] = 0 ;                       
                         
-                      
+                       
                         $value2['kegiatan'] = $rencana_detail_kegiatan2;
 
                         $realiasi_raw = Realisasi::where('rencana_id', $rencana_id)

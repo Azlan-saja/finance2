@@ -10,8 +10,11 @@
  
 }
 .frezz{
+  position: sticky;
+  left: 0;
+  z-index: 1;
 }
-
+ 
 </style>
 @endsection
 
@@ -92,25 +95,25 @@
                   <table class="table border text-nowrap customize-table mb-0 align-middle ">
                     <thead class="text-dark fs-4" style="position:sticky;">
                       <tr class="bg-dark">
-                        <th class="border-bottom-0 frezz align-middle">
+                        <th class="border-bottom-0  align-middle">
                           <span class="fw-semibold mb-0 text-white align-middle">#</span>
                         </th>                       
-                        <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
+                        <th class="border-bottom-0  fw-semibold mb-0 text-white align-middle">  
                           Kode                       
                         </th>                       
                         <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
                           Uraian Kegiatan                       
                         </th>                                                                                       
-                        <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
+                        <th class="border-bottom-0  fw-semibold mb-0 text-white align-middle">  
                           Sasaran                       
                         </th>                                                                                       
-                        <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
+                        <th class="border-bottom-0  fw-semibold mb-0 text-white text-wrap align-middle">  
                           Sumber Anggaran                       
                         </th>                                                                                       
-                        <th class="border-bottom-0 frezz fw-semibold mb-0 text-white text-wrap align-middle">  
+                        <th class="border-bottom-0  fw-semibold mb-0 text-white text-wrap align-middle">  
                           Besar Anggaran                       
                         </th>
-                        <th class="border-bottom-0 frezz fw-semibold mb-0 text-white align-middle">  
+                        <th class="border-bottom-0  fw-semibold mb-0 text-white align-middle">  
                           Volume                       
                         </th>     
                         @for ($i = 1; $i <= 12; $i++)
@@ -126,15 +129,15 @@
                     <tbody>
                     @forelse ($rencana->bagian as $data)
                       <tr class="bg-primary-subtle">    
-                        <td class="frezz">
+                        <td class="">
                           <h6 class="fw-bold mb-0">{{ $loop->iteration}}</h6>
-                        </td>                          
-                        <td class="frezz">                          
+                        </td>
+                        <td>                          
                         </td> 
-                        <td class="text-wrap frezz" colspan="4">
+                        <td class="text-wrap frezz" colspan="3">
                           <p class="mb-0 fw-bold"> {{ $data->nama_bagian}}</p>
                         </td>              
-                        <td colspan="13"></td>           
+                        <td colspan="14"></td>           
                         <td class="bg-danger-subtle border-bottom-0">
                           <h6 class="fw-bold"> 
                             {{ 'Rp. '.number_format($data->total_bagian,0,",",".") }}
@@ -144,15 +147,14 @@
                      
                         @forelse ($data->subbgaian as $data2)
                           <tr class="fw-bold">    
-                                <td class="bg-primary-subtle frezz"></td>
-                                <td class="border-0 frezz">
+                                <td class="bg-primary-subtle "></td>
+                                <td class="border-0">
                                   <p class="mb-0 fw-bold"> {{ $loop->parent->iteration }}.{{ $loop->iteration }} </p>
                                 </td> 
-                                <td class="border-0 text-wrap frezz" colspan="5"> 
+                                <td class="border-0 text-wrap frezz" colspan="3"> 
                                    {{ $data2->nama_subbagian }} 
-                                </td>            
-                                <td colspan="3" class="frezz"></td>                                                        
-                                 <td colspan="9" class="border-0"></td>
+                                </td>                                                                   
+                                 <td colspan="14" class="border-0"></td>
                                  <td class="bg-warning-subtle border-0">
                                   <h6 class="fw-bold"> 
                                       {{ 'Rp. '.number_format($data2->total_subbagian,0,",",".") }}
@@ -161,25 +163,31 @@
                               </tr>                                  
                                   @forelse($data2->kegiatan as $data3)
                                             <tr class="border-bottom">                                              
-                                              <td class="bg-primary-subtle border-0 frezz"></td>
-                                              <td class="bg-info text-white border-0 text-end frezz">{{ $data->index+1 }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}</td>
+                                              <td class="bg-primary-subtle border-0 "></td>
+                                              <td class="bg-info text-white border-0 text-end ">{{ $data->index+1 }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}</td>
                                               <td class="bg-info text-white border-0 text-wrap frezz">
                                                 {{ $data3->nama_kegiatan }}
                                                 <br>
                                                 
                                                  
                                               </td>
-                                              <td class="bg-info text-white border-0 text-wrap frezz">{{ $data3->sasaran }}</td>
-                                              <td class="bg-info text-white border-0 text-wrap" frezz>{{ $data3->anggaran }}</td>
+                                              <td class="bg-info text-white border-0 text-wrap ">{{ $data3->sasaran }}</td>
+                                              <td class="bg-info text-white border-0 text-wrap" >{{ $data3->anggaran }}</td>
                                               <td class="bg-info text-white border-0">Rp.{{ number_format($data3->jumlah_sasaran * str_replace('.','',$data3->harga) * $data3->volume,0,",",".") }}</td>
                                               <td class="bg-info text-white border-0 text-center">{{ $data3->volume }}</td>
                                              @for ($i = 1; $i <= 12; $i++)
-                                                  <td class="bg-info text-white border-0 border-start border-end">                                                 
+                                                  <td class="bg-info text-white border-0 border-start border-end" style="position: relative;">                                                 
                                                   <a href="{{ route('user.realisasi.create', ['rencana_id' => $rencana_id, 'kegiatan_id' => $data3->id, 'bulan' => $i]) }}" class="btn mb-1 bg-primary-subtle text-primary me-2 btn-sm d-inline-flex align-items-center justify-content-center">
                                                     {{ $i }}<i class="fs-5 ti ti-edit text-primary"></i> 
                                                   </a> 
                                                   @forelse($data3->realisasi as $data4)
-                                                    <div class="d-none"> {{ $x = 'b'.$i}}</div>
+                                                     <div class="d-none"> {{ $y = 'pdf_'.$i}} {{ $x = 'b'.$i}}</div>
+                                                      @if ($data4->$y !== null && $data4->$x != 0)
+                                                          <a href="{{ route('laporan.bukti', $data4->$y) }}" target="_blank" class="text-primary me-2 d-inline-flex align-items-center justify-content-center bg-dark" style=" position: absolute;top: 0;right: 0;">
+                                                              <i class="fs-5 ti ti-file-type-pdf text-white p-1"></i> 
+                                                          </a> 
+                                                      @endif
+                                                      
                                                       @if ($data4->$x != 0)
                                                           {{ 'Rp. '.number_format($data4->$x,0,",",".") }}
                                                       @else
@@ -239,5 +247,28 @@
 @endsection
 
 @section('jsSidebar')
+  <script>
+    let isMouseDown = false;
+    let startX;
+    let scrollLeft;
+   const table = document.querySelector('.table-responsive');
 
+    table.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        startX = e.pageX - table.offsetLeft;
+        scrollLeft = table.scrollLeft;
+    });
+
+    table.addEventListener('mousemove', (e) => {
+        if (!isMouseDown) return;
+        e.preventDefault();
+        const x = e.pageX - table.offsetLeft;
+        const walk = (x - startX) * 2;
+        table.scrollLeft = scrollLeft - walk;
+    });
+
+    table.addEventListener('mouseup', () => {
+        isMouseDown = false;
+    });
+  </script>
 @endsection

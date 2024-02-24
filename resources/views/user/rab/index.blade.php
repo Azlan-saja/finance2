@@ -1,7 +1,7 @@
 @extends('user.sidebar')
 @section('title')Rencana Anggaran Belanja - RAB - {{ Auth::user()->type }} @endsection
 
-
+ 
 @section('pages')
 @php
     $order = request()->input('order', 'asc');
@@ -31,7 +31,7 @@
                   <form action="{{ route('user.rencana.search') }}" method="POST">
                      @csrf               
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control @error('cari') is-invalid @enderror" placeholder="Pencarian" name="cari" required>                      
+                      <input type="search" class="form-control @error('cari') is-invalid @enderror" placeholder="Pencarian" name="cari" required>                      
                       <button class="btn bg-primary-subtle text-primary rounded-end font-medium" type="submit">
                         Cari
                       </button> 
@@ -62,10 +62,16 @@
                               Tahun Anggaran
                             </a>
                         </th>
-                         <th class="border-bottom-0">                          
-                            <a class="fw-semibold mb-0 text-white" href="{{ route('user.rencana.index', ['sort' => 'status', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
+                        <th class="border-bottom-0">                          
+                            <a class="fw-semibold mb-0 text-white" href="{{ route('rencana.index', ['sort' => 'status', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
-                              Status
+                              Status Rencana
+                            </a>
+                        </th>
+                         <th class="border-bottom-0">                          
+                            <a class="fw-semibold mb-0 text-white" href="{{ route('rencana.index', ['sort' => 'status', 'order' => $order == 'asc' ? 'desc' : 'asc']) }}">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l4 -4l4 4m-4 -4v14" /><path d="M21 15l-4 4l-4 -4m4 4v-14" /></svg>  
+                              Status Realisasi
                             </a>
                         </th>
                         <th class="border-bottom-0">                         
@@ -83,11 +89,14 @@
                         </td>                      
                          <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">{{ $data->tahun }}</p>
-                        </td>
+                        </td>                        
                          <td class="border-bottom-0">
                           <span class="mb-1 badge rounded-pill {{ $data->status == 'Open' ? 'text-bg-success' : 'text-bg-danger' }}">{{ $data->status }} </span>
                         </td>
-                           <td class="border-bottom-0">
+                        <td class="border-bottom-0">
+                          <span class="mb-1 badge rounded-pill {{ $data->status_realisasi == 'Waiting' ? 'text-bg-warning' : ($data->status_realisasi == 'Open' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $data->status_realisasi }} </span>
+                        </td>
+                        <td class="border-bottom-0">
                           <div class="d-flex align-items-center gap-2">
                             <div class="dropdown dropstart">
                               <a href="#" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -116,7 +125,7 @@
                       </tr>    
                       @empty
                       <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                           <div class="alert alert-danger text-center" role="alert">
                               Data Rencana Anggaran Belanja Kosong.
                           </div>

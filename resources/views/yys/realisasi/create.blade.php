@@ -69,7 +69,7 @@
                                     @enderror
                                 </div>                          
                             </div>
-                        </div>                                                                                                        
+                        </div>                                                                                                         
                         <div class="mb-3">                            
                             <div class="row">
                                 <label class="col-lg-2 form-label pt-2">Bukti PDF <br>**Jika ada</label>                         

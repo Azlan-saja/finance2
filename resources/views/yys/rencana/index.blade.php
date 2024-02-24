@@ -1,6 +1,6 @@
 @extends('yys.sidebar')
 @section('title')Rencana Anggaran Belanja - RAB - YYS @endsection
-
+ 
 
 @section('pages')
 @php

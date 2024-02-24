@@ -181,18 +181,15 @@
                                               <td class="bg-info text-white border-0">Rp.{{ number_format($data3->jumlah_sasaran * str_replace('.','',$data3->harga) * $data3->volume,0,",",".") }}</td>
                                               <td class="bg-info text-white border-0 text-center">{{ $data3->volume }}</td>
                                               @for ($i = 1; $i <= 12; $i++)
-                                                  <td class="bg-info text-white border-0 border-start border-end">  
-                                                  
-                                                
-
+                                                  <td class="bg-info text-white border-0 border-start border-end" style="position: relative;">                                                    
                                                   <a href="{{ route('realisasi.create', ['rencana_id' => $rencana_id, 'kegiatan_id' => $data3->id, 'bulan' => $i]) }}" class="btn mb-1 bg-primary-subtle text-primary me-2 btn-sm d-inline-flex align-items-center justify-content-center">
                                                     {{ $i }}<i class="fs-5 ti ti-edit text-primary"></i> 
                                                   </a> 
                                                   @forelse($data3->realisasi as $data4)
                                                         <div class="d-none"> {{ $y = 'pdf_'.$i}} {{ $x = 'b'.$i}}</div>
                                                         @if ($data4->$y !== null && $data4->$x != 0)
-                                                          <a href="{{ route('laporan.bukti', $data4->$y) }}" target="_blank" class="text-primary me-2 d-inline-flex align-items-center justify-content-center">
-                                                              <i class="fs-5 ti ti-download text-black"></i> 
+                                                          <a href="{{ route('laporan.bukti', $data4->$y) }}" target="_blank" class="text-primary me-2 d-inline-flex align-items-center justify-content-center bg-dark" style=" position: absolute;top: 0;right: 0;">
+                                                              <i class="fs-5 ti ti-file-type-pdf text-white p-1"></i> 
                                                           </a> 
                                                         @endif
 
